@@ -13,7 +13,9 @@ const signup = () => {
 				<div className={styles.register_inner_container}>
 					<div className={styles.container_a}>
 						<h3>Join The Community</h3>
-						<p>Create your Member profile and get first access to the very best topic and community.</p>
+						<p className={styles.container_p}>
+							Create your Member profile and get first access to the very best topic and community.
+						</p>
 
 						<label htmlFor='username'>
 							Username: <br />

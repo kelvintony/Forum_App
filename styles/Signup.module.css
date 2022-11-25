@@ -22,13 +22,15 @@
 	font-size: 24px;
 	font-weight: 900px;
 	color: rgb(31, 31, 31);
+	margin-bottom: 10px;
 }
 
-.container_a > p:first-child {
+.container_a .container_p {
 	font-size: 18px;
 	font-weight: 300px;
 	color: rgb(44, 44, 44);
 	letter-spacing: 0.05rem;
+	margin-bottom: 10px;
 }
 
 .container_a label {
@@ -69,7 +71,8 @@
 }
 
 .already_signup {
-	font-size: 11px;
+	font-size: 12px;
+	margin-top: 10px;
 	font-weight: 300px;
 	color: rgb(44, 44, 44);
 	letter-spacing: 0.05rem;
