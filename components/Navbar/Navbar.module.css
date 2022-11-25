@@ -61,14 +61,12 @@
 }
 
 .btn_login {
-	border: 0.5px solid #1682fd;
+	border: 1px solid #f48023;
 	outline: none;
 	display: inline-flex;
-	/* justify-content: center;
-	align-items: center; */
 	gap: 5px;
 	background-color: white;
-	color: #1682fd;
+	color: #f48023;
 	border-radius: 5px;
 	padding: 7px 15px;
 	cursor: pointer;
@@ -76,7 +74,7 @@
 }
 
 .btn_login:hover {
-	background-color: #1682fd;
+	background-color: #f48023;
 	color: white;
 }
 
