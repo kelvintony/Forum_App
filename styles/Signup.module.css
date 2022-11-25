@@ -9,6 +9,7 @@
 }
 
 .container_a {
+	margin-top: 50px;
 	padding: 10px;
 	width: 300px;
 	display: flex;
@@ -95,7 +96,9 @@
 		grid-template-columns: 1fr;
 		height: calc(100vh - 60px);
 	}
-
+	.container_a {
+		margin-top: 0px;
+	}
 	.container_a .container_p {
 		font-size: 16px;
 	}
