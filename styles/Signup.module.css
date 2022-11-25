@@ -1,5 +1,5 @@
 .register_container {
-	height: 100vh;
+	height: calc(100vh - 60px);
 }
 
 .register_inner_container {
@@ -78,9 +78,11 @@
 	color: blue;
 	cursor: pointer;
 }
+
 .container_b .regster_logo {
 	width: 100%;
-	height: auto;
+	height: 100vh;
+	object-fit: cover;
 }
 @media screen and (max-width: 900px) {
 }
