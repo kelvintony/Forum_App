@@ -84,5 +84,15 @@
 	height: 100vh;
 	object-fit: cover;
 }
+
 @media screen and (max-width: 900px) {
+	.register_inner_container {
+		margin-top: 80px;
+		grid-template-columns: 1fr;
+		height: calc(100vh - 60px);
+	}
+
+	.container_b .regster_logo {
+		display: none;
+	}
 }
