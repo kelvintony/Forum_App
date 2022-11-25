@@ -1,0 +1,83 @@
+.navbar_container {
+	top: 0;
+	left: 0;
+	width: 100%;
+	background-color: white;
+	position: sticky;
+	padding: 10px 30px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	box-shadow: rgba(0, 0, 0, 0.10) 0px 3px 3px 0px;
+}
+
+.navbar_logo {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 5px;
+}
+
+.logo_image {
+	width: 30px;
+	height: 28px;
+}
+
+.navbar_logo p {
+	letter-spacing: 0.05em;
+}
+
+.navbar_btn {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.btn_register {
+	border: none;
+	outline: none;
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	gap: 5px;
+	background-color: #f48023;
+	border-radius: 5px;
+	padding: 7px 15px;
+	color: #ffffff;
+	cursor: pointer;
+	transition: all 0.3s ease-in-out;
+}
+
+.btn_register:hover {
+	background-color: #ff9b49;
+}
+.user_image {
+	width: 15px;
+	height: 15px;
+}
+.btn_register > svg {
+	width: 15px;
+}
+
+.btn_login {
+	border: 0.5px solid #1682fd;
+	outline: none;
+	display: inline-flex;
+	/* justify-content: center;
+	align-items: center; */
+	gap: 5px;
+	background-color: white;
+	color: #1682fd;
+	border-radius: 5px;
+	padding: 7px 15px;
+	cursor: pointer;
+	transition: all 0.3s ease-in-out;
+}
+
+.btn_login:hover {
+	background-color: #1682fd;
+	color: white;
+}
+
+@media screen and (max-width: 900px) {
+}

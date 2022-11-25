@@ -1,0 +1,19 @@
+.home_container {
+	/* max-width: 900px; */
+	/* margin: 0 auto; */
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.home_container h1 {
+	font-size: 50px;
+	color: rgb(68, 68, 68);
+}
+
+.home_image {
+	width: 500px;
+	height: auto;
+}
