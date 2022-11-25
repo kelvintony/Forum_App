@@ -95,4 +95,9 @@
 	.container_b .regster_logo {
 		display: none;
 	}
+
+	.already_signup {
+		font-size: 12px;
+		margin-top: 10px;
+	}
 }
