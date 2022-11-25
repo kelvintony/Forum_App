@@ -17,3 +17,14 @@
 	width: 500px;
 	height: auto;
 }
+
+@media screen and (max-width: 900px) {
+	.home_container h1 {
+		font-size: 28px;
+		color: rgb(68, 68, 68);
+	}
+	.home_image {
+		width: 200px;
+		height: auto;
+	}
+}
