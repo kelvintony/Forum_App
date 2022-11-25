@@ -60,6 +60,7 @@
 	cursor: pointer;
 	transition: all 0.3s ease-in-out;
 	margin-top: 15px;
+	font-weight: 600;
 }
 
 .btn_register_a:hover {
