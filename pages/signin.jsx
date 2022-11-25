@@ -12,7 +12,7 @@ const signin = () => {
 			<section className={styles.register_container}>
 				<div className={styles.register_inner_container}>
 					<div className={styles.container_a}>
-						<h3>We've Missed You</h3>
+						<h3>We&apos;ve Missed You</h3>
 						<p>Kindly signin and get first access to the very best topic and community.</p>
 
 						<label htmlFor='email'>
@@ -29,7 +29,7 @@ const signin = () => {
 
 						<button className={styles.btn_register_a}>Login</button>
 						<Link href='/signup' className={styles.already_signup}>
-							Don't have an account? <span>Sign up</span>
+							Don&apos;t have an account? <span>Sign up</span>
 						</Link>
 					</div>
 					<div className={styles.container_b}>
