@@ -19,7 +19,7 @@
 }
 
 .container_a > h3 {
-	font-size: 50px;
+	font-size: 24px;
 	font-weight: 900px;
 	color: rgb(31, 31, 31);
 	margin-bottom: 10px;
@@ -94,6 +94,10 @@
 		margin-top: 80px;
 		grid-template-columns: 1fr;
 		height: calc(100vh - 60px);
+	}
+
+	.container_a .container_p {
+		font-size: 16px;
 	}
 
 	.container_b .regster_logo {
