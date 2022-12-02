@@ -90,6 +90,12 @@
 	object-fit: cover;
 }
 
+.errorMessageContainer {
+	/* font-size: 13px; */
+	background-color: rgb(250, 128, 128);
+	padding: 10px;
+}
+
 @media screen and (max-width: 900px) {
 	.register_inner_container {
 		margin-top: 80px;

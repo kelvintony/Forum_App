@@ -4,7 +4,7 @@ const dashboard = () => {
 	let login = false;
 	return (
 		<div>
-			<h1 className={login ? styles.dashboardHeader : styles.dashboardHeaderActive}>Dashboard algorithm</h1>
+			<h1 className={login ? styles.dashboardHeader : styles.dashboardHeaderActive}>Dashboard page</h1>
 		</div>
 	);
 };
