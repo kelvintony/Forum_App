@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import axios from 'axios';
 
 import styles from '../styles/Signup.module.css';
@@ -14,9 +13,7 @@ const authAxios = axios.create({
 	baseURL: 'https://forum-api-3fif.onrender.com'
 });
 
-const signup = () => {
-	const router = useRouter();
-
+const Signup = () => {
 	const [ formData, setFormData ] = useState({
 		username: '',
 		email: '',
@@ -170,4 +167,4 @@ const signup = () => {
 	);
 };
 
-export default signup;
+export default Signup;

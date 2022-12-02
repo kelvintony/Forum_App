@@ -13,7 +13,7 @@ const authAxios = axios.create({
 	baseURL: 'https://forum-api-3fif.onrender.com'
 });
 
-const signin = () => {
+const Signin = () => {
 	const router = useRouter();
 
 	// const navigate = useNavigate();
@@ -126,4 +126,4 @@ const signin = () => {
 	);
 };
 
-export default signin;
+export default Signin;
