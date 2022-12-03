@@ -8,6 +8,7 @@ import logo from '../../assets/logo.svg';
 import register_logo from '../../assets/user_plus.svg';
 
 const Navbar = () => {
+	// console.log('lol')
 	const router = useRouter();
 
 	const { pathname } = router;
