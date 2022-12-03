@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Link from 'next/link';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 
 import styles from '../styles/Signup.module.css';
 import Image from 'next/image';
@@ -11,9 +11,19 @@ import Navbar from '../components/Navbar/Navbar';
 // style={{cursor:loading&&'progress'}} 
 const authAxios = axios.create({
 	baseURL: 'https://forum-api-3fif.onrender.com'
+	// baseURL: 'http://localhost:5000'
 });
 
+// style={{cursor:loading&&'progress'}}
 const Signup = () => {
+	const router = useRouter();
+
+	const { pathname, asPath } = router; 
+
+	const {redirect}= router.query
+
+	const [ user, setUser ] = useState('notLoggedIn');
+
 	const [ formData, setFormData ] = useState({
 		username: '',
 		email: '',
@@ -29,8 +39,21 @@ const Signup = () => {
 
 	const [ loading, setLoading ] = useState(false);
 
-	useEffect(() => {}, []);
-	// const navigate = useNavigate();
+useEffect(() => {
+		setUser(JSON.parse(window.sessionStorage.getItem('profile')));
+
+	}, [])
+
+	useEffect(() => {
+		user?.result?.email.length!==0 && router.push('/')
+		// user!=='notLoggedIn' &&router.push('/')
+	 
+	}, [])
+
+	useEffect(() => {
+		user==='notLoggedIn' &&router.go('/signup')
+	}, [])
+	
 
 	const submitFormData = async () => {
 		if (
@@ -150,7 +173,7 @@ const Signup = () => {
 								)}
 							</label>
 
-							<button onClick={submitFormData} className={styles.btn_register_a} style={{cursor:loading&&'progress'}}  disabled={loading}>
+							<button onClick={submitFormData} className={styles.btn_register_a} disabled={loading}>
 								{loading ? 'loading...' : 'Register'}
 							</button>
 							<Link href='/signin' className={styles.already_signup}>

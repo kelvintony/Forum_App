@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useRef } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import axios from 'axios';
@@ -11,12 +11,19 @@ import Navbar from '../components/Navbar/Navbar';
 
 const authAxios = axios.create({
 	baseURL: 'https://forum-api-3fif.onrender.com'
+	// baseURL: 'http://localhost:5000'
 });
 
 const Signin = () => {
 	const router = useRouter();
 
-	// const navigate = useNavigate();
+	const { pathname, asPath } = router; 
+
+	const {redirect}= router.query
+
+	const [ user, setUser ] = useState('notLoggedIn');
+
+
 
 	const [ formData, setFormData ] = useState({
 		email: '',
@@ -31,7 +38,21 @@ const Signin = () => {
 
 	const [ loading, setLoading ] = useState(false);
 
-	useEffect(() => {}, []);
+	useEffect(() => {
+		setUser(JSON.parse(window.sessionStorage.getItem('profile')));
+
+	}, [])
+
+	useEffect(() => {
+		user?.result?.email.length!==0 && router.push('/')
+		// user!=='notLoggedIn' &&router.push('/')
+	 
+	}, [])
+
+	useEffect(() => {
+		user==='notLoggedIn' &&router.push('/signin')
+	}, [])
+	
 
 	const submitFormData = async () => {
 		if (
