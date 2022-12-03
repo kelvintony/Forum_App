@@ -51,7 +51,7 @@ useEffect(() => {
 	}, [])
 
 	useEffect(() => {
-		user==='notLoggedIn' &&router.go('/signup')
+		user==='notLoggedIn' &&router.push('/signup')
 	}, [])
 	
 
