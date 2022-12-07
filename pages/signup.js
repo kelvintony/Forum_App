@@ -22,7 +22,7 @@ const Signup = () => {
 
 	const {redirect}= router.query
 
-	const [ user, setUser ] = useState('notLoggedIn');
+	const [ user, setUser ] = useState(null);
 
 	const [ formData, setFormData ] = useState({
 		username: '',
@@ -39,20 +39,20 @@ const Signup = () => {
 
 	const [ loading, setLoading ] = useState(false);
 
-useEffect(() => {
+	useEffect(() => {
 		setUser(JSON.parse(window.sessionStorage.getItem('profile')));
 
 	}, [])
 
-	useEffect(() => {
-		user?.result?.email.length!==0 && router.push('/')
-		// user!=='notLoggedIn' &&router.push('/')
+	// useEffect(() => { 
+	// 	user?.result?.email.length!==0 && router.push('/')
+	// 	// user!=='notLoggedIn' &&router.push('/')
 	 
-	}, [])
+	// }, [])
 
-	useEffect(() => {
-		user==='notLoggedIn' &&router.push('/signup')
-	}, [])
+	// useEffect(() => {
+	// 	user==='notLoggedIn' &&router.push('/signup')
+	// }, [])
 	
 
 	const submitFormData = async () => {
@@ -92,6 +92,11 @@ useEffect(() => {
 		}
 		// console.log('the error', errorMessage);
 	};
+
+	if (user!==null) {
+		router.replace('/')
+		return null
+	}
 
 	return (
 		<div>
