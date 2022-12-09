@@ -10,8 +10,10 @@ import Navbar from '../components/Navbar/Navbar';
 
 
 const authAxios = axios.create({
-	baseURL: 'https://forum-api-3fif.onrender.com'
-	// baseURL: 'http://localhost:5000'
+	baseURL: 'https://forum-api-3fif.onrender.com',
+	// baseURL: 'http://localhost:5000',
+	headers:{'Content-Type':'application/json'},
+	withCredentials:true
 });
 
 const Signin = () => {
@@ -20,8 +22,6 @@ const Signin = () => {
 	const { pathname, asPath } = router; 
 
 	const {redirect}= router.query
-
-	// const [ user, setUser ] = useState('notLoggedIn');
 
 	const [ user, setUser ] = useState(null);
 
@@ -43,21 +43,14 @@ const Signin = () => {
 
 	const [ loading, setLoading ] = useState(false);
 
+	const [ loadComponent, setLoadComponent ] = useState(true);
+
 	useEffect(() => {
 		setUser(JSON.parse(window.sessionStorage.getItem('profile')));
-
+			setLoadComponent(false)
 	}, [])
 
-	// useEffect(() => {
-	// 	user?.result?.email.length!==0 && router.push('/')
-	// 	// user!=='notLoggedIn' &&router.push('/')
-	 
-	// }, [])
-
-	// useEffect(() => {
-	// 	user==='notLoggedIn' &&router.push('/signin')
-	// }, [])
-	
+	console.log(loadComponent)
 
 	const submitFormData = async () => {
 		if (
@@ -96,6 +89,9 @@ const Signin = () => {
 		return null
 	}
 
+	if (loadComponent) {
+		return null
+	}
 	return (
 		<div>
 			<Navbar />

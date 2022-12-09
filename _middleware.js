@@ -1,22 +1,27 @@
 import { NextResponse } from 'next/server';
 import { verify } from 'jsonwebtoken';
+import decode from 'jwt-decode';
 
 const secret = 'test';
 
 const middleware = (req) => {
-	const { cookies } = req;
+	// const { cookies } = req;
+	const token = req?.cookies?.access_token;
+	// const jwt = cookies.Oursite.JWT;
 
-	const jwt = cookies.Oursite.JWT;
+	console.log('this is jwt' + jwt);
 
-	console.log(jwt);
 	const url = req.url;
 	if (url.includes('/dashboard')) {
-		if (jwt === undefined) {
+		if (token === undefined || token === null) {
 			return NextResponse.redirect('/');
 		}
 		try {
-			verify(jwt, secret);
-			return NextResponse.next();
+			if(verify(token, secret)){
+
+				
+				return NextResponse.next();
+			}
 		} catch (error) {
 			return NextResponse.redirect('/');
 		}

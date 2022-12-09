@@ -39,21 +39,14 @@ const Signup = () => {
 
 	const [ loading, setLoading ] = useState(false);
 
+	const [ loadComponent, setLoadComponent ] = useState(true);
+
 	useEffect(() => {
 		setUser(JSON.parse(window.sessionStorage.getItem('profile')));
 
+		setLoadComponent(false)
 	}, [])
 
-	// useEffect(() => { 
-	// 	user?.result?.email.length!==0 && router.push('/')
-	// 	// user!=='notLoggedIn' &&router.push('/')
-	 
-	// }, [])
-
-	// useEffect(() => {
-	// 	user==='notLoggedIn' &&router.push('/signup')
-	// }, [])
-	
 
 	const submitFormData = async () => {
 		if (
@@ -95,6 +88,10 @@ const Signup = () => {
 
 	if (user!==null) {
 		router.replace('/')
+		return null
+	}
+
+	if (loadComponent) {
 		return null
 	}
 

@@ -24,7 +24,7 @@ const Navbar = () => {
 
 	const logoutUser = async () => {
 		await axios
-			.get('https://forum-api-3fif.onrender.com/logout')
+			.get('http://localhost:5000/user//logout')
 			.then((res) => {
 				if (res) {
 					console.log('logout success');
