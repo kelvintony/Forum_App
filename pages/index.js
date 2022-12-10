@@ -8,6 +8,7 @@ import comingsoon from '../assets/comingsoon.png';
 
 
 export default function Home({cookies}) {
+	console.log('')
 	return (
 		<div>
 			<Navbar />
