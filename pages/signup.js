@@ -10,7 +10,7 @@ import Navbar from '../components/Navbar/Navbar';
 
 // style={{cursor:loading&&'progress'}} 
 const authAxios = axios.create({
-	baseURL: 'https://forum-api-3fif.onrender.com'
+	baseURL: 'https://reddit-forum-api.vercel.app'
 	// baseURL: 'http://localhost:5000'
 });
 
