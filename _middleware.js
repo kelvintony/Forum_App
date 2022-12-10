@@ -6,22 +6,19 @@ const secret = 'test';
 
 const middleware = (req) => {
 	// const { cookies } = req;
-	const token = req?.cookies?.access_token;
-	// const jwt = cookies.Oursite.JWT;
+	// const token = req?.cookies?.access_token;
+	const jwt = cookies.OursiteJWT;
 
 	console.log('this is jwt' + jwt);
 
 	const url = req.url;
 	if (url.includes('/dashboard')) {
-		if (token === undefined || token === null) {
+		if (jwt === undefined || jwt === null) {
 			return NextResponse.redirect('/');
 		}
 		try {
-			if(verify(token, secret)){
-
-				
-				return NextResponse.next();
-			}
+			verify(jwt, secret);
+			return NextResponse.next();
 		} catch (error) {
 			return NextResponse.redirect('/');
 		}
