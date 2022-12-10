@@ -19,7 +19,8 @@ const dashboard = ({ data }) => {
 			<Navbar />
 			{/* <h1 className={login ? styles.dashboardHeader : styles.dashboardHeaderActive}>Dashboard page</h1> */}
 			<h1 style={{ marginTop: '100px', textAlign: 'center' }}>Dashboard page</h1>
-		</div>
+		        <p>{JSON.stringify(data)}</p>
+                </div>
 	);
 };
 
