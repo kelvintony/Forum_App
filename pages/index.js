@@ -4,6 +4,9 @@ import styles from '../styles/Home.module.css';
 import Navbar from '../components/Navbar/Navbar';
 import comingsoon from '../assets/comingsoon.png';
 
+
+
+
 export default function Home({cookies}) {
 	return (
 		<div>
@@ -17,11 +20,4 @@ export default function Home({cookies}) {
 	);
 }
 
-export const getServerSideProps = async (context) => {
-	const cookies = context?.req?.cookies;
-	// console.log(cookies);
 
-	return {
-		props: { cookies }
-	};
-};
