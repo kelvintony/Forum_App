@@ -16,11 +16,11 @@ const LeftSideBar = () => {
 	return (
 		<section className={styles.leftbar_section}>
 			<div className={styles.navbarSearch}>
-				<Image width='11px' height='11px' src={searchIcon} alt='searchPix' />
+				<Image width={11} height={11} src={searchIcon} alt='searchPix' />
 				<input type='text' name='' id='' placeholder='Global search' />
 			</div>
 			<a className={styles.menu} href=''>
-				<Image width='18px' height='18px' src={menuIcon} alt='menuPix' />Menu
+				<Image width={18} height={18} src={menuIcon} alt='menuPix' />Menu
 			</a>
 			<br />
 			<a className={styles.forum} href=''>
@@ -29,21 +29,21 @@ const LeftSideBar = () => {
 			<div className={styles.popular_community}>
 				<h4>POPULAR COMMUNITIES</h4>
 				<div className={styles.community_container}>
-					<Image width='28px' height='28px' src={dcIcon} alt='comunityPix' />
+					<Image width={28} height={28} src={dcIcon} alt='comunityPix' />
 					<div className={styles.community_inner}>
 						<a href=''>Design Community</a>
 						<a href=''>Find the latest Update</a>
 					</div>
 				</div>
 				<div className={styles.community_container}>
-					<Image width='28px' height='28px' src={gdcIcon} alt='comunityPix' />
+					<Image width={28} height={28} src={gdcIcon} alt='comunityPix' />
 					<div className={styles.community_inner}>
 						<a href=''>Google Developer Cycle</a>
 						<a href=''>Explore more from this community</a>
 					</div>
 				</div>
 				<div className={styles.community_container}>
-					<Image width='28px' height='28px' src={fcIcon} alt='comunityPix' />
+					<Image width={28} height={28} src={fcIcon} alt='comunityPix' />
 					<div className={styles.community_inner}>
 						<a href=''>Flutter </a>
 						<a href=''>Explore more from this community</a>
@@ -53,35 +53,35 @@ const LeftSideBar = () => {
 			<div className={`${styles.popular_community} ${styles.interestCommunity}`}>
 				<h4 className={styles.interest_community_heading}>INTEREST</h4>
 				<div className={`${styles.community_container}  ${styles.fixed_position}`}>
-					<Image width='28px' height='28px' src={javaIcon} alt='comunityPix' />
+					<Image width={28} height={28} src={javaIcon} alt='comunityPix' />
 					<div className={styles.community_inner}>
 						<a href=''>#javascript</a>
 						<a href=''>82,645 Communities &middot Trending</a>
 					</div>
 				</div>
 				<div className={styles.community_container}>
-					<Image width='28px' height='28px' src={bitcoinIcon} alt='comunityPix' />
+					<Image width={28} height={28} src={bitcoinIcon} alt='comunityPix' />
 					<div className={styles.community_inner}>
 						<a href=''>#bitcoin</a>
 						<a href=''>82,645 Communities &middot Trending</a>
 					</div>
 				</div>
 				<div className={styles.community_container}>
-					<Image width='28px' height='28px' src={designIcon} alt='comunityPix' />
+					<Image width={28} height={28} src={designIcon} alt='comunityPix' />
 					<div className={styles.community_inner}>
 						<a href=''>#design</a>
 						<a href=''>82,645 Communities &middot Trending</a>
 					</div>
 				</div>
 				<div className={styles.community_container}>
-					<Image width='28px' height='28px' src={tutorialIcon} alt='comunityPix' />
+					<Image width={28} height={28} src={tutorialIcon} alt='comunityPix' />
 					<div className={styles.community_inner}>
 						<a href=''>#tutorial</a>
 						<a href=''>82,645 Communities &middot Trending</a>
 					</div>
 				</div>
 				<div className={styles.community_container}>
-					<Image width='28px' height='28px' src={businessIcon} alt='comunityPix' />
+					<Image width={28} height={28} src={businessIcon} alt='comunityPix' />
 					<div className={styles.community_inner}>
 						<a href=''>#business</a>
 						<a href=''>82,645 Communities &middot Trending</a>

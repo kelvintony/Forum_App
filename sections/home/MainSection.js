@@ -13,21 +13,21 @@ const MainSection = () => {
 	return (
 		<div className={styles.rigtbar_section_a}>
 			<button className={styles.btn_rightbar_trending}>
-				<Image width='12px' height='12px' src={trendingIcon} alt='trending_icon' />
+				<Image width={12} height={12} src={trendingIcon} alt='trending_icon' />
 				Trending
 			</button>
 			<button className={styles.btn_rightbar_new}>
-				<Image width='10px' height='10px' src={newIcon} alt='start_icon' />New
+				<Image width={10} height={10} src={newIcon} alt='start_icon' />New
 			</button>
 			<div className={styles.post_card}>
 				<div className={styles.container_a}>
-					<Image width='40px' height='40px' src={userIcon} alt='user_pix' />
+					<Image width={40} height={40} src={userIcon} alt='user_pix' />
 					<div className={styles.inner_a}>
 						<p>Golanginya</p>
 						<p>5 min ago</p>
 					</div>
 					<a href=''>
-						<Image width='24px' height='24px' src={futureMoreVertical} alt='feature_pix' />
+						<Image width={24} height={24} src={futureMoreVertical} alt='feature_pix' />
 					</a>
 				</div>
 				<h3>How to patch KDE on FreeBSD?</h3>
@@ -56,13 +56,13 @@ const MainSection = () => {
 			</div>
 			<div className={styles.post_card}>
 				<div className={styles.container_a}>
-					<Image width='40px' height='40px' src={userIcon} alt='user_pix' />
+					<Image width={40} height={40} src={userIcon} alt='user_pix' />
 					<div className={styles.inner_a}>
 						<p>Golanginya</p>
 						<p>5 min ago</p>
 					</div>
 					<a href=''>
-						<Image width='24px' height='24px' src={futureMoreVertical} alt='feature_pix' />
+						<Image width={24} height={24} src={futureMoreVertical} alt='feature_pix' />
 					</a>
 				</div>
 				<h3>How to patch KDE on FreeBSD?</h3>
