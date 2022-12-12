@@ -5,8 +5,8 @@ import Navbar from '../components/Navbar/Navbar';
 import axios from 'axios';
 
 const authAxios = axios.create({
-	baseURL: 'https://reddit-forum-api.vercel.app',
-	// baseURL: 'http://localhost:5000',
+	// baseURL: 'https://reddit-forum-api.vercel.app',
+	baseURL: 'http://localhost:5000',
 	headers: { 'Content-Type': 'application/json' },
 	withCredentials: true
 });
@@ -19,8 +19,8 @@ const dashboard = ({ data }) => {
 			<Navbar />
 			{/* <h1 className={login ? styles.dashboardHeader : styles.dashboardHeaderActive}>Dashboard page</h1> */}
 			<h1 style={{ marginTop: '100px', textAlign: 'center' }}>Dashboard page</h1>
-		        <p>{JSON.stringify(data)}</p>
-                </div>
+			{/* <p>{JSON.stringify(data)}</p> */}
+		</div>
 	);
 };
 
