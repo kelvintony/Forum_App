@@ -11,8 +11,8 @@ import LeftSideBar from '../components/leftSideBar/LeftSideBar';
 
 
 const authAxios = axios.create({
-	// baseURL: 'https://reddit-forum-api.vercel.app',
-	baseURL: 'http://localhost:5000',
+	baseURL: 'https://reddit-forum-api.vercel.app',
+	// baseURL: 'http://localhost:5000',
 	headers:{'Content-Type':'application/json'},
 	withCredentials:true
 });

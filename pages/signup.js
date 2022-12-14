@@ -12,8 +12,8 @@ import LeftSideBar from '../components/leftSideBar/LeftSideBar';
 // style={{cursor:loading&&'progress'}} 
 
 const authAxios = axios.create({
-	// baseURL: 'https://reddit-forum-api.vercel.app'
-	baseURL: 'http://localhost:5000'
+	baseURL: 'https://reddit-forum-api.vercel.app'
+	// baseURL: 'http://localhost:5000'
 });
 
 // style={{cursor:loading&&'progress'}}
