@@ -5,9 +5,17 @@ import axios from 'axios';
 import Image from 'next/image';
 import styles from './Navbar.module.css';
 import logo from '../../assets/logo.svg';
-import register_logo from '../../assets/user_plus.svg';
 
-const Navbar = () => {
+import register_logo from '../../assets/user_plus.svg';
+import menuIcon from '../../assets/home-page/menu-icon.svg';
+
+const Navbar = (props) => {
+	const [ showMenu, setshowMenu ] = useState(false);
+
+	const toggle = () => {
+		setshowMenu(!showMenu);
+	};
+
 	// console.log('lol')
 	const router = useRouter();
 
@@ -38,10 +46,16 @@ const Navbar = () => {
 	};
 	return (
 		<nav className={styles.navbar_container}>
-			<Link href='/' className={styles.navbar_logo}>
-				<p>Forum</p>
-				<Image className={styles.logo_image} src={logo} alt='pix-a' />
-			</Link>
+			<div className={styles.hamburger_container}>
+				<button className={styles.hamburger_menu} onClick={() => props.openMenu()}>
+					{' '}
+					<Image src={menuIcon} width={30} height={30} alt='menu_icon' />
+				</button>
+				<Link href='/' className={styles.navbar_logo}>
+					<p>Forum</p>
+					<Image className={styles.logo_image} src={logo} alt='pix-a' />
+				</Link>
+			</div>
 
 			<div className={styles.navbar_btn}>
 				{user ? (

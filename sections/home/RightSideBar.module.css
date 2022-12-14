@@ -532,87 +532,13 @@
 	letter-spacing: 0.05em;
 	cursor: pointer;
 }
-.harmbugerSlide {
-	display: none;
-}
+
 @media screen and (max-width: 900px) {
 	/* leftbar section */
 	.leftbar_section {
 		display: none;
 	}
 
-	/* harmburger section */
-	.harmbuger_slide {
-		display: block;
-	}
-
-	.harmbuger_slide .leftbar_section {
-		height: 100vh;
-		background-color: #ffffff;
-		/* padding-left: 30px;
-		padding-right: 20px; */
-		padding-left: 0;
-		padding-right: 0;
-		position: fixed;
-		left: 0;
-		/* top: 60px; */
-		/* width: 25%; */
-
-		display: block;
-		background-color: #ffffff;
-		width: 85%;
-		z-index: 10000;
-		top: 0;
-
-		overflow-y: scroll;
-		padding-top: 20px;
-	}
-	.harmbuger_header {
-		display: flex;
-		justify-content: space-between;
-		align-items: flex-start;
-		/* border-bottom: 1px solid rgb(196, 196, 196); */
-		padding: 0 20px;
-		padding-bottom: 30px;
-	}
-
-	.harmbuger_header h2 {
-		font-weight: 500;
-		font-size: 20px;
-	}
-	.close_Button {
-		border: none;
-		background-color: inherit;
-	}
-	.harmburger_linethrough {
-		border: 1px solid rgb(212, 212, 212);
-	}
-
-	.popular_community,
-	.lefttbar_about,
-	.forum_container,
-	.search_container {
-		margin-left: 20px;
-		margin-right: 20px;
-	}
-
-	.overlay {
-		position: fixed;
-		top: 0;
-		left: 0;
-		/* right: 0; */
-		/* bottom: 0; */
-		width: 100%;
-		height: 5000px;
-		z-index: 500;
-		background-color: black;
-		opacity: 0.5;
-		position: absolute;
-	}
-	/* hamburger ends here */
-	.navbarSearch {
-		margin-top: 30px;
-	}
 	/* middle sidebar */
 	.inner_b {
 		flex-wrap: wrap;
