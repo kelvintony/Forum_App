@@ -72,7 +72,7 @@ export const getServerSideProps = async ({ params }) => {
 	const { userId } = params;
 	const { tokenId } = params;
 
-	const res = await fetch(`https://forum-api-3fif.onrender.com/user/verifytoken/${userId}/verify/${tokenId}`);
+	const res = await fetch(`https://reddit-forum-api.vercel.app/user/verifytoken/${userId}/verify/${tokenId}`);
 
 	const data = await res.json();
 	console.log('from props' + data);
