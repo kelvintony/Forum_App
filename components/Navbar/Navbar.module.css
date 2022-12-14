@@ -11,6 +11,22 @@
 	align-items: center;
 	box-shadow: rgba(0, 0, 0, 0.10) 0px 3px 3px 0px;
 }
+.hamburger_container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.hamburger_menu {
+	display: none;
+	/* display: inline-flex; */
+	justify-content: center;
+	align-items: center;
+	outline: none;
+	border: none;
+	background-color: #ffffff;
+	margin-right: 15px;
+	cursor: pointer;
+}
 
 .navbar_logo {
 	display: flex;
@@ -79,4 +95,24 @@
 }
 
 @media screen and (max-width: 900px) {
+	.hamburger_menu {
+		display: inline-flex;
+		justify-content: center;
+		align-items: center;
+		outline: none;
+		border: none;
+		background-color: #ffffff;
+		margin-right: 15px;
+		cursor: pointer;
+	}
+
+	.btn_register {
+		font-size: 13px;
+		padding: 5px 8px;
+	}
+
+	.btn_login {
+		font-size: 13px;
+		padding: 5px 8px;
+	}
 }

@@ -7,20 +7,29 @@ import styles from '../styles/Signup.module.css';
 import Image from 'next/image';
 import registerPix from '../assets/register_pix.png';
 import Navbar from '../components/Navbar/Navbar';
+import LeftSideBar from '../components/leftSideBar/LeftSideBar';
 
 // style={{cursor:loading&&'progress'}} 
+
 const authAxios = axios.create({
 	// baseURL: 'https://reddit-forum-api.vercel.app'
 	baseURL: 'http://localhost:5000'
 });
 
 // style={{cursor:loading&&'progress'}}
-const Signup = () => {
+const signup = () => {
+	//toggle menu section
+	const [ mobileMenu, setmobileMenu ] = useState(false);
+
+	const toggle = () => {
+		setmobileMenu(!mobileMenu);
+	};
+
 	const router = useRouter();
 
-	const { pathname, asPath } = router; 
+	// const { pathname, asPath } = router; 
 
-	const {redirect}= router.query
+	// const {redirect}= router.query
 
 	const [ user, setUser ] = useState(null);
 
@@ -97,7 +106,9 @@ const Signup = () => {
 
 	return (
 		<div>
-			<Navbar />
+			<Navbar openMenu={toggle} />
+			<LeftSideBar burgerMenu={mobileMenu} closeMenu={toggle} />
+
 			<section className={styles.register_container}>
 				<div className={styles.register_inner_container}>
 					{responseMessage ? (
@@ -192,4 +203,4 @@ const Signup = () => {
 	);
 };
 
-export default Signup;
+export default signup;

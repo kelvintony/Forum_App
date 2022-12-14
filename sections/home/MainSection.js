@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import styles from './MainSection.module.css';
+
 import trendingIcon from '../../assets/home-page/trending-icon.svg';
 import newIcon from '../../assets/home-page/new-icon.svg';
 import userIcon from '../../assets/home-page/user-icon.svg';
