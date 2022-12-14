@@ -1,4 +1,4 @@
-import React, { useEffect, useState,useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import axios from 'axios';
@@ -7,6 +7,7 @@ import styles from '../styles/Signup.module.css';
 import Image from 'next/image';
 import loginPix from '../assets/login_pix.png';
 import Navbar from '../components/Navbar/Navbar';
+import LeftSideBar from '../components/leftSideBar/LeftSideBar';
 
 
 const authAxios = axios.create({
@@ -17,6 +18,13 @@ const authAxios = axios.create({
 });
 
 const Signin = () => {
+	//toggle menu section
+	const [ mobileMenu, setmobileMenu ] = useState(false);
+
+	const toggle = () => {
+		setmobileMenu(!mobileMenu);
+	};
+
 	const router = useRouter();
 
 	const { pathname, asPath } = router; 
@@ -94,7 +102,8 @@ const Signin = () => {
 	}
 	return (
 		<div>
-			<Navbar />
+			<Navbar openMenu={toggle} />
+			<LeftSideBar burgerMenu={mobileMenu} closeMenu={toggle} />
 			<section className={styles.register_container}>
 				<div className={styles.register_inner_container}>
 					<div className={styles.container_a}>
