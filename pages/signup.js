@@ -17,7 +17,7 @@ const authAxios = axios.create({
 });
 
 // style={{cursor:loading&&'progress'}}
-const signup = () => {
+const Signup = () => {
 	//toggle menu section
 	const [ mobileMenu, setmobileMenu ] = useState(false);
 
@@ -107,7 +107,7 @@ const signup = () => {
 	return (
 		<div>
 			<Navbar openMenu={toggle} />
-			<LeftSideBar burgerMenu={mobileMenu} closeMenu={toggle} />
+			{mobileMenu&&<LeftSideBar burgerMenu={mobileMenu} closeMenu={toggle} />}
 
 			<section className={styles.register_container}>
 				<div className={styles.register_inner_container}>
@@ -203,4 +203,4 @@ const signup = () => {
 	);
 };
 
-export default signup;
+export default Signup;
