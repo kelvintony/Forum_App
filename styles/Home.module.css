@@ -8,7 +8,13 @@
 	margin-top: 80px;
 	padding: 30px;
 }
-
+.home_container{
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	
+}
 @media screen and (max-width: 900px) {
 	/* rightbar section */
 	.rigtbar_section {
