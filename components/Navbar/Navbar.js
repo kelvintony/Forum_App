@@ -5,6 +5,7 @@ import axios from 'axios';
 import Image from 'next/image';
 import styles from './Navbar.module.css';
 import logo from '../../assets/logo.svg';
+import profileImage from '../../assets/home-page/user-icon.svg';
 
 import register_logo from '../../assets/user_plus.svg';
 import menuIcon from '../../assets/home-page/menu-icon.svg';
@@ -61,7 +62,7 @@ const Navbar = (props) => {
 				{user ? (
 					<div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
 						{' '}
-						<h4 style={{ color: ' #04AA6D', fontSize: '12px' }}>{user.result.username}</h4>{' '}
+						<h4 style={{ color: ' #04AA6D', fontSize: '12px' }}>{user?.result?.username}</h4>{' '}
 						<button onClick={logoutUser} className={styles.btn_register}>
 							Logout
 						</button>
@@ -76,6 +77,33 @@ const Navbar = (props) => {
 						</Link>
 					</div>
 				)}
+				{user&&
+				<button onClick={toggle} className={styles.btn_profileImage}>
+					<Image className={styles.profile_image} src={profileImage} alt='profile_pix' />
+				</button>}
+
+				{user&&<div className={showMenu ? styles.profile_dropdown : styles.close_profileMenu}>
+					<ul>
+						<li>
+							<h3 className={styles.profile_Name}>{user?user?.result?.username:'kel123'}</h3>
+							<span className={styles.proile_userName}>@{user?user?.result?.username:'kel123'}</span>
+						</li>
+						<hr />
+						<li className={styles.profileItems}>
+							<Link href=''>Dashboard</Link>
+						</li>
+						<li className={styles.profileItems}>
+							<Link href=''>Write a post</Link>
+						</li>
+						<li className={styles.profileItems}>
+							<Link href=''>Settings</Link>
+						</li>
+						<hr />
+						<li className={styles.profileItems}>
+							<Link href=''>Logout</Link>
+						</li>
+					</ul>
+				</div>}
 			</div>
 		</nav>
 	);

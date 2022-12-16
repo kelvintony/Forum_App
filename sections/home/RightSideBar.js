@@ -11,7 +11,7 @@ const RightSideBar = () => {
 			{/* first section  */}
 			<div className={styles.right_sidebar}>
 				<h4>
-					<Image width={12} height={12} src={startIcon} alt='start_icon' />Post of the moment
+					<Image width={12} height={12} src={startIcon} alt='start_icon' />
 				</h4>
 				<ul className={styles.post_of_moment}>
 					<li>

@@ -28,7 +28,7 @@ const LeftSideBar = (props) => {
 				</a> */}
 				<br />
 				<a className={styles.forum} href=''>
-					Forum Page
+					Forum Page 
 				</a>
 				<div className={styles.popular_community}>
 					<h4>POPULAR COMMUNITIES</h4>

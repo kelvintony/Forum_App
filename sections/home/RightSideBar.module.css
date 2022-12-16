@@ -551,8 +551,13 @@
 	}
 
 	.rigtbar_section_b {
-		margin-top: 150px;
+		margin-top: 200px;
+		background-color: red;
 	}
+	.rigtbar_section_b .right_sidebar {
+		margin-top: 200px;
+	}
+
 	/* .rigtbar_section_b .right_sidebar:nth-child(1) {
 		display: none;
 	} */
