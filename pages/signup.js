@@ -87,12 +87,10 @@ const Signup = () => {
 				})
 				.catch((err) => {
 					// alert('Email already exist');
-					// console.log(err.response.data.message);
 					setLoading(false);
 					setErrorMessage(err?.response?.data?.message);
 				});
 		}
-		// console.log('the error', errorMessage);
 	};
 
 	if (user!==null) {
