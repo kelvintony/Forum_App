@@ -7,7 +7,6 @@ import styles from './Navbar.module.css';
 import logo from '../../assets/logo.svg';
 import profileImage from '../../assets/home-page/user-icon.svg';
 
-// import {IoIosNotificationsOutline} from 'react-icons/io'
 import {MdNotificationsNone} from 'react-icons/md'
 import {BiMessageRounded} from 'react-icons/bi'
 
@@ -46,6 +45,8 @@ const Navbar = (props) => {
 		setUser(null);
 		window.location = '/';
 	};
+
+	
 	return (
 		<nav className={styles.navbar_container}>
 			<div className={styles.hamburger_container}>
@@ -65,7 +66,6 @@ const Navbar = (props) => {
 						{' '}
 						{/* <h4 style={{ color: ' #04AA6D', fontSize: '12px' }}>{user?.result?.username}</h4>{' '} */}
 						<Link href='/'>
-							{/* <IoIosNotificationsOutline color='#808080' size={30}/> */}
 							<MdNotificationsNone color='#808080' size={25}/>
 						</Link>
 						<Link href='/'>
@@ -84,7 +84,8 @@ const Navbar = (props) => {
 				)}
 				{user&&
 				<button onClick={toggle} className={styles.btn_profileImage}>
-					<Image className={styles.profile_image} src={profileImage} alt='profile_pix' />
+					{user?.result?.username.charAt(0).toUpperCase()}
+					{/* <Image className={styles.profile_image} src={profileImage} alt='profile_pix' /> */}
 				</button>}
 
 				{user&&<div className={showMenu ? styles.profile_dropdown : styles.close_profileMenu}>
