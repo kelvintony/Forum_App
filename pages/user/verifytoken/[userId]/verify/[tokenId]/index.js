@@ -6,37 +6,6 @@ import Navbar from '../../../../../../components/Navbar/Navbar';
 import styles from '../../../../../../styles/Home.module.css';
 
 const VerifyUser = ({ data }) => {
-	// const [ errorMessage, setErrorMessage ] = useState('');
-
-	// const [ isUserVerified, setIsUserVerified ] = useState(false);
-
-	// const router = useRouter();
-
-	// const userId = router.query.userId;
-
-	// const tokenId = router.query.tokenId;
-
-	// useEffect(() => {
-	// 	const fetchData = async () => {
-	// 		await axios
-	// 			.get(`http://localhost:5000/user/verifytoken/${userId}/verify/${tokenId}`)
-	// 			.then((res) => {
-	// 				setIsUserVerified(true);
-	// 				// console.log(res);
-	// 			})
-	// 			.catch((err) => {
-	// 				setErrorMessage(err?.response?.data?.message)
-	// 				console.log(err);
-	// 			});
-	// 	};
-	// 	fetchData();
-
-	// }, []);
-
-	// let myStyle={
-
-	// }
-
 	const myStyle = {
 		textAlign: 'center',
 		width: '150px',

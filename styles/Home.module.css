@@ -8,13 +8,12 @@
 	margin-top: 80px;
 	padding: 30px;
 }
-.home_container{
+.home_container {
 	height: 100vh;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
-	
 }
 @media screen and (max-width: 900px) {
 	/* rightbar section */
@@ -22,4 +21,8 @@
 		grid-template-columns: 1fr;
 		margin-left: 0;
 	}
+
+	/* .rigtbar_section_b {
+		top: 150px;
+	} */
 }
