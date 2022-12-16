@@ -102,6 +102,12 @@ const Navbar = (props) => {
 							<Link href=''>Write a post</Link>
 						</li>
 						<li onClick={toggle} className={styles.profileItems}>
+							<Link href=''>Communities</Link>
+						</li>
+						<li onClick={toggle} className={styles.profileItems}>
+							<Link href=''>Profile</Link>
+						</li>
+						<li onClick={toggle} className={styles.profileItems}>
 							<Link href=''>Settings</Link>
 						</li>
 						<hr />
