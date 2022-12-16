@@ -35,7 +35,6 @@ const Signin = () => {
 
 	// const userDummy=globalThis?.window?.sessionStorage.getItem('profile')
 
-	// console.log(userDummy)
 
 
 	const [ formData, setFormData ] = useState({
@@ -58,7 +57,6 @@ const Signin = () => {
 			setLoadComponent(false)
 	}, [])
 
-	console.log(loadComponent)
 
 	const submitFormData = async () => {
 		if (
@@ -79,18 +77,15 @@ const Signin = () => {
 					alert('signin successfully');
 					router.push('/')
 
-					// navigate('/');
 				}
 			})
 			.catch((err) => {
-				// alert('user already exist');
 				setLoading(false);
 				setErrorMessage(err?.response?.data?.message);
 			});
 		}
 	};
 
-	// console.log(user)
 
 	if (user!==null) {
 		router.replace('/')

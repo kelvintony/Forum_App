@@ -7,6 +7,10 @@ import styles from './Navbar.module.css';
 import logo from '../../assets/logo.svg';
 import profileImage from '../../assets/home-page/user-icon.svg';
 
+// import {IoIosNotificationsOutline} from 'react-icons/io'
+import {MdNotificationsNone} from 'react-icons/md'
+import {BiMessageRounded} from 'react-icons/bi'
+
 import register_logo from '../../assets/user_plus.svg';
 import menuIcon from '../../assets/home-page/menu-icon.svg';
 
@@ -17,13 +21,11 @@ const Navbar = (props) => {
 		setshowMenu(!showMenu);
 	};
 
-	// console.log('lol')
 	const router = useRouter();
 
 	const { pathname } = router;
 	const [ user, setUser ] = useState();
 
-	// const user = null;
 	useEffect(
 		() => {
 			setUser(JSON.parse(window.sessionStorage.getItem('profile')));
@@ -37,7 +39,6 @@ const Navbar = (props) => {
 			.then((res) => {
 				if (res) {
 					console.log('logout success');
-					// navigate('/');
 				}
 			})
 			.catch((err) => {});
@@ -62,10 +63,14 @@ const Navbar = (props) => {
 				{user ? (
 					<div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
 						{' '}
-						<h4 style={{ color: ' #04AA6D', fontSize: '12px' }}>{user?.result?.username}</h4>{' '}
-						<button onClick={logoutUser} className={styles.btn_register}>
-							Logout
-						</button>
+						{/* <h4 style={{ color: ' #04AA6D', fontSize: '12px' }}>{user?.result?.username}</h4>{' '} */}
+						<Link href='/'>
+							{/* <IoIosNotificationsOutline color='#808080' size={30}/> */}
+							<MdNotificationsNone color='#808080' size={25}/>
+						</Link>
+						<Link href='/'>
+							<BiMessageRounded color='#808080' size={25}/>
+						</Link>
 					</div>
 				) : (
 					<div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
@@ -89,19 +94,22 @@ const Navbar = (props) => {
 							<span className={styles.proile_userName}>@{user?user?.result?.username:'kel123'}</span>
 						</li>
 						<hr />
-						<li className={styles.profileItems}>
+						<li onClick={toggle} className={styles.profileItems}>
 							<Link href=''>Dashboard</Link>
 						</li>
-						<li className={styles.profileItems}>
+						<li onClick={toggle} className={styles.profileItems}>
 							<Link href=''>Write a post</Link>
 						</li>
-						<li className={styles.profileItems}>
+						<li onClick={toggle} className={styles.profileItems}>
 							<Link href=''>Settings</Link>
 						</li>
 						<hr />
-						<li className={styles.profileItems}>
-							<Link href=''>Logout</Link>
+						<li onClick={logoutUser} className={styles.profileItems}>
+							<Link  href=''>Logout</Link>
 						</li>
+						{/* <li onClick={logoutUser} className={styles.btn_register}>
+							<Link  href='/'>Logout</Link>
+						</li> */}
 					</ul>
 				</div>}
 			</div>
