@@ -9,9 +9,9 @@ const RightSideBar = () => {
 	return (
 		<div className='rigtbar_section_b'>
 			{/* first section  */}
-			<div className={styles.right_sidebar}>
+			<div className={`${styles.right_sidebar} ${styles.right_sidebarTop}`}>
 				<h4>
-					<Image width={12} height={12} src={startIcon} alt='start_icon' />
+					<Image width={12} height={12} src={startIcon} alt='start_icon' /> Post Of The Moment
 				</h4>
 				<ul className={styles.post_of_moment}>
 					<li>

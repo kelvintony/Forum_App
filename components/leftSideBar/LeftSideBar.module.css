@@ -576,8 +576,11 @@
 		padding-bottom: 30px;
 	}
 
-	.harmbuger_header h2 {
-		font-weight: 500;
+	.harmbuger_header p {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		/* gap: 2px; */
 		font-size: 20px;
 	}
 	.close_Button {

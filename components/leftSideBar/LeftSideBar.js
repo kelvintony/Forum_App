@@ -14,6 +14,7 @@ import tutorialIcon from '../../assets/home-page/tutorial-icon.svg';
 import businessIcon from '../../assets/home-page/business-icon.svg';
 
 import { GrFormClose } from "react-icons/gr";
+import {IoLogoFoursquare} from 'react-icons/io'
 
 const LeftSideBar = (props) => {
 	return (
@@ -103,7 +104,7 @@ const LeftSideBar = (props) => {
 			<div className={styles.harmbuger_slide}>
 				<section className={styles.leftbar_section}>
 					<div className={styles.harmbuger_header}>
-						<h2>Forumix Community</h2>
+						<p>Forumix <IoLogoFoursquare color='#BE272A' size={25}/></p>
 						<button className={styles.close_Button} onClick={() => props.closeMenu()}>
 							<GrFormClose size={25} />
 						</button>
