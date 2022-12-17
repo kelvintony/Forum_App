@@ -151,19 +151,11 @@
 	background-color: #faebd7;
 }
 
-.profile_dropdown li:last-child > button {
+.user_logout {
 	display: inline-flex;
 	gap: 2px;
+	padding: 5px 0;
 	justify-content: center;
-	align-items: center;
-}
-
-.user_logout {
-	font-weight: 600;
-	font-size: 14px;
-	line-height: 14px;
-	letter-spacing: 0.05em;
-	color: #303030;
 }
 
 .profile_dropdown .profile_Name {
