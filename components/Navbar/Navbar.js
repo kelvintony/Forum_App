@@ -111,7 +111,7 @@ const Navbar = (props) => {
 							<Link href=''>Write a post</Link>
 						</li>
 						<li onClick={toggle} className={styles.profileItems}>
-							<Link href=''>Communities</Link>
+							<Link href=''>Create a community</Link>
 						</li>
 						<li onClick={toggle} className={styles.profileItems}>
 							<Link href=''>Profile</Link>
