@@ -92,7 +92,7 @@ const Navbar = (props) => {
 					{/* <Image className={styles.profile_image} src={profileImage} alt='profile_pix' /> */}
 					</button>
 					<button style={{cursor:'pointer', display:'flex', justifyContent:'center', alignItems:'center'}} onClick={toggle}>
-						{!showMenu?<IoMdArrowDropdown size={15}/>:<IoMdArrowDropup size={15}/>}
+						{!showMenu?<IoMdArrowDropdown size={25}/>:<IoMdArrowDropup size={25}/>}
 					</button>
 				</div>}
 
@@ -120,7 +120,7 @@ const Navbar = (props) => {
 						</li>
 						<hr />
 						<li onClick={logoutUser} className={styles.profileItems}>
-							<button><FiLogOut size={14}/>Logout</button>
+							<button className={styles.user_logout}><FiLogOut size={14}/>Logout</button>
 						</li>
 						{/* <li onClick={logoutUser} className={styles.btn_register}>
 							<Link  href='/'>Logout</Link>
