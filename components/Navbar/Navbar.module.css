@@ -35,6 +35,14 @@
 	gap: 5px;
 }
 
+.navbar_logo p {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	/* gap: 2px; */
+	font-size: 20px;
+}
+
 .logo_image {
 	width: 30px;
 	height: 28px;
@@ -183,6 +191,10 @@
 	color: #000000;
 }
 @media screen and (max-width: 900px) {
+	.navbar_container {
+		padding: 10px 15px;
+	}
+
 	.hamburger_menu {
 		display: inline-flex;
 		justify-content: center;

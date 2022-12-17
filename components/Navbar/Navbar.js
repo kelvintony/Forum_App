@@ -12,6 +12,7 @@ import {BiMessageRounded} from 'react-icons/bi'
 import {IoMdArrowDropdown} from 'react-icons/io'
 import {IoMdArrowDropup} from 'react-icons/io'
 import {FiLogOut} from 'react-icons/fi'
+import {IoLogoFoursquare} from 'react-icons/io'
 
 import register_logo from '../../assets/user_plus.svg';
 import menuIcon from '../../assets/home-page/menu-icon.svg';
@@ -58,8 +59,8 @@ const Navbar = (props) => {
 					<Image src={menuIcon} width={30} height={30} alt='menu_icon' />
 				</button>
 				<Link href='/' className={styles.navbar_logo}>
-					<p>Forum</p>
-					<Image className={styles.logo_image} src={logo} alt='pix-a' />
+					<p>Forumix <IoLogoFoursquare color='#BE272A' size={25}/> </p>
+					{/* <Image className={styles.logo_image} src={logo} alt='pix-a' /> */}
 				</Link>
 			</div>
 
