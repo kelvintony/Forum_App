@@ -9,6 +9,9 @@ import profileImage from '../../assets/home-page/user-icon.svg';
 
 import {MdNotificationsNone} from 'react-icons/md'
 import {BiMessageRounded} from 'react-icons/bi'
+import {IoMdArrowDropdown} from 'react-icons/io'
+import {IoMdArrowDropup} from 'react-icons/io'
+import {FiLogOut} from 'react-icons/fi'
 
 import register_logo from '../../assets/user_plus.svg';
 import menuIcon from '../../assets/home-page/menu-icon.svg';
@@ -83,10 +86,15 @@ const Navbar = (props) => {
 					</div>
 				)}
 				{user&&
-				<button onClick={toggle} className={styles.btn_profileImage}>
+				<div className={styles.profile_container}>
+					<button onClick={toggle} className={styles.btn_profileImage}>
 					{user?.result?.username.charAt(0).toUpperCase()}
 					{/* <Image className={styles.profile_image} src={profileImage} alt='profile_pix' /> */}
-				</button>}
+					</button>
+					<button style={{cursor:'pointer', display:'flex', justifyContent:'center', alignItems:'center'}} onClick={toggle}>
+						{!showMenu?<IoMdArrowDropdown size={15}/>:<IoMdArrowDropup size={15}/>}
+					</button>
+				</div>}
 
 				{user&&<div className={showMenu ? styles.profile_dropdown : styles.close_profileMenu}>
 					<ul>
@@ -112,7 +120,7 @@ const Navbar = (props) => {
 						</li>
 						<hr />
 						<li onClick={logoutUser} className={styles.profileItems}>
-							<Link  href=''>Logout</Link>
+							<button><FiLogOut size={14}/>Logout</button>
 						</li>
 						{/* <li onClick={logoutUser} className={styles.btn_register}>
 							<Link  href='/'>Logout</Link>

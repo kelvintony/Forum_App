@@ -95,10 +95,13 @@
 }
 
 /* profile section  */
+.profile_container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
 .btn_profileImage {
 	border: none;
-	/* background-color: inherit; */
-	/* background-color: red; */
 	font-size: 18px;
 	font-weight: 700;
 	width: 40px;
@@ -138,6 +141,27 @@
 
 .profile_dropdown li {
 	padding: 10px;
+	cursor: pointer;
+}
+
+.profile_dropdown li:nth-child(1):hover {
+	background-color: inherit;
+}
+.profile_dropdown li:hover {
+	background-color: #faebd7;
+}
+
+.profile_dropdown li:last-child > button {
+	display: inline-flex;
+	gap: 2px;
+	justify-content: center;
+	align-items: center;
+
+	font-weight: 500;
+	font-size: 14px;
+	line-height: 14px;
+	letter-spacing: 0.05em;
+	color: #000000;
 }
 
 .profile_dropdown .profile_Name {
