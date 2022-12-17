@@ -550,15 +550,7 @@
 		margin-left: 0;
 	}
 
-	.rigtbar_section_b {
-		margin-top: 200px;
-		background-color: red;
+	.right_sidebarTop {
+		margin-top: 100px;
 	}
-	.rigtbar_section_b .right_sidebar {
-		margin-top: 200px;
-	}
-
-	/* .rigtbar_section_b .right_sidebar:nth-child(1) {
-		display: none;
-	} */
 }
