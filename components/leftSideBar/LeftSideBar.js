@@ -36,7 +36,7 @@ const LeftSideBar = (props) => {
 					<div className={styles.community_container}>
 						<Image width={28} height={28} src={dcIcon} alt='comunityPix' />
 						<div className={styles.community_inner}>
-							<a href=''>Design Community</a>
+							<a href=''>Port Harcourt Design Community</a>
 							<a href=''>Find the latest Update</a>
 						</div>
 					</div>
