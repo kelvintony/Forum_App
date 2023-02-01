@@ -20,7 +20,7 @@ import like_icon from '../assets/home-page/like-icon.svg';
 import dislike_icon from '../assets/home-page/dislike-icon.svg';
 import share_icon from '../assets/home-page/share-icon.svg';
 
-const singlecommunity = () => {
+const Singlecommunity = () => {
 	const [ mobileMenu, setmobileMenu ] = useState(false);
 
 	const toggle = () => {
@@ -147,4 +147,4 @@ const singlecommunity = () => {
 	);
 };
 
-export default singlecommunity;
+export default Singlecommunity;
