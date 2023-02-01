@@ -36,7 +36,7 @@ const LeftSideBar = (props) => {
 					<div className={styles.community_container}>
 						<Image width={28} height={28} src={dcIcon} alt='comunityPix' />
 						<div className={styles.community_inner}>
-							<a href=''>Port Harcourt Design Community</a>
+							<a href=''>Design Community</a>
 							<a href=''>Find the latest Update</a>
 						</div>
 					</div>
@@ -61,35 +61,35 @@ const LeftSideBar = (props) => {
 						<Image width={28} height={28} src={javaIcon} alt='comunityPix' />
 						<div className={styles.community_inner}>
 							<a href=''>#javascript</a>
-							<a href=''>82,645 Communities &middot; Trending</a>
+							<a href=''>82,645 Communities &middot Trending</a>
 						</div>
 					</div>
 					<div className={styles.community_container}>
 						<Image width={28} height={28} src={bitcoinIcon} alt='comunityPix' />
 						<div className={styles.community_inner}>
 							<a href=''>#bitcoin</a>
-							<a href=''>82,645 Communities &middot; Trending</a>
+							<a href=''>82,645 Communities &middot Trending</a>
 						</div>
 					</div>
 					<div className={styles.community_container}>
 						<Image width={28} height={28} src={designIcon} alt='comunityPix' />
 						<div className={styles.community_inner}>
 							<a href=''>#design</a>
-							<a href=''>82,645 Communities &middot; Trending</a>
+							<a href=''>82,645 Communities &middot Trending</a>
 						</div>
 					</div>
 					<div className={styles.community_container}>
 						<Image width={28} height={28} src={tutorialIcon} alt='comunityPix' />
 						<div className={styles.community_inner}>
 							<a href=''>#tutorial</a>
-							<a href=''>82,645 Communities &middot; Trending</a>
+							<a href=''>82,645 Communities &middot Trending</a>
 						</div>
 					</div>
 					<div className={styles.community_container}>
 						<Image width={28} height={28} src={businessIcon} alt='comunityPix' />
 						<div className={styles.community_inner}>
 							<a href=''>#business</a>
-							<a href=''>82,645 Communities &middot; Trending</a>
+							<a href=''>82,645 Communities &middot Trending</a>
 						</div>
 					</div>
 				</div>
@@ -130,7 +130,7 @@ const LeftSideBar = (props) => {
 						<div className={styles.community_container}>
 							<Image width={28} height={28} src={dcIcon} alt='comunityPix' />
 							<div className={styles.community_inner}>
-								<a href=''>Port Harcourt Design Community</a>
+								<a href=''>Design Community</a>
 								<a href=''>Find the latest Update</a>
 							</div>
 						</div>
@@ -155,35 +155,35 @@ const LeftSideBar = (props) => {
 							<Image width={28} height={28} src={javaIcon} alt='comunityPix' />
 							<div className={styles.community_inner}>
 								<a href=''>#javascript</a>
-								<a href=''>82,645 Communities &middot; Trending</a>
+								<a href=''>82,645 Communities &middot Trending</a>
 							</div>
 						</div>
 						<div className={styles.community_container}>
 							<Image width={28} height={28} src={bitcoinIcon} alt='comunityPix' />
 							<div className={styles.community_inner}>
 								<a href=''>#bitcoin</a>
-								<a href=''>82,645 Communities &middot; Trending</a>
+								<a href=''>82,645 Communities &middot Trending</a>
 							</div>
 						</div>
 						<div className={styles.community_container}>
 							<Image width={28} height={28} src={designIcon} alt='comunityPix' />
 							<div className={styles.community_inner}>
 								<a href=''>#design</a>
-								<a href=''>82,645 Communities &middot; Trending</a>
+								<a href=''>82,645 Communities &middot Trending</a>
 							</div>
 						</div>
 						<div className={styles.community_container}>
 							<Image width={28} height={28} src={tutorialIcon} alt='comunityPix' />
 							<div className={styles.community_inner}>
 								<a href=''>#tutorial</a>
-								<a href=''>82,645 Communities &middot; Trending</a>
+								<a href=''>82,645 Communities &middot Trending</a>
 							</div>
 						</div>
 						<div className={styles.community_container}>
 							<Image width={28} height={28} src={businessIcon} alt='comunityPix' />
 							<div className={styles.community_inner}>
 								<a href=''>#business</a>
-								<a href=''>82,645 Communities &middot; Trending</a>
+								<a href=''>82,645 Communities &middot Trending</a>
 							</div>
 						</div>
 					</div>
