@@ -1,0 +1,72 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./create_community.css">
+    <title>Document</title>
+</head>
+<body>
+    <!-- <h1>hellooooooooo</h1> -->
+    <div class="community_container">
+        <div class="container">
+            <div class="inner_a">
+                <p>Create a Community</p>
+                <button> <img src="./assets/single_community/cancel_icon.svg" alt="cancel_pix"> </button>
+            </div>
+            <hr class="comuunity_line">
+            <div class="select_interest">
+                <p>Select Interest</p>
+                <select name="interest" id="">
+                    <option value="design">Design</option>
+                    <option value="javascript">Javascript</option>
+                    <option value="bitcoin">Bitcoin</option>
+                </select>
+            </div>
+
+            <div class="community_name">
+                <p>Name</p> 
+                <p> Community name including capitalization cannot be changed</p>
+                <input class="txt_community" type="text" placeholder="enter community name">
+                <p> 21 Characters remaining</p>
+            </div>
+            
+            <div class="radio_communityType">
+                <p>Community Type</p>
+                <input type="radio" id="radioPublic" name="communityType" value="public" checked>
+                <label for="radioPublic">Public, <span class="radion_inner">Anyone can view, post, and comment to this community</span></label>
+            
+                <input type="radio" id="radioRestricted" name="communityType" value="restricted">
+                <label for="radioRestricted">Restricted, <span class="radion_inner">Anyone can view, post, and comment to this community</span></label>
+            
+                <input type="radio" id="radioPrivate" name="communityType" value="private">
+                <label for="radioPrivate">private, <span class="radion_inner">Anyone can view, post, and comment to this community</span></label> 
+            </div>
+
+            <div class="upload_container">
+                <p>Upload cover image</p>
+                <input class="custom-file-input" type="file" name="uploadFile" id="uploadFile">
+            </div>
+            
+            <div class="community_buttons">
+                <button class="btn_cancel">Cancel</button>
+                <button class="btn_create">Create Community</button>
+            </div>
+        </div>  
+        
+        <!-- this section is the section when the wants to create post after creating community -->
+        <!-- <div class="continue_container">
+            <div class="inner_a">
+                <p>Create your first post</p>
+                <button> <img src="./assets/single_community/cancel_icon.svg" alt="cancel_pix"> </button>
+            </div>
+            <p class="continue_text">Lorem ipsum dolor sit amet consectetur. Amet eget sed porttitor nec morbi adipiscing consequat gravida gravida. Nunc rhoncus porta quisque nulla sit nullam. Libero tellus et elit molestie morbi</p>
+            <div class="community_buttons">
+                <button class="btn_cancel">Continue</button>
+                <button class="btn_create">Create a post</button>
+            </div>
+        </div>  -->
+    </div>
+</body>
+</html>

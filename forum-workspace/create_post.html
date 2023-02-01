@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./create_post.css">
+    <title>Document</title>
+</head>
+<body>
+    <nav class="navbar_container">
+        <div class="navbar_logo">
+            <p>Forum</p>
+            <img src="./assets/logo.svg" alt="pix-a">
+        </div>
+
+        <div class="navbar_btn">
+            <button class="btn_register"> <img src="./assets/user-plus.svg" alt="pix-b"> Register</button>
+            <button class="btn_login">Login</button>
+        </div>
+    </nav>
+
+    <!-- Right sidebar -->
+    <section class="rigtbar_section">
+        
+        <div class="rigtbar_section_a">
+            <div class="container_a">
+                <h3>New Post</h3>
+                <div class="select_interest">
+                    <p>Select community</p>
+                    <select name="interest" id="">
+                        <option value="design">lorem Design</option>
+                        <option value="javascript">lorem Javascript</option>
+                        <option value="bitcoin">lorem Bitcoin</option>
+                    </select>
+                </div>
+
+                <div class="interest_name">
+                    <p>Post title</p> 
+                    <input class="txt_community" type="text" placeholder="enter post title">
+                </div>
+    
+                <div class="interest_name">
+                    <p>Content</p> 
+                    <textarea placeholder="enter content" class="txt_post" name="" id="" cols="30" rows="10"></textarea>
+                </div>
+
+                
+
+                <div class="interest_buttons">
+                    <button class="btn_image btn_create"><img src="./assets/addImage_icon.svg" alt="create_pix"> Add Image</button>
+                    <div class="interet_btnInner">
+                        <button class="btn_draft btn_create">Save as draft</button>
+                        <button class="btn_image btn_create"><img src="./assets/sendPost_icon.svg" alt="create_pix">Post</button>
+                    </div>
+                </div>
+            </div>
+        </div>               
+            
+
+        <!-- <div class="rigtbar_section_b">
+            <div class="right_sidebar">
+                <h3>Right bar section</h3>
+            </div>
+        </div> -->
+    </section>
+</body>
+</html>

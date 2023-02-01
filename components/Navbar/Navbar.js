@@ -7,6 +7,8 @@ import styles from './Navbar.module.css';
 import logo from '../../assets/logo.svg';
 import profileImage from '../../assets/home-page/user-icon.svg';
 
+import { signIn, getSession } from 'next-auth/react';
+
 import {MdNotificationsNone} from 'react-icons/md'
 import {BiMessageRounded} from 'react-icons/bi'
 import {IoMdArrowDropdown} from 'react-icons/io'
@@ -29,11 +31,18 @@ const Navbar = (props) => {
 	const { pathname } = router;
 	const [ user, setUser ] = useState();
 
+	const {session}= props;
+
 	useEffect(
 		() => {
-			setUser(JSON.parse(window.sessionStorage.getItem('profile')));
+			// setUser(JSON.parse(window?.localStorage?.getItem('profile')) );
+			if (session) {
+				setUser(session?.user );
+				// setUser(JSON.parse(window?.localStorage?.getItem('profile')) );
+			}
+			// session&&setUser(JSON.parse(window?.localStorage?.getItem('profile')) );
 		},
-		[ pathname ]
+		[ pathname,session ]
 	);
 
 	const logoutUser = async () => {
@@ -50,7 +59,7 @@ const Navbar = (props) => {
 		window.location = '/';
 	};
 
-	
+	// console.log('from navbar component', session);
 	return (
 		<nav className={styles.navbar_container}>
 			<div className={styles.hamburger_container}>
@@ -89,7 +98,7 @@ const Navbar = (props) => {
 				{user&&
 				<div className={styles.profile_container}>
 					<button onClick={toggle} className={styles.btn_profileImage}>
-					{user?.result?.username.charAt(0).toUpperCase()}
+					{session&&user?.username.charAt(0).toUpperCase()}
 					{/* <Image className={styles.profile_image} src={profileImage} alt='profile_pix' /> */}
 					</button>
 					<button style={{cursor:'pointer', display:'flex', justifyContent:'center', alignItems:'center'}} onClick={toggle}>
@@ -100,18 +109,18 @@ const Navbar = (props) => {
 				{user&&<div className={showMenu ? styles.profile_dropdown : styles.close_profileMenu}>
 					<ul>
 						<li>
-							<h3 className={styles.profile_Name}>{user?user?.result?.username:'kel123'}</h3>
-							<span className={styles.proile_userName}>@{user?user?.result?.username:'kel123'}</span>
+							<h3 className={styles.profile_Name}>{user?.username}</h3>
+							<span className={styles.proile_userName}>@{user?.username}</span>
 						</li>
 						<hr />
 						<li onClick={toggle} className={styles.profileItems}>
 							<Link href=''>Dashboard</Link>
 						</li>
 						<li onClick={toggle} className={styles.profileItems}>
-							<Link href=''>Write a post</Link>
+							<Link href='/create-post'>Write a post</Link>
 						</li>
 						<li onClick={toggle} className={styles.profileItems}>
-							<Link href=''>Create a community</Link>
+							<Link href=''>Communities</Link>
 						</li>
 						<li onClick={toggle} className={styles.profileItems}>
 							<Link href=''>Profile</Link>
@@ -132,5 +141,6 @@ const Navbar = (props) => {
 		</nav>
 	);
 };
+
 
 export default Navbar;

@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 
+import { signIn, getSession } from 'next-auth/react';
+
 import styles from '../styles/Signup.module.css';
 import Image from 'next/image';
 import loginPix from '../assets/login_pix.png';
@@ -10,14 +12,8 @@ import Navbar from '../components/Navbar/Navbar';
 import LeftSideBar from '../components/leftSideBar/LeftSideBar';
 
 
-const authAxios = axios.create({
-	baseURL: 'https://reddit-forum-api.vercel.app',
-	// baseURL: 'http://localhost:5000',
-	headers:{'Content-Type':'application/json'},
-	withCredentials:true
-});
 
-const Signin = () => {
+const Signin = ({session}) => {
 	//toggle menu section
 	const [ mobileMenu, setmobileMenu ] = useState(false);
 
@@ -27,15 +23,13 @@ const Signin = () => {
 
 	const router = useRouter();
 
-	const { pathname, asPath } = router; 
+	const { pathname, asPath } = router;
 
-	const {redirect}= router.query
+	const { redirect } = router.query;
 
 	const [ user, setUser ] = useState(null);
 
 	// const userDummy=globalThis?.window?.sessionStorage.getItem('profile')
-
-
 
 	const [ formData, setFormData ] = useState({
 		email: '',
@@ -52,53 +46,43 @@ const Signin = () => {
 
 	const [ loadComponent, setLoadComponent ] = useState(true);
 
-	useEffect(() => {
-		setUser(JSON.parse(window.sessionStorage.getItem('profile')));
-			setLoadComponent(false)
-	}, [])
-
+	const mySession = getSession();
 
 	const submitFormData = async () => {
-		if (
-			formData.email.length === 0 ||
-			formData.password.length === 0 
-		) {
+		if (formData.email.length === 0 || formData.password.length === 0) {
 			setFormDataError(true);
 		}
 
-		if (formData.email && formData.password ) {
+		if (formData.email && formData.password) {
 			setLoading(true);
-		await authAxios
-			.post('/user/signin', formData)
-			.then((res) => {
-				if (res) {
-					window.sessionStorage.setItem('profile', JSON.stringify(res.data));
-					setLoading(false);
-					alert('signin successfully');
-					router.push('/')
-
-				}
-			})
-			.catch((err) => {
-				setLoading(false);
-				setErrorMessage(err?.response?.data?.message);
+			const result = await signIn('credentials', {
+				redirect: false,
+				email: formData.email,
+				password: formData.password
 			});
+
+			try {
+				if (result.ok) {
+					setLoading(false);
+					console.log(result);
+					console.log(session);
+					router.replace('/');
+				} else {
+					setLoading(false);
+					setErrorMessage(result.error);
+					// console.log(result);
+					// console.log(result.error);
+				}
+			} catch (error) {
+				console.log(error);
+			}
 		}
 	};
 
-
-	if (user!==null) {
-		router.replace('/')
-		return null
-	}
-
-	if (loadComponent) {
-		return null
-	}
 	return (
 		<div>
 			<Navbar openMenu={toggle} />
-			{mobileMenu&&<LeftSideBar burgerMenu={mobileMenu} closeMenu={toggle} />}
+			{mobileMenu && <LeftSideBar burgerMenu={mobileMenu} closeMenu={toggle} />}
 			<section className={styles.register_container}>
 				<div className={styles.register_inner_container}>
 					<div className={styles.container_a}>
@@ -117,10 +101,10 @@ const Signin = () => {
 							/>
 							<br />
 							{formDataError && formData.email.length <= 0 ? (
-									<span style={{ color: 'red' }}>* required</span>
-								) : (
-									''
-								)}
+								<span style={{ color: 'red' }}>* required</span>
+							) : (
+								''
+							)}
 						</label>
 
 						<label htmlFor='password'>
@@ -132,14 +116,14 @@ const Signin = () => {
 							/>
 							<br />
 							{formDataError && formData.password.length <= 0 ? (
-									<span style={{ color: 'red' }}>* required</span>
-								) : (
-									''
-								)}
+								<span style={{ color: 'red' }}>* required</span>
+							) : (
+								''
+							)}
 						</label>
 
-						<button onClick={submitFormData} className={styles.btn_register_a}   disabled={loading}>
-						{loading ? 'loading...' : 'Login'}
+						<button onClick={submitFormData} className={styles.btn_register_a} disabled={loading}>
+							{loading ? 'loading...' : 'Login'}
 						</button>
 
 						<Link href='/signup' className={styles.already_signup}>
@@ -158,5 +142,23 @@ const Signin = () => {
 		</div>
 	);
 };
+
+export async function getServerSideProps(context) {
+  
+	const session = await getSession(context)
+	// console.log('from session',session)
+    if (session?.user) {
+        return {
+            redirect: {
+                permanent: false,
+                destination: "/"
+            }
+        }
+    }
+    
+    return {
+        props: {session}
+    }
+}
 
 export default Signin;
