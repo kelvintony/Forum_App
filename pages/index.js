@@ -44,7 +44,7 @@ export async function getServerSideProps(context) {
 	await db.connect();
 	const posts = await postModel.find({}).populate('user', 'username');
 
-	await db.disconnect();
+	// await db.disconnect();
 	let serPost = JSON.parse(JSON.stringify(posts))
 	// await db.disconnect();
 	// const res= await axios.get(`${process.env.HOST}/api/post`,{headers: {
