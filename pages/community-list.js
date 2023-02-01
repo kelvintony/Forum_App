@@ -12,7 +12,7 @@ import post_icon from '../assets/post_icon.svg';
 import new_icon from '../assets/home-page/new-icon.svg';
 import animation_design_icon from '../assets/animation_design_icon.svg';
 
-const communitylist = () => {
+const Communitylist = () => {
 	const [ mobileMenu, setmobileMenu ] = useState(false);
 
 	const toggle = () => {
@@ -81,4 +81,4 @@ const communitylist = () => {
 	);
 };
 
-export default communitylist;
+export default Communitylist;

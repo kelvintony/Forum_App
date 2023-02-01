@@ -19,7 +19,7 @@ import MainSection from '../sections/home/MainSection';
 import RightSideBar from '../sections/home/RightSideBar';
 import CreatePost from '../sections/CreatePost/CreatePost';
 
-const createpost = ({session}) => {
+const Createpost = ({session}) => {
 	const router = useRouter();
 
 	const [ postData, setPostData ] = useState({
@@ -47,7 +47,7 @@ const createpost = ({session}) => {
 		})
 		.then(function(response) {
 			if (response) {
-				// router.replace('/')
+				router.replace('/')
 				console.log(response)
 			}
 		})
@@ -140,5 +140,5 @@ export async function getServerSideProps(context) {
     }
 }
 
-export default createpost;
+export default Createpost;
 
