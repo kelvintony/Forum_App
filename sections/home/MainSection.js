@@ -11,8 +11,8 @@ import likeIcon from '../../assets/home-page/like-icon.svg';
 import dislike from '../../assets/home-page/dislike-icon.svg';
 import shareIcon from '../../assets/home-page/share-icon.svg';
 
-const MainSection = ({ data }) => {
-	console.log('from component', data);
+const MainSection = ({ getPost}) => {
+	console.log('from component', getPost);
 
 	const cutText = (str) => {
 		if (str.length > 45) {
@@ -41,15 +41,15 @@ const MainSection = ({ data }) => {
 				<Image width={10} height={10} src={newIcon} alt='start_icon' />New
 			</button>
 			
-			{data.map((post) => {
+			{getPost?.map((post) => {
 				return (
 					<div key={post?._id} className={styles.post_card}>
 						<div className={styles.container_a}>
 							{/* <Image width={40} height={40} src={userIcon} alt='user_pix' /> */}
-							<div className={styles.profile__image}>{post?.user.username.charAt(0).toUpperCase()}</div>
+							<div className={styles.profile__image}>{post?.user?.username?.charAt(0).toUpperCase()}</div>
 							<div className={styles.inner_a}>
-								<p>{post?.user.username}</p>
-								<p>{moment(post.createdAt).fromNow()}</p>
+								<p>{post?.user?.username}</p>
+								<p>{moment(post?.createdAt).fromNow()}</p>
 							</div>
 							<a href=''>
 								<Image width={24} height={24} src={futureMoreVertical} alt='feature_pix' />
@@ -57,7 +57,7 @@ const MainSection = ({ data }) => {
 						</div>
 						<h3>{post?.title}</h3>
 				
-						{replaceWithBr2(cutText(post.content))}
+						{replaceWithBr2(cutText(post?.content))}
 						{/* {replaceWithBr2(post.content)} */}
 						{/* <div dangerouslySetInnerHTML={{__html: replaceWithBr(post?.content)}}/> */}
 						<div className={styles.inner_b}>
