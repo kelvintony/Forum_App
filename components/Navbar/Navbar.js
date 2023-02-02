@@ -134,7 +134,7 @@ const Navbar = (props) => {
 						</li>
 						<hr />
 						<li onClick={logoutUser} className={styles.profileItems}>
-							<button onClick={signOut} className={styles.user_logout}><FiLogOut size={13}/>Logout</button>
+							<button onClick={logoutClickHandler} className={styles.user_logout}><FiLogOut size={13}/>Logout</button>
 						</li>
 						{/* <li onClick={logoutUser} className={styles.btn_register}>
 							<Link  href='/'>Logout</Link>
