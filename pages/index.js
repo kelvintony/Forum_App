@@ -1,7 +1,7 @@
 import React, { useState, useEffect,useReducer  } from 'react';
 
-import db from '../utils/db';
-import postModel from '../models/post';
+// import db from '../utils/db';
+// import postModel from '../models/post';
 import styles2 from '../sections/home/MainSection.module.css'
 
 
@@ -202,11 +202,11 @@ export default function Home({ session,data }) {
 export async function getServerSideProps(context) {
 	const session = await getSession(context);
 
-	await db.connect();
-	const posts = await postModel.find({}).populate('user', 'username');
+	// await db.connect();
+	// const posts = await postModel.find({}).populate('user', 'username');
 
-	let serPost = JSON.parse(JSON.stringify(posts))
-	await db.disconnect();
+	// let serPost = JSON.parse(JSON.stringify(posts))
+	// await db.disconnect();
 	// const res= await axios.get(`${process.env.HOST}/api/post`,{headers: {
 	// 	"Content-Type": "application/json"}})
 
@@ -230,7 +230,7 @@ export async function getServerSideProps(context) {
 	return {
 		props: { 
 			session,
-			data:serPost
+			// data:serPost
 			// data:posts.map((post) => ({
 			// 	_id: post._id.toString(),
 			// 	title: post.input,
