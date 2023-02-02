@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useReducer  } from 'react';
 
 import db from '../utils/db';
 import postModel from '../models/post';
@@ -29,7 +29,26 @@ import axios from 'axios';
 
 import { useRouter } from 'next/router';
 
+function reducer(state, action) {
+	switch (action.type) {
+	  case 'FETCH_REQUEST':
+		return { ...state, loading: true, error: '' };
+	  case 'FETCH_SUCCESS':
+		return { ...state, loading: false, orders: action.payload, error: '' };
+	  case 'FETCH_FAIL':
+		return { ...state, loading: false, error: action.payload };
+	  default:
+		state;
+	}
+  }
+
 export default function Home({ session,data }) {
+	const [{ loading, error, orders }, dispatch] = useReducer(reducer, {
+		loading: true,
+		orders: [],
+		error: '',
+	  });
+	
 	const [ mobileMenu, setmobileMenu ] = useState(false);
 	const [ getPost, setGetPost ] = useState('');
 
@@ -46,18 +65,15 @@ export default function Home({ session,data }) {
 	useEffect(() => {
 		const fetchData = async () => {
 		  try {
-			// const { data } = await axios.get(`/api/post`);
-			const res = await fetch('/api/post')
-			const data= await res.json();
-			setGetPost(data)
+			dispatch({ type: 'FETCH_REQUEST' });
+			const { data } = await axios.get(`/api/post`);
+			dispatch({ type: 'FETCH_SUCCESS', payload: data });
 		  } catch (err) {
-			console.log(err)
+			dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
 		  }
 		};
 		fetchData();
 	  }, []);
-	// console.log('from home page', session);
-		console.log(getPost)
 
 		//
 		//
@@ -84,34 +100,77 @@ export default function Home({ session,data }) {
 			<Navbar openMenu={toggle} session={session} />
 			<LeftSideBar burgerMenu={mobileMenu} closeMenu={toggle} />
 			<section className={styles2.rigtbar_section}>
-			<div className={styles2.rigtbar_section_a}>
-			<button className={styles2.btn_rightbar_trending}>
-				<Image width={12} height={12} src={trendingIcon} alt='trending_icon' />
-				Trending
-			</button>
-			<button className={styles2.btn_rightbar_new}>
-				<Image width={10} height={10} src={newIcon} alt='start_icon' />New
-			</button>
-			
-			{data?.map((post) => {
-				return (
-					<div key={post?._id} className={styles2.post_card}>
+			{loading ? (
+            <div>Loading...</div>
+          ) : error ? (
+            <div className="alert-error">{error}</div>
+          ) : (
+				<div className={styles2.rigtbar_section_a}>
+					<button className={styles2.btn_rightbar_trending}>
+						<Image width={12} height={12} src={trendingIcon} alt='trending_icon' />
+						Trending
+					</button>
+					<button className={styles2.btn_rightbar_new}>
+						<Image width={10} height={10} src={newIcon} alt='start_icon' />New
+					</button>
+					
+					{orders.map((post) => {
+						return (
+							<div key={post?._id} className={styles2.post_card}>
+								<div className={styles2.container_a}>
+									{/* <Image width={40} height={40} src={userIcon} alt='user_pix' /> */}
+									<div className={styles2.profile__image}>{post?.user?.username?.charAt(0).toUpperCase()}</div>
+									<div className={styles2.inner_a}>
+										<p>{post?.user?.username}</p>
+										<p>{moment(post?.createdAt).fromNow()}</p>
+									</div>
+									<a href=''>
+										<Image width={24} height={24} src={futureMoreVertical} alt='feature_pix' />
+									</a>
+								</div>
+								<h3>{post?.title}</h3>
+						
+								{replaceWithBr2(cutText(post?.content))}
+								{/* {replaceWithBr2(post.content)} */}
+								{/* <div dangerouslySetInnerHTML={{__html: replaceWithBr(post?.content)}}/> */}
+								<div className={styles2.inner_b}>
+									<div className={styles2.inner_ba}>
+										<button className={styles2.btn_post}>goland</button>
+										<button className={styles2.btn_post}>link</button>
+										<button className={styles2.btn_post}>overflow</button>
+									</div>
+									<div className={styles2.inner_bb}>
+										<a href=''>
+											<Image src={numberOfViewsIcon} alt='views_pix' />125
+										</a>
+										<a href=''>
+											<Image src={likeIcon} alt='views_pix' />125
+										</a>
+										<a href=''>
+											<Image src={dislike} alt='views_pix' />125
+										</a>
+										<a href=''>
+											<Image src={shareIcon} alt='views_pix' />155
+										</a>
+									</div>
+								</div>
+							</div>
+						);
+					})}
+
+					<div className={styles2.post_card}>
 						<div className={styles2.container_a}>
-							{/* <Image width={40} height={40} src={userIcon} alt='user_pix' /> */}
-							<div className={styles2.profile__image}>{post?.user?.username?.charAt(0).toUpperCase()}</div>
+							<Image width={40} height={40} src={userIcon} alt='user_pix' />
 							<div className={styles2.inner_a}>
-								<p>{post?.user?.username}</p>
-								<p>{moment(post?.createdAt).fromNow()}</p>
+								<p>Golanginya</p>
+								<p>5 min ago</p>
 							</div>
 							<a href=''>
 								<Image width={24} height={24} src={futureMoreVertical} alt='feature_pix' />
 							</a>
 						</div>
-						<h3>{post?.title}</h3>
-				
-						{replaceWithBr2(cutText(post?.content))}
-						{/* {replaceWithBr2(post.content)} */}
-						{/* <div dangerouslySetInnerHTML={{__html: replaceWithBr(post?.content)}}/> */}
+						<h3>How to patch KDE on FreeBSD? How to patch KDE on FreeBSD? FreeBSD?</h3>
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Consequat aliquet maecenas ut sit nulla</p>
 						<div className={styles2.inner_b}>
 							<div className={styles2.inner_ba}>
 								<button className={styles2.btn_post}>goland</button>
@@ -133,46 +192,8 @@ export default function Home({ session,data }) {
 								</a>
 							</div>
 						</div>
-					</div>
-				);
-			})}
-
-			<div className={styles2.post_card}>
-				<div className={styles2.container_a}>
-					<Image width={40} height={40} src={userIcon} alt='user_pix' />
-					<div className={styles2.inner_a}>
-						<p>Golanginya</p>
-						<p>5 min ago</p>
-					</div>
-					<a href=''>
-						<Image width={24} height={24} src={futureMoreVertical} alt='feature_pix' />
-					</a>
-				</div>
-				<h3>How to patch KDE on FreeBSD? How to patch KDE on FreeBSD? FreeBSD?</h3>
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Consequat aliquet maecenas ut sit nulla</p>
-				<div className={styles2.inner_b}>
-					<div className={styles2.inner_ba}>
-						<button className={styles2.btn_post}>goland</button>
-						<button className={styles2.btn_post}>link</button>
-						<button className={styles2.btn_post}>overflow</button>
-					</div>
-					<div className={styles2.inner_bb}>
-						<a href=''>
-							<Image src={numberOfViewsIcon} alt='views_pix' />125
-						</a>
-						<a href=''>
-							<Image src={likeIcon} alt='views_pix' />125
-						</a>
-						<a href=''>
-							<Image src={dislike} alt='views_pix' />125
-						</a>
-						<a href=''>
-							<Image src={shareIcon} alt='views_pix' />155
-						</a>
-					</div>
-				</div>
-			</div> 
-		</div>
+					</div> 
+				</div>)}
 				<RightSideBar />
 			</section>
 		</div>
