@@ -7,7 +7,7 @@ import styles from './Navbar.module.css';
 import logo from '../../assets/logo.svg';
 import profileImage from '../../assets/home-page/user-icon.svg';
 
-import { signIn, getSession } from 'next-auth/react';
+import { signOut,signIn, getSession } from 'next-auth/react';
 
 import {MdNotificationsNone} from 'react-icons/md'
 import {BiMessageRounded} from 'react-icons/bi'
@@ -59,6 +59,10 @@ const Navbar = (props) => {
 		window.location = '/';
 	};
 
+	const logoutClickHandler = () => {
+		Cookies.clear();
+		signOut({ callbackUrl: '/' });
+	  };
 	// console.log('from navbar component', session);
 	return (
 		<nav className={styles.navbar_container}>
@@ -130,7 +134,7 @@ const Navbar = (props) => {
 						</li>
 						<hr />
 						<li onClick={logoutUser} className={styles.profileItems}>
-							<Link href='/' className={styles.user_logout}><FiLogOut size={13}/>Logout</Link>
+							<button onClick={signOut} className={styles.user_logout}><FiLogOut size={13}/>Logout</button>
 						</li>
 						{/* <li onClick={logoutUser} className={styles.btn_register}>
 							<Link  href='/'>Logout</Link>
