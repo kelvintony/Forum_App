@@ -31,6 +31,8 @@ const Createpost = ({session}) => {
 
 	const [ mobileMenu, setmobileMenu ] = useState(false);
 
+	const [ loading, setLoading ] = useState(false);
+
 	const toggle = () => {
 		setmobileMenu(!mobileMenu);
 	};
@@ -38,7 +40,7 @@ const Createpost = ({session}) => {
 	const handleSubmit = async() => {
 		const { title, content, community } = postData;
 		// console.log(postData);
-
+		setLoading(true);
 		await axios
 		.post(`/api/post/create`, {
 			title,
@@ -47,8 +49,9 @@ const Createpost = ({session}) => {
 		})
 		.then(function(response) {
 			if (response) {
+				setLoading(false);
 				router.replace('/')
-				console.log(response)
+				// console.log(response)
 			}
 		})
 		.catch(function(error) {
@@ -111,7 +114,7 @@ const Createpost = ({session}) => {
 					<div className={styles2.interet_btnInner}>
 						<button className={`${styles2.btn_draft} ${styles2.btn_create}`}>Save as draft</button>
 						<button onClick={handleSubmit} className={`${styles2.btn_image} ${styles2.btn_create}`}>
-							<Image src={sendPostIcon} alt='create_pix' />Post
+							<Image src={sendPostIcon} alt='create_pix' />{loading ? 'loading...' : 'Post'}
 						</button>
 					</div>
 				</div>
