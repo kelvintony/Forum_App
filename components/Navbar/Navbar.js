@@ -8,6 +8,7 @@ import logo from '../../assets/logo.svg';
 import profileImage from '../../assets/home-page/user-icon.svg';
 
 import { signOut,signIn, getSession } from 'next-auth/react';
+import Cookies from 'js-cookie';
 
 import {MdNotificationsNone} from 'react-icons/md'
 import {BiMessageRounded} from 'react-icons/bi'
@@ -60,7 +61,7 @@ const Navbar = (props) => {
 	};
 
 	const logoutClickHandler = () => {
-		Cookies.clear();
+		Cookies.remove('profile');
 		signOut({ callbackUrl: '/' });
 	  };
 	// console.log('from navbar component', session);
