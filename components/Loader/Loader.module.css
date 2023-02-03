@@ -1,14 +1,14 @@
-/* .lds_default {
+.lds_default {
   display: inline-block;
   position: relative;
-  width: 80px;
-  height: 80px;
+  width: 40px;
+  height: 40px;
 }
 .lds_default div {
   position: absolute;
   width: 6px;
   height: 6px;
-  background: rgb(46, 46, 46);
+  background: #f48023;
   border-radius: 50%;
   animation: lds_default 1.2s linear infinite;
 }
@@ -82,8 +82,8 @@
   50% {
     transform: scale(1.5);
   }
-} */
-.loader {
+}
+/* .loader {
   width: 48px;
   height: 48px;
   background: #f48023;
@@ -114,4 +114,4 @@
   100% {
     transform: rotate(360deg);
   }
-}
+} */
