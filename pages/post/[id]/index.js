@@ -17,7 +17,7 @@ export async function getServerSideProps(context) {
   await db.connect();
   const post = await postModel.findOne({ _id: id });
 
-  const { _id, createdAt, updatedAt, ...others } = post._doc;
+  const { updatedAt, ...others } = post._doc;
   //   console.log('from server post', post);
   console.log('from server others', others);
   await db.disconnect();
