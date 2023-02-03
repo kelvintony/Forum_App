@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useReducer } from 'react';
+import Loader from '../components/Loader/Loader';
 
-import db from '../utils/db';
-import postModel from '../models/post';
+// import db from '../utils/db';
+// import postModel from '../models/post';
 
 import styles2 from '../sections/home/MainSection.module.css';
 
@@ -29,23 +30,22 @@ import axios from 'axios';
 
 import { useRouter } from 'next/router';
 
-export async function getStaticProps(context) {
+export async function getServerSideProps(context) {
   const session = await getSession(context);
 
-  await db.connect();
+  // await db.connect();
 
-  const posts = await postModel.find({});
+  // const posts = await postModel.find({}).populate('user', 'username');
 
   // console.log('my work', posts);
 
-  await db.disconnect();
+  // await db.disconnect();
 
   return {
     props: {
       session,
-      myPost: posts ? JSON.parse(JSON.stringify(posts)) : null,
+      // myPost: posts ? JSON.parse(JSON.stringify(posts)) : null,
     },
-    revalidate: 10,
   };
 }
 
@@ -62,7 +62,7 @@ function reducer(state, action) {
   }
 }
 
-export default function Home({ session, myPost }) {
+export default function Home({ session }) {
   const [{ loading, error, posts }, dispatch] = useReducer(reducer, {
     loading: true,
     posts: [],
@@ -71,7 +71,7 @@ export default function Home({ session, myPost }) {
 
   const [mobileMenu, setmobileMenu] = useState(false);
   // const [getPost, setGetPost] = useState('');
-  const [loadme, setLoadme] = useState(false);
+  // const [loadme, setLoadme] = useState(false);
 
   const router = useRouter();
   const mySession = useSession();
@@ -127,8 +127,8 @@ export default function Home({ session, myPost }) {
       <Navbar openMenu={toggle} session={session} />
       <LeftSideBar burgerMenu={mobileMenu} closeMenu={toggle} />
       <section className={styles2.rigtbar_section}>
-        {loadme ? (
-          <div>Loading...</div>
+        {loading ? (
+          <Loader />
         ) : error ? (
           <div className='alert-error'>{error}</div>
         ) : (
@@ -147,7 +147,7 @@ export default function Home({ session, myPost }) {
               New
             </button>
 
-            {myPost.map((post) => {
+            {posts.map((post) => {
               return (
                 <div key={post?._id} className={styles2.post_card}>
                   <div className={styles2.container_a}>
