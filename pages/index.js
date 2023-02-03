@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useReducer } from 'react';
 
-import db from '../utils/db';
-import postModel from '../models/post';
+// import db from '../utils/db';
+// import postModel from '../models/post';
 import styles2 from '../sections/home/MainSection.module.css';
 
 import Head from 'next/head';
@@ -30,18 +30,18 @@ import { useRouter } from 'next/router';
 export async function getServerSideProps(context) {
   const session = await getSession(context);
 
-  await db.connect();
+  // await db.connect();
 
-  const posts = await postModel.find({}).populate('user', 'username');
+  // const posts = await postModel.find({}).populate('user', 'username');
 
-  console.log('my work', posts);
+  // console.log('my work', posts);
 
-  await db.disconnect();
+  // await db.disconnect();
 
   return {
     props: {
       session,
-      myPost: posts ? JSON.parse(JSON.stringify(posts)) : null,
+      // myPost: posts ? JSON.parse(JSON.stringify(posts)) : null,
     },
   };
 }
@@ -59,7 +59,7 @@ function reducer(state, action) {
   }
 }
 
-export default function Home({ session, myPost }) {
+export default function Home({ session }) {
   const [{ loading, error, posts }, dispatch] = useReducer(reducer, {
     loading: true,
     posts: [],
