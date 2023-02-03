@@ -28,12 +28,13 @@ import { signIn, getSession, useSession } from 'next-auth/react';
 import axios from 'axios';
 
 import { useRouter } from 'next/router';
-export async function getServerSideProps(context) {
+
+export async function getStaticProps(context) {
   const session = await getSession(context);
 
   await db.connect();
 
-  const posts = await postModel.find({}).populate('user', 'username');
+  const posts = await postModel.find({});
 
   // console.log('my work', posts);
 
@@ -44,6 +45,7 @@ export async function getServerSideProps(context) {
       session,
       myPost: posts ? JSON.parse(JSON.stringify(posts)) : null,
     },
+    revalidate: 10,
   };
 }
 
@@ -125,7 +127,7 @@ export default function Home({ session, myPost }) {
       <Navbar openMenu={toggle} session={session} />
       <LeftSideBar burgerMenu={mobileMenu} closeMenu={toggle} />
       <section className={styles2.rigtbar_section}>
-        {myPost === null || myPost === undefined || myPost === '' ? (
+        {loadme ? (
           <div>Loading...</div>
         ) : error ? (
           <div className='alert-error'>{error}</div>
