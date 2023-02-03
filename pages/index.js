@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useReducer } from 'react';
 
-// import db from '../utils/db';
-// import postModel from '../models/post';
+import db from '../utils/db';
+import postModel from '../models/post';
+
 import styles2 from '../sections/home/MainSection.module.css';
 
 import Head from 'next/head';
@@ -30,18 +31,18 @@ import { useRouter } from 'next/router';
 export async function getServerSideProps(context) {
   const session = await getSession(context);
 
-  // await db.connect();
+  await db.connect();
 
-  // const posts = await postModel.find({}).populate('user', 'username');
+  const posts = await postModel.find({}).populate('user', 'username');
 
   // console.log('my work', posts);
 
-  // await db.disconnect();
+  await db.disconnect();
 
   return {
     props: {
       session,
-      // myPost: posts ? JSON.parse(JSON.stringify(posts)) : null,
+      myPost: posts ? JSON.parse(JSON.stringify(posts)) : null,
     },
   };
 }
@@ -59,7 +60,7 @@ function reducer(state, action) {
   }
 }
 
-export default function Home({ session }) {
+export default function Home({ session, myPost }) {
   const [{ loading, error, posts }, dispatch] = useReducer(reducer, {
     loading: true,
     posts: [],
@@ -68,7 +69,7 @@ export default function Home({ session }) {
 
   const [mobileMenu, setmobileMenu] = useState(false);
   // const [getPost, setGetPost] = useState('');
-  // const [loadme, setLoadme] = useState(false);
+  const [loadme, setLoadme] = useState(false);
 
   const router = useRouter();
   const mySession = useSession();
@@ -124,7 +125,7 @@ export default function Home({ session }) {
       <Navbar openMenu={toggle} session={session} />
       <LeftSideBar burgerMenu={mobileMenu} closeMenu={toggle} />
       <section className={styles2.rigtbar_section}>
-        {loading ? (
+        {loadme ? (
           <div>Loading...</div>
         ) : error ? (
           <div className='alert-error'>{error}</div>
@@ -144,7 +145,7 @@ export default function Home({ session }) {
               New
             </button>
 
-            {posts.map((post) => {
+            {myPost.map((post) => {
               return (
                 <div key={post?._id} className={styles2.post_card}>
                   <div className={styles2.container_a}>
