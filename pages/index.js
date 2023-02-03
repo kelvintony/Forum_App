@@ -30,7 +30,7 @@ import { useRouter } from 'next/router';
 export async function getServerSideProps(context) {
   const session = await getSession(context);
 
-  await db.connect();
+  // await db.connect();
 
   const posts = await postModel.find({});
 
@@ -38,7 +38,7 @@ export async function getServerSideProps(context) {
 
   console.log('my work', posts);
 
-  await db.disconnect();
+  // await db.disconnect();
 
   return {
     props: {
