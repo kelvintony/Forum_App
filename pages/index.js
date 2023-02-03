@@ -30,15 +30,13 @@ import { useRouter } from 'next/router';
 export async function getServerSideProps(context) {
   const session = await getSession(context);
 
-  // await db.connect();
+  await db.connect();
 
-  const posts = await postModel.find({});
-
-  // const { ...others } = posts._doc;
+  const posts = await postModel.find({}).populate('user', 'username');
 
   console.log('my work', posts);
 
-  // await db.disconnect();
+  await db.disconnect();
 
   return {
     props: {
@@ -53,7 +51,7 @@ function reducer(state, action) {
     case 'FETCH_REQUEST':
       return { ...state, loading: true, error: '' };
     case 'FETCH_SUCCESS':
-      return { ...state, loading: false, orders: action.payload, error: '' };
+      return { ...state, loading: false, posts: action.payload, error: '' };
     case 'FETCH_FAIL':
       return { ...state, loading: false, error: action.payload };
     default:
@@ -62,15 +60,15 @@ function reducer(state, action) {
 }
 
 export default function Home({ session, myPost }) {
-  const [{ loading, error, orders }, dispatch] = useReducer(reducer, {
+  const [{ loading, error, posts }, dispatch] = useReducer(reducer, {
     loading: true,
-    orders: [],
+    posts: [],
     error: '',
   });
 
   const [mobileMenu, setmobileMenu] = useState(false);
   // const [getPost, setGetPost] = useState('');
-  const [loadme, setLoadme] = useState(false);
+  // const [loadme, setLoadme] = useState(false);
 
   const router = useRouter();
   const mySession = useSession();
@@ -126,7 +124,7 @@ export default function Home({ session, myPost }) {
       <Navbar openMenu={toggle} session={session} />
       <LeftSideBar burgerMenu={mobileMenu} closeMenu={toggle} />
       <section className={styles2.rigtbar_section}>
-        {loadme ? (
+        {loading ? (
           <div>Loading...</div>
         ) : error ? (
           <div className='alert-error'>{error}</div>
@@ -146,7 +144,7 @@ export default function Home({ session, myPost }) {
               New
             </button>
 
-            {myPost.map((post) => {
+            {posts.map((post) => {
               return (
                 <div key={post?._id} className={styles2.post_card}>
                   <div className={styles2.container_a}>
