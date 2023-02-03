@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useReducer } from 'react';
 
-// import db from '../utils/db';
-// import postModel from '../models/post';
+import db from '../utils/db';
+import postModel from '../models/post';
 import styles2 from '../sections/home/MainSection.module.css';
 
 import Head from 'next/head';
@@ -27,6 +27,26 @@ import { signIn, getSession, useSession } from 'next-auth/react';
 import axios from 'axios';
 
 import { useRouter } from 'next/router';
+export async function getServerSideProps(context) {
+  const session = await getSession(context);
+
+  await db.connect();
+
+  const posts = await postModel.find({}).populate('user', 'username');
+
+  // const { ...others } = posts._doc;
+
+  console.log('my work', posts);
+
+  await db.disconnect();
+
+  return {
+    props: {
+      session,
+      myPost: posts ? JSON.parse(JSON.stringify(posts)) : null,
+    },
+  };
+}
 
 function reducer(state, action) {
   switch (action.type) {
@@ -41,7 +61,7 @@ function reducer(state, action) {
   }
 }
 
-export default function Home({ session, data }) {
+export default function Home({ session, myPost }) {
   const [{ loading, error, orders }, dispatch] = useReducer(reducer, {
     loading: true,
     orders: [],
@@ -49,13 +69,14 @@ export default function Home({ session, data }) {
   });
 
   const [mobileMenu, setmobileMenu] = useState(false);
-  const [getPost, setGetPost] = useState('');
+  // const [getPost, setGetPost] = useState('');
+  const [loadme, setLoadme] = useState(false);
 
   const router = useRouter();
   const mySession = useSession();
 
   //   console.log("cusSess", mySession);
-  console.log('cusSess', mySession?.data?.user._id);
+  // console.log('cusSess', mySession?.data?.user._id);
 
   const toggle = () => {
     setmobileMenu(!mobileMenu);
@@ -105,7 +126,7 @@ export default function Home({ session, data }) {
       <Navbar openMenu={toggle} session={session} />
       <LeftSideBar burgerMenu={mobileMenu} closeMenu={toggle} />
       <section className={styles2.rigtbar_section}>
-        {loading ? (
+        {loadme ? (
           <div>Loading...</div>
         ) : error ? (
           <div className='alert-error'>{error}</div>
@@ -125,7 +146,7 @@ export default function Home({ session, data }) {
               New
             </button>
 
-            {orders.map((post) => {
+            {myPost.map((post) => {
               return (
                 <div key={post?._id} className={styles2.post_card}>
                   <div className={styles2.container_a}>
@@ -240,47 +261,4 @@ export default function Home({ session, data }) {
       </section>
     </div>
   );
-}
-export async function getServerSideProps(context) {
-  const session = await getSession(context);
-
-  // await db.connect();
-  // const posts = await postModel.find({}).populate('user', 'username');
-
-  // let serPost = JSON.parse(JSON.stringify(posts))
-  // await db.disconnect();
-  // const res= await axios.get(`${process.env.HOST}/api/post`,{headers: {
-  // 	"Content-Type": "application/json"}})
-
-  // let data=''
-  // if (res) {
-  // 	data=res.data
-  // } else {
-  // 	data=[]
-  // }
-
-  // console.log('from serverprops',serPost)
-  // if (session?.user) {
-  //     return {
-  //         redirect: {
-  //             permanent: false,
-  //             destination: "/"
-  //         }
-  //     }
-  // }
-
-  return {
-    props: {
-      session,
-      // data:serPost
-      // data:posts.map((post) => ({
-      // 	_id: post._id.toString(),
-      // 	title: post.input,
-      // 	username: post.username,
-      // 	content: post.content,
-      // 	createdAt: post.createdAt.toString(),
-      // 	updatedAt:	post.updatedAt.toString()
-      //   })),
-    },
-  };
 }
