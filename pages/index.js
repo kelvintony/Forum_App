@@ -125,7 +125,7 @@ export default function Home({ session, myPost }) {
       <Navbar openMenu={toggle} session={session} />
       <LeftSideBar burgerMenu={mobileMenu} closeMenu={toggle} />
       <section className={styles2.rigtbar_section}>
-        {loadme ? (
+        {myPost === null || myPost === undefined || myPost === '' ? (
           <div>Loading...</div>
         ) : error ? (
           <div className='alert-error'>{error}</div>
