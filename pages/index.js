@@ -32,7 +32,7 @@ export async function getServerSideProps(context) {
 
   await db.connect();
 
-  const posts = await postModel.find({}).populate('user', 'username');
+  const posts = await postModel.find({});
 
   // const { ...others } = posts._doc;
 
