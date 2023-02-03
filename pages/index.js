@@ -34,7 +34,7 @@ export async function getStaticProps(context) {
 
   await db.connect();
 
-  const posts = await postModel.find({}).populate('user', 'username');
+  const posts = await postModel.find({});
 
   // console.log('my work', posts);
 
