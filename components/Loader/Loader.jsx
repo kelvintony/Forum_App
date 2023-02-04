@@ -17,7 +17,6 @@ const Loader = () => {
       <div></div>
       <div></div>
     </div>
-    // <span class={styles.loader}></span>
   );
 };
 
