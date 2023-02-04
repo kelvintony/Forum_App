@@ -179,9 +179,10 @@ export default function Home({ session }) {
                   {/* <div dangerouslySetInnerHTML={{__html: replaceWithBr(post?.content)}}/> */}
                   <div className={styles2.inner_b}>
                     <div className={styles2.inner_ba}>
-                      <button className={styles2.btn_post}>goland</button>
-                      <button className={styles2.btn_post}>link</button>
-                      <button className={styles2.btn_post}>overflow</button>
+                      <button className={styles2.btn_post}>
+                        {post.community}
+                        {''} community
+                      </button>
                     </div>
                     <div className={styles2.inner_bb}>
                       <a href=''>
@@ -232,9 +233,7 @@ export default function Home({ session }) {
               </p>
               <div className={styles2.inner_b}>
                 <div className={styles2.inner_ba}>
-                  <button className={styles2.btn_post}>goland</button>
-                  <button className={styles2.btn_post}>link</button>
-                  <button className={styles2.btn_post}>overflow</button>
+                  <button className={styles2.btn_post}>goland community</button>
                 </div>
                 <div className={styles2.inner_bb}>
                   <a href=''>
