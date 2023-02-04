@@ -130,7 +130,7 @@ export default function Home({ session }) {
         {loading ? (
           <Loader />
         ) : error ? (
-          <div className='alert-error'>{error}</div>
+          <div className={styles.alert_error}>{error}</div>
         ) : (
           <div className={styles2.rigtbar_section_a}>
             <button className={styles2.btn_rightbar_trending}>

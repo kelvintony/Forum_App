@@ -62,8 +62,8 @@ const Signin = ({ session }) => {
       try {
         if (result.ok) {
           setLoading(false);
-          console.log(result);
-          console.log(session);
+          // console.log(result);
+          // console.log(session);
           router.replace('/');
         } else {
           setLoading(false);
