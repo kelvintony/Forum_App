@@ -82,6 +82,7 @@ const EditPost = () => {
           console.log(err);
         });
     };
+    ``;
 
     getTasks();
   }, []);
@@ -124,22 +125,7 @@ const EditPost = () => {
             </div>
           ) : (
             <div>
-              <h3>New Post</h3>
-              <div className={styles2.select_interest}>
-                <p>Select community</p>
-                <select
-                  name='interest'
-                  id=''
-                  onChange={(e) =>
-                    setPostData({ ...postData, community: e.target.value })
-                  }
-                  value={postData.community}
-                >
-                  <option value='design'>Design</option>
-                  <option value='javascript'>Javascript</option>
-                  <option value='bitcoin'>Bitcoin</option>
-                </select>
-              </div>
+              <h3>Edit Post</h3>
 
               <div className={styles2.interest_name}>
                 <p>Post title</p>
