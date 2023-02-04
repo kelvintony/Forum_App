@@ -125,7 +125,7 @@ const EditPost = () => {
             </div>
           ) : (
             <div>
-              <h3>Edit Post</h3>
+              <h3 style={{ marginBottom: '40px' }}>Edit Post</h3>
 
               <div className={styles2.interest_name}>
                 <p>Post title</p>
@@ -165,9 +165,10 @@ const EditPost = () => {
                 />
                 <div className={styles2.interet_btnInner}>
                   <button
+                    onClick={() => router.back()}
                     className={`${styles2.btn_draft} ${styles2.btn_create}`}
                   >
-                    Save as draft
+                    Cancel
                   </button>
                   <button
                     onClick={handleSubmit}
