@@ -1,32 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from 'react';
 // import styles from '../styles/CreatePost.module.css';
-import styles2 from "../sections/CreatePost/CreatePost.module.css";
+import styles2 from '../sections/CreatePost/CreatePost.module.css';
 
-import { getSession } from "next-auth/react";
-import axios from "axios";
-import { useRouter } from "next/router";
+import { getSession } from 'next-auth/react';
+import axios from 'axios';
+import { useRouter } from 'next/router';
 
 // import loginPix from '../assets/login_pix.png';
-import addImageIcon from "../assets/addImage_icon.svg";
-import sendPostIcon from "../assets/sendPost_icon.svg";
+import addImageIcon from '../assets/addImage_icon.svg';
+import sendPostIcon from '../assets/sendPost_icon.svg';
 
-import Head from "next/head";
-import Image from "next/image";
-import styles from "../styles/Home.module.css";
-import Navbar from "../components/Navbar/Navbar";
-import LeftSideBar from "../components/leftSideBar/LeftSideBar";
-import MainSection from "../sections/home/MainSection";
-import RightSideBar from "../sections/home/RightSideBar";
-import CreatePost from "../sections/CreatePost/CreatePost";
+import Head from 'next/head';
+import Image from 'next/image';
+import styles from '../styles/Home.module.css';
+import Navbar from '../components/Navbar/Navbar';
+import LeftSideBar from '../components/leftSideBar/LeftSideBar';
+import MainSection from '../sections/home/MainSection';
+import RightSideBar from '../sections/home/RightSideBar';
+import CreatePost from '../sections/CreatePost/CreatePost';
 
 const Createpost = ({ session }) => {
   const router = useRouter();
 
   const [postData, setPostData] = useState({
-    title: "",
-    content: "",
-    community: "",
-    image: "",
+    title: '',
+    content: '',
+    community: '',
+    image: '',
   });
 
   const [mobileMenu, setmobileMenu] = useState(false);
@@ -50,7 +50,7 @@ const Createpost = ({ session }) => {
       .then(function (response) {
         if (response) {
           setLoading(false);
-          router.replace("/");
+          router.replace('/');
           // console.log(response)
         }
       })
@@ -112,7 +112,7 @@ const Createpost = ({ session }) => {
 						<Image src={addImageIcon} alt='create_pix' /> Add Image
 					</button> */}
               <input
-                style={{ backgroundColor: "unset", color: "black" }}
+                style={{ backgroundColor: 'unset', color: 'black' }}
                 type='file'
                 className={`${styles2.btn_image} ${styles2.btn_create}`}
                 placeholder='choose file'
@@ -128,7 +128,7 @@ const Createpost = ({ session }) => {
                   className={`${styles2.btn_image} ${styles2.btn_create}`}
                 >
                   <Image src={sendPostIcon} alt='create_pix' />
-                  {loading ? "loading..." : "Post"}
+                  {loading ? 'loading...' : 'Post'}
                 </button>
               </div>
             </div>
@@ -146,7 +146,7 @@ export async function getServerSideProps(context) {
     return {
       redirect: {
         permanent: false,
-        destination: "/signin",
+        destination: '/signin',
       },
     };
   }
