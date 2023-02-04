@@ -55,6 +55,7 @@ const EditPost = () => {
   });
 
   const [loading, setLoading] = useState(false);
+  const [loadingButton, setLoadingButton] = useState(false);
 
   const router = useRouter();
 
@@ -87,7 +88,7 @@ const EditPost = () => {
 
   const handleSubmit = async (e) => {
     const { title, content, community } = postData;
-
+    setLoading(true);
     e.preventDefault();
     await axios
       .put(`/api/post/${id}`, {
