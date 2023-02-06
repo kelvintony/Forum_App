@@ -25,7 +25,8 @@ function MyApp({ Component, pageProps }) {
   }, []);
   return (
     <SessionProvider session={pageProps.session}>
-      {loading ? <h1>Loading...</h1> : <Component {...pageProps} />}
+      {/* {loading ? <h1>Loading...</h1> : <Component {...pageProps} />} */}
+      <Component {...pageProps} />
     </SessionProvider>
   );
 }
