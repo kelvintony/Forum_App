@@ -154,9 +154,6 @@ const EditPost = () => {
               </div>
 
               <div className={styles2.interest_buttons}>
-                {/* <button className={`${styles.btn_image} ${styles.btn_create}`}>
-						<Image src={addImageIcon} alt='create_pix' /> Add Image
-					</button> */}
                 <input
                   style={{ backgroundColor: 'unset', color: 'black' }}
                   type='file'

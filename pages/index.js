@@ -172,9 +172,17 @@ export default function Home({ session }) {
                       <a href=''></a>
                     )}
                   </div>
-                  <h3>{post?.title}</h3>
+                  <h3>
+                    <a href={`/post/community-post/${post?._id}`}>
+                      {post?.title}
+                    </a>
+                  </h3>
+                  <p>
+                    <a href={`/post/community-post/${post?._id}`}>
+                      {replaceWithBr2(cutText(post?.content))}
+                    </a>
+                  </p>
 
-                  {replaceWithBr2(cutText(post?.content))}
                   {/* {replaceWithBr2(post.content)} */}
                   {/* <div dangerouslySetInnerHTML={{__html: replaceWithBr(post?.content)}}/> */}
                   <div className={styles2.inner_b}>
