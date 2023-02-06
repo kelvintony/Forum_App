@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useReducer } from 'react';
 import Loader from '../../../components/Loader/Loader';
 
-import db from '../../../utils/db';
 import postModel from '../../../models/post';
+import db from '../../../utils/db';
 
 import styles2 from '../../../sections/home/MainSection.module.css';
 
