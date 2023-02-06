@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useReducer } from 'react';
 import Loader from '../../../components/Loader/Loader';
 
-import postModel from '../../../models/post';
+import postModel from '../../../models/Post';
 import db from '../../../utils/db';
 
 import styles2 from '../../../sections/home/MainSection.module.css';
@@ -41,7 +41,7 @@ export async function getServerSideProps(context) {
     .findOne({ _id: id })
     .populate('user', 'username')
     .lean();
-  //   console.log('single post', post);
+  console.log('single post', post);
   await db.disconnect();
 
   return {

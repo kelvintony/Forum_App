@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const postSchema = new mongoose.Schema(
+const PostSchema = new mongoose.Schema(
   {
     title: { type: String, required: true },
     content: { type: String, required: true },
@@ -8,7 +8,7 @@ const postSchema = new mongoose.Schema(
     image: { type: String },
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'user',
+      ref: 'User',
       required: true,
     },
   },
@@ -17,6 +17,6 @@ const postSchema = new mongoose.Schema(
   }
 );
 
-let postData = mongoose.models.post || mongoose.model('post', postSchema);
+let postData = mongoose.models.Post || mongoose.model('Post', PostSchema);
 
 export default postData;
