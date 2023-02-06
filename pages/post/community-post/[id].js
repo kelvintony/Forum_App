@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useReducer } from 'react';
 import Loader from '../../../components/Loader/Loader';
 
-import postData from '../../../models/Post';
+import PostData from '../../../models/Post';
 import db from '../../../utils/db';
 
 import styles2 from '../../../sections/home/MainSection.module.css';
@@ -37,8 +37,7 @@ export async function getServerSideProps(context) {
   const { id } = params;
 
   await db.connect();
-  const post = await postData
-    .findOne({ _id: id })
+  const post = await PostData.findOne({ _id: id })
     .populate('user', 'username')
     .lean();
   console.log('single post', post);

@@ -17,6 +17,6 @@ const PostSchema = new mongoose.Schema(
   }
 );
 
-let postData = mongoose.models.Post || mongoose.model('Post', PostSchema);
+let PostData = mongoose.models.Post || mongoose.model('Post', PostSchema);
 
-export default postData;
+export default PostData;
