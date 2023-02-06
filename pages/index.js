@@ -44,12 +44,10 @@ export async function getServerSideProps(context) {
     return {
       props: {
         session,
-        myPost: posts ? JSON.parse(JSON.stringify(posts)) : null,
+        myPost: JSON.parse(JSON.stringify(posts)).map(db.convertDocToObj),
       },
     };
-  } catch (error) {
-    console('server erorr', error);
-  }
+  } catch (error) {}
 }
 
 function reducer(state, action) {
