@@ -32,21 +32,24 @@ import { useRouter } from 'next/router';
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);
+  try {
+    await db.connect();
 
-  await db.connect();
+    const posts = await postModel.find().populate('user', 'username').lean();
 
-  const posts = await postModel.find().populate('user', 'username').lean();
+    // console.log('my work', posts);
 
-  // console.log('my work', posts);
+    // await db.disconnect();
 
-  // await db.disconnect();
-
-  return {
-    props: {
-      session,
-      myPost: posts ? JSON.parse(JSON.stringify(posts)) : null,
-    },
-  };
+    return {
+      props: {
+        session,
+        myPost: posts ? JSON.parse(JSON.stringify(posts)) : null,
+      },
+    };
+  } catch (error) {
+    console('server erorr', error);
+  }
 }
 
 function reducer(state, action) {
