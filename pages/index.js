@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useReducer } from 'react';
 import Loader from '../components/Loader/Loader';
 
-import db from '../utils/db';
-import postModel from '../models/post';
+// import db from '../utils/db';
+// import postModel from '../models/post';
 
 import styles2 from '../sections/home/MainSection.module.css';
 
@@ -32,22 +32,21 @@ import { useRouter } from 'next/router';
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);
-  try {
-    await db.connect();
 
-    const posts = await postModel.find().populate('user', 'username').lean();
+  // await db.connect();
 
-    // console.log('my work', posts);
+  // const posts = await postModel.find({}).populate('user', 'username');
 
-    // await db.disconnect();
+  // console.log('my work', posts);
 
-    return {
-      props: {
-        session,
-        myPost: JSON.parse(JSON.stringify(posts)).map(db.convertDocToObj),
-      },
-    };
-  } catch (error) {}
+  // await db.disconnect();
+
+  return {
+    props: {
+      session,
+      // myPost: posts ? JSON.parse(JSON.stringify(posts)) : null,
+    },
+  };
 }
 
 function reducer(state, action) {
@@ -63,7 +62,7 @@ function reducer(state, action) {
   }
 }
 
-export default function Home({ session, myPost }) {
+export default function Home({ session }) {
   const [{ loading, error, posts }, dispatch] = useReducer(reducer, {
     loading: true,
     posts: [],
@@ -128,129 +127,136 @@ export default function Home({ session, myPost }) {
       <Navbar openMenu={toggle} session={session} />
       <LeftSideBar burgerMenu={mobileMenu} closeMenu={toggle} />
       <section className={styles2.rigtbar_section}>
-        <div className={styles2.rigtbar_section_a}>
-          <button className={styles2.btn_rightbar_trending}>
-            <Image
-              width={12}
-              height={12}
-              src={trendingIcon}
-              alt='trending_icon'
-            />
-            Trending
-          </button>
-          <button className={styles2.btn_rightbar_new}>
-            <Image width={10} height={10} src={newIcon} alt='start_icon' />
-            New
-          </button>
+        {loading ? (
+          <Loader />
+        ) : error ? (
+          <div className={styles.alert_error}>{error}</div>
+        ) : (
+          <div className={styles2.rigtbar_section_a}>
+            <button className={styles2.btn_rightbar_trending}>
+              <Image
+                width={12}
+                height={12}
+                src={trendingIcon}
+                alt='trending_icon'
+              />
+              Trending
+            </button>
+            <button className={styles2.btn_rightbar_new}>
+              <Image width={10} height={10} src={newIcon} alt='start_icon' />
+              New
+            </button>
 
-          {myPost.map((post) => {
-            return (
-              <div key={post?._id} className={styles2.post_card}>
-                <div className={styles2.container_a}>
-                  {/* <Image width={40} height={40} src={userIcon} alt='user_pix' /> */}
-                  <div className={styles2.profile__image}>
-                    {post?.user?.username?.charAt(0).toUpperCase()}
+            {posts.map((post) => {
+              return (
+                <div key={post?._id} className={styles2.post_card}>
+                  <div className={styles2.container_a}>
+                    {/* <Image width={40} height={40} src={userIcon} alt='user_pix' /> */}
+                    <div className={styles2.profile__image}>
+                      {post?.user?.username?.charAt(0).toUpperCase()}
+                    </div>
+                    <div className={styles2.inner_a}>
+                      <p>{post?.user?.username}</p>
+                      <p>{moment(post?.createdAt).fromNow()}</p>
+                    </div>
+                    {mySession?.data?.user?._id === post?.user?._id ? (
+                      <a href={`/post/${post?._id}`}>
+                        <Image
+                          width={24}
+                          height={24}
+                          src={futureMoreVertical}
+                          alt='feature_pix'
+                        />
+                      </a>
+                    ) : (
+                      <a href=''></a>
+                    )}
                   </div>
-                  <div className={styles2.inner_a}>
-                    <p>{post?.user?.username}</p>
-                    <p>{moment(post?.createdAt).fromNow()}</p>
+                  <h3>{post?.title}</h3>
+
+                  {replaceWithBr2(cutText(post?.content))}
+                  {/* {replaceWithBr2(post.content)} */}
+                  {/* <div dangerouslySetInnerHTML={{__html: replaceWithBr(post?.content)}}/> */}
+                  <div className={styles2.inner_b}>
+                    <div className={styles2.inner_ba}>
+                      <button className={styles2.btn_post}>
+                        {post.community}
+                        {''} community
+                      </button>
+                    </div>
+                    <div className={styles2.inner_bb}>
+                      <a href=''>
+                        <Image src={numberOfViewsIcon} alt='views_pix' />
+                        125
+                      </a>
+                      <a href=''>
+                        <Image src={likeIcon} alt='views_pix' />
+                        125
+                      </a>
+                      <a href=''>
+                        <Image src={dislike} alt='views_pix' />
+                        125
+                      </a>
+                      <a href=''>
+                        <Image src={shareIcon} alt='views_pix' />
+                        155
+                      </a>
+                    </div>
                   </div>
-                  {mySession?.data?.user?._id === post?.user?._id ? (
-                    <a href={`/post/${post?._id}`}>
-                      <Image
-                        width={24}
-                        height={24}
-                        src={futureMoreVertical}
-                        alt='feature_pix'
-                      />
-                    </a>
-                  ) : (
-                    <a href=''></a>
-                  )}
                 </div>
-                <h3>{post?.title}</h3>
+              );
+            })}
 
-                {replaceWithBr2(cutText(post?.content))}
-                {/* {replaceWithBr2(post.content)} */}
-                {/* <div dangerouslySetInnerHTML={{__html: replaceWithBr(post?.content)}}/> */}
-                <div className={styles2.inner_b}>
-                  <div className={styles2.inner_ba}>
-                    <button className={styles2.btn_post}>
-                      {post.community}
-                      {''} community
-                    </button>
-                  </div>
-                  <div className={styles2.inner_bb}>
-                    <a href=''>
-                      <Image src={numberOfViewsIcon} alt='views_pix' />
-                      125
-                    </a>
-                    <a href=''>
-                      <Image src={likeIcon} alt='views_pix' />
-                      125
-                    </a>
-                    <a href=''>
-                      <Image src={dislike} alt='views_pix' />
-                      125
-                    </a>
-                    <a href=''>
-                      <Image src={shareIcon} alt='views_pix' />
-                      155
-                    </a>
-                  </div>
+            <div className={styles2.post_card}>
+              <div className={styles2.container_a}>
+                <Image width={40} height={40} src={userIcon} alt='user_pix' />
+                <div className={styles2.inner_a}>
+                  <p>Golanginya</p>
+                  <p>5 min ago</p>
                 </div>
+                <a href=''>
+                  <Image
+                    width={24}
+                    height={24}
+                    src={futureMoreVertical}
+                    alt='feature_pix'
+                  />
+                </a>
               </div>
-            );
-          })}
-
-          <div className={styles2.post_card}>
-            <div className={styles2.container_a}>
-              <Image width={40} height={40} src={userIcon} alt='user_pix' />
-              <div className={styles2.inner_a}>
-                <p>Golanginya</p>
-                <p>5 min ago</p>
-              </div>
-              <a href=''>
-                <Image
-                  width={24}
-                  height={24}
-                  src={futureMoreVertical}
-                  alt='feature_pix'
-                />
-              </a>
-            </div>
-            <h3>
-              How to patch KDE on FreeBSD? How to patch KDE on FreeBSD? FreeBSD?
-            </h3>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Consequat
-              aliquet maecenas ut sit nulla
-            </p>
-            <div className={styles2.inner_b}>
-              <div className={styles2.inner_ba}>
-                <button className={styles2.btn_post}>goland community</button>
-              </div>
-              <div className={styles2.inner_bb}>
-                <a href=''>
-                  <Image src={numberOfViewsIcon} alt='views_pix' />
-                  125
-                </a>
-                <a href=''>
-                  <Image src={likeIcon} alt='views_pix' />
-                  125
-                </a>
-                <a href=''>
-                  <Image src={dislike} alt='views_pix' />
-                  125
-                </a>
-                <a href=''>
-                  <Image src={shareIcon} alt='views_pix' />
-                  155
-                </a>
+              <h3>
+                How to patch KDE on FreeBSD? How to patch KDE on FreeBSD?
+                FreeBSD?
+              </h3>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Consequat aliquet maecenas ut sit nulla
+              </p>
+              <div className={styles2.inner_b}>
+                <div className={styles2.inner_ba}>
+                  <button className={styles2.btn_post}>goland community</button>
+                </div>
+                <div className={styles2.inner_bb}>
+                  <a href=''>
+                    <Image src={numberOfViewsIcon} alt='views_pix' />
+                    125
+                  </a>
+                  <a href=''>
+                    <Image src={likeIcon} alt='views_pix' />
+                    125
+                  </a>
+                  <a href=''>
+                    <Image src={dislike} alt='views_pix' />
+                    125
+                  </a>
+                  <a href=''>
+                    <Image src={shareIcon} alt='views_pix' />
+                    155
+                  </a>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        )}
         <RightSideBar />
       </section>
     </div>

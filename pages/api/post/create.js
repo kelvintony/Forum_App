@@ -32,7 +32,7 @@ export const createPost = async (req, res) => {
   // console.log(post);
 
   const post = req.body;
-  console.log(post);
+  // console.log(post);
 
   await db.connect();
 
@@ -46,7 +46,7 @@ export const createPost = async (req, res) => {
     await newPost.save();
 
     await db.disconnect();
-    res.status(201).json(newPost);
+    res.status(201).json(JSON.stringify(newPost));
   } catch (error) {
     res.status(409).json({ message: error });
   }
