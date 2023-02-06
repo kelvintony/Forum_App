@@ -2,7 +2,7 @@ import React, { useState, useEffect, useReducer } from 'react';
 import Loader from '../../../components/Loader/Loader';
 
 import db from '../../../utils/db';
-import PostModel from '../../../models/Post';
+// import PostModel from '../../../models/Post';
 
 import styles2 from '../../../sections/home/MainSection.module.css';
 
@@ -37,16 +37,21 @@ export async function getServerSideProps(context) {
   const { id } = params;
 
   await db.connect();
-  const postData = await PostModel.findOne({ _id: id })
-    .populate('user', 'username')
-    .lean();
-  console.log('single post', postData);
+  //   const postData = await PostModel.findOne({ _id: id })
+  //     .populate('user', 'username')
+  //     .lean();
+  //   console.log('single post', postData);
   await db.disconnect();
 
   return {
     props: {
       session,
-      myPost: postData ? JSON.parse(JSON.stringify(postData)) : null,
+      myPost: {
+        title: 'jems',
+        _id: '909484473738838393993',
+        context: 'i dont know \nyes o \njemmy ',
+        community: 'design',
+      },
     },
   };
 }
