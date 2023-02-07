@@ -4,9 +4,9 @@ import postModel from '../../../models/post';
 import { getSession } from 'next-auth/react';
 
 // export const config = {
-// 	api: {
-// 		bodyParser: false
-// 	}
+//   api: {
+//     bodyParser: false,
+//   },
 // };
 
 export default async (req, res) => {
@@ -27,19 +27,24 @@ export const createPost = async (req, res) => {
   }
 
   const userId = session.user._id;
+  const username = session.user.username;
 
   // console.log('coming from post route', session);
-  // console.log(post);
+  console.log(session);
 
   const post = req.body;
-  // console.log(post);
+  console.log(post);
 
   await db.connect();
 
   const newPost = new postModel({
     ...post,
+    user: {
+      id: userId,
+      username: username,
+    },
+
     // content: post.content.replace(/\n/g, '<br />'),
-    user: userId,
   });
 
   try {
@@ -48,7 +53,8 @@ export const createPost = async (req, res) => {
     await db.disconnect();
     res.status(201).json(JSON.stringify(newPost));
   } catch (error) {
-    res.status(409).json({ message: error });
+    res.status(409).json({ message: error.message });
+    console.log(error.message);
   }
 };
 
