@@ -115,16 +115,15 @@ export default function Home({ session, myPost }) {
     return str;
   };
 
-  function replaceWithBr(value) {
-    return value.replace(/\n/g, '<br />');
-  }
+  // function replaceWithBr(value) {
+  //   return value.replace(/\n/g, '<br />');
+  // }
 
   function replaceWithBr2(value) {
     let str = value;
     let result = str.split('\n');
     return result.map((i, key) => <p key={key}>{i + '\n'}</p>);
   }
-  console.log(myPost);
   return (
     <div>
       <Navbar openMenu={toggle} session={session} />
@@ -147,7 +146,11 @@ export default function Home({ session, myPost }) {
 
           {myPost.map((post) => {
             return (
-              <div key={post?._id} className={styles2.post_card}>
+              <div
+                onClick={() => router.push(`/post/community-post/${post?._id}`)}
+                key={post?._id}
+                className={styles2.post_card}
+              >
                 <div className={styles2.container_a}>
                   {/* <Image width={40} height={40} src={userIcon} alt='user_pix' /> */}
                   <div className={styles2.profile__image}>
@@ -158,26 +161,24 @@ export default function Home({ session, myPost }) {
                     <p>{moment(post?.createdAt).fromNow()}</p>
                   </div>
                   {mySession?.data?.user?._id === post?.user?.id ? (
-                    <a href={`/post/${post?._id}`}>
+                    <Link href={`/post/${post?._id}`}>
                       <Image
                         width={24}
                         height={24}
                         src={futureMoreVertical}
                         alt='feature_pix'
                       />
-                    </a>
+                    </Link>
                   ) : (
                     <a href=''></a>
                   )}
                 </div>
                 <h3>
-                  <a href={`/post/community-post/${post?._id}`}>
+                  <Link href={`/post/community-post/${post?._id}`}>
                     {post?.title}
-                  </a>
+                  </Link>
                 </h3>
-                <a href={`/post/community-post/${post?._id}`}>
-                  {replaceWithBr2(cutText(post?.content))}
-                </a>
+                {replaceWithBr2(cutText(post?.content))}
 
                 {/* {replaceWithBr2(post.content)} */}
                 {/* <div dangerouslySetInnerHTML={{__html: replaceWithBr(post?.content)}}/> */}
