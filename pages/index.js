@@ -119,6 +119,14 @@ export default function Home({ session, myPost }) {
   //   return value.replace(/\n/g, '<br />');
   // }
 
+  const mystyle = {
+    fontStyle: 'normal',
+    fontWeight: '400',
+    fontSize: '10px',
+    lineHeight: '12px',
+    letterSpacing: '0.05em',
+    color: '#808080',
+  };
   function replaceWithBr2(value) {
     let str = value;
     let result = str.split('\n');
@@ -147,7 +155,7 @@ export default function Home({ session, myPost }) {
           {myPost.map((post) => {
             return (
               <div
-                onClick={() => router.push(`/post/community-post/${post?._id}`)}
+                // onClick={() => router.push(`/post/community-post/${post?._id}`)}
                 key={post?._id}
                 className={styles2.post_card}
               >
@@ -173,12 +181,17 @@ export default function Home({ session, myPost }) {
                     <a href=''></a>
                   )}
                 </div>
-                <h3>
+                <h3 className={styles2.myHeader}>
                   <Link href={`/post/community-post/${post?._id}`}>
                     {post?.title}
                   </Link>
                 </h3>
-                {replaceWithBr2(cutText(post?.content))}
+                <Link
+                  className={styles2.myTitle}
+                  href={`/post/community-post/${post?._id}`}
+                >
+                  {replaceWithBr2(cutText(post?.content))}
+                </Link>
 
                 {/* {replaceWithBr2(post.content)} */}
                 {/* <div dangerouslySetInnerHTML={{__html: replaceWithBr(post?.content)}}/> */}

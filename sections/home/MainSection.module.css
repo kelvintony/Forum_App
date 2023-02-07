@@ -34,8 +34,22 @@
 
   color: #000000;
 }
+.post_card > .myHeader {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 25px;
+  letter-spacing: 0.05em;
+}
 
 .post_card > p {
+  font-weight: 300;
+
+  font-size: 14px;
+  line-height: 25px;
+  letter-spacing: 0.05em;
+  color: #000000;
+}
+.post_card > .myTitle {
   font-weight: 300;
 
   font-size: 14px;
