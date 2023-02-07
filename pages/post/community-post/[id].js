@@ -144,7 +144,7 @@ export default function Home({ session, myPost }) {
                 <p>{myPost?.user?.username}</p>
                 <p>{moment(myPost?.createdAt).fromNow()}</p>
               </div>
-              {mySession?.data?.user?._id === myPost?.user?._id ? (
+              {mySession?.data?.user?._id === myPost?.user?.id ? (
                 <a href={`/post/${myPost?._id}`}>
                   <Image
                     width={24}
