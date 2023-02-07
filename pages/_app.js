@@ -3,6 +3,8 @@ import { SessionProvider } from 'next-auth/react';
 import React from 'react';
 import Router from 'next/router';
 
+import Loader from '../components/Loader/Loader';
+
 function MyApp({ Component, pageProps }) {
   const [loading, setLoading] = React.useState(false);
   React.useEffect(() => {
@@ -25,8 +27,8 @@ function MyApp({ Component, pageProps }) {
   }, []);
   return (
     <SessionProvider session={pageProps.session}>
-      {/* {loading ? <h1>Loading...</h1> : <Component {...pageProps} />} */}
-      <Component {...pageProps} />
+      {loading ? <Loader /> : <Component {...pageProps} />}
+      {/* <Component {...pageProps} /> */}
     </SessionProvider>
   );
 }
