@@ -2,7 +2,7 @@ import React, { useState, useEffect, useReducer } from 'react';
 import Loader from '../../../components/Loader/Loader';
 
 import db from '../../../utils/db';
-// import PostModel from '../../../models/Post';
+import postModel from '../../../models/post';
 
 import styles2 from '../../../sections/home/MainSection.module.css';
 
@@ -37,21 +37,15 @@ export async function getServerSideProps(context) {
   const { id } = params;
 
   await db.connect();
-  //   const postData = await PostModel.findOne({ _id: id })
-  //     .populate('user', 'username')
-  //     .lean();
-  //   console.log('single post', postData);
+  const post = await postModel.findOne({ _id: id }).lean();
+
+  console.log('single post', post);
   await db.disconnect();
 
   return {
     props: {
       session,
-      myPost: {
-        title: 'jems',
-        _id: '909484473738838393993',
-        context: 'i dont know \nyes o \njemmy ',
-        community: 'design',
-      },
+      myPost: post ? JSON.parse(JSON.stringify(post)) : null,
     },
   };
 }
@@ -139,70 +133,34 @@ export default function Home({ session, myPost }) {
       <Navbar openMenu={toggle} session={session} />
       <LeftSideBar burgerMenu={mobileMenu} closeMenu={toggle} />
       <section className={styles2.rigtbar_section}>
-        {loading ? (
-          <div style={simpleDiv}>
-            <Loader />
-          </div>
-        ) : error ? (
-          <div className={styles.alert_error}>{error}</div>
-        ) : (
-          <div className={styles2.rigtbar_section_a}>
-            <div key={myPost?._id} className={styles2.post_card}>
-              <div className={styles2.container_a}>
-                {/* <Image width={40} height={40} src={userIcon} alt='user_pix' /> */}
-                <div className={styles2.profile__image}>
-                  {myPost?.user?.username?.charAt(0).toUpperCase()}
-                </div>
-                <div className={styles2.inner_a}>
-                  <p>{myPost?.user?.username}</p>
-                  <p>{moment(myPost?.createdAt).fromNow()}</p>
-                </div>
-                {mySession?.data?.user?._id === myPost?.user?._id ? (
-                  <a href={`/post/${myPost?._id}`}>
-                    <Image
-                      width={24}
-                      height={24}
-                      src={futureMoreVertical}
-                      alt='feature_pix'
-                    />
-                  </a>
-                ) : (
-                  <a href=''></a>
-                )}
+        <div className={styles2.rigtbar_section_a}>
+          <div key={myPost?._id} className={styles2.post_card}>
+            <div className={styles2.container_a}>
+              {/* <Image width={40} height={40} src={userIcon} alt='user_pix' /> */}
+              <div className={styles2.profile__image}>
+                {myPost?.user?.username?.charAt(0).toUpperCase()}
               </div>
-              <h3>{myPost?.title}</h3>
-
-              {/* {replaceWithBr2(cutText(myPost?.content))} */}
-              {replaceWithBr2(myPost?.content)}
-              {/* <div className={styles2.inner_b}>
-                    <div className={styles2.inner_ba}>
-                      <button className={styles2.btn_post}>
-                        {post.community}
-                        {''} community
-                      </button>
-                    </div>
-                    <div className={styles2.inner_bb}>
-                      <a href=''>
-                        <Image src={numberOfViewsIcon} alt='views_pix' />
-                        125
-                      </a>
-                      <a href=''>
-                        <Image src={likeIcon} alt='views_pix' />
-                        125
-                      </a>
-                      <a href=''>
-                        <Image src={dislike} alt='views_pix' />
-                        125
-                      </a>
-                      <a href=''>
-                        <Image src={shareIcon} alt='views_pix' />
-                        155
-                      </a>
-                    </div>
-                  </div> */}
+              <div className={styles2.inner_a}>
+                <p>{myPost?.user?.username}</p>
+                <p>{moment(myPost?.createdAt).fromNow()}</p>
+              </div>
+              {mySession?.data?.user?._id === myPost?.user?._id ? (
+                <a href={`/post/${myPost?._id}`}>
+                  <Image
+                    width={24}
+                    height={24}
+                    src={futureMoreVertical}
+                    alt='feature_pix'
+                  />
+                </a>
+              ) : (
+                <a href=''></a>
+              )}
             </div>
+            <h3>{myPost?.title}</h3>
+            {replaceWithBr2(myPost?.content)}
           </div>
-        )}
+        </div>
         <RightSideBar />
       </section>
     </div>
