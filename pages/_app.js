@@ -13,7 +13,7 @@ function MyApp({ Component, pageProps }) {
       setLoading(true);
     };
     const end = () => {
-      console.log('findished');
+      console.log('finished');
       setLoading(false);
     };
     Router.events.on('routeChangeStart', start);

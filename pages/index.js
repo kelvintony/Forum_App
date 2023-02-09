@@ -1,5 +1,11 @@
 import React, { useState, useEffect, useReducer } from 'react';
 import Loader from '../components/Loader/Loader';
+import { Suspense } from 'react';
+
+{
+  /* <Suspense fallback={<Loader />}>
+</Suspense> */
+}
 
 import db from '../utils/db';
 import postModel from '../models/post';
@@ -38,7 +44,7 @@ export async function getServerSideProps(context) {
 
   const posts = await postModel.find().lean();
 
-  console.log('my work', posts);
+  // console.log('my work', posts);
 
   await db.disconnect();
 
@@ -151,7 +157,6 @@ export default function Home({ session, myPost }) {
             <Image width={10} height={10} src={newIcon} alt='start_icon' />
             New
           </button>
-
           {myPost.map((post) => {
             return (
               <div
