@@ -1,0 +1,28 @@
+.multiform_container {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.btn {
+  color: red;
+}
+.form_btn {
+  margin-top: 20px;
+  display: flex;
+  gap: 20px;
+}
+.progressbar {
+  /* width: 400px; */
+  width: 400px;
+  height: 10px;
+  background-color: rgb(212, 185, 255);
+  margin-bottom: 50px;
+}
+
+.progressbar div {
+  width: 33.3%;
+  height: 100%;
+  background-color: rgb(98, 0, 255);
+}

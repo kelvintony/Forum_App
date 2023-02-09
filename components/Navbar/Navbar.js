@@ -1,24 +1,24 @@
-import React, { useState, useEffect } from "react";
-import { useRouter } from "next/router";
-import Link from "next/link";
-import axios from "axios";
-import Image from "next/image";
-import styles from "./Navbar.module.css";
-import logo from "../../assets/logo.svg";
-import profileImage from "../../assets/home-page/user-icon.svg";
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
+import axios from 'axios';
+import Image from 'next/image';
+import styles from './Navbar.module.css';
+import logo from '../../assets/logo.svg';
+import profileImage from '../../assets/home-page/user-icon.svg';
 
-import { signOut, signIn, getSession } from "next-auth/react";
-import Cookies from "js-cookie";
+import { signOut, signIn, getSession, useSession } from 'next-auth/react';
+import Cookies from 'js-cookie';
 
-import { MdNotificationsNone } from "react-icons/md";
-import { BiMessageRounded } from "react-icons/bi";
-import { IoMdArrowDropdown } from "react-icons/io";
-import { IoMdArrowDropup } from "react-icons/io";
-import { FiLogOut } from "react-icons/fi";
-import { IoLogoFoursquare } from "react-icons/io";
+import { MdNotificationsNone } from 'react-icons/md';
+import { BiMessageRounded } from 'react-icons/bi';
+import { IoMdArrowDropdown } from 'react-icons/io';
+import { IoMdArrowDropup } from 'react-icons/io';
+import { FiLogOut } from 'react-icons/fi';
+import { IoLogoFoursquare } from 'react-icons/io';
 
-import register_logo from "../../assets/user_plus.svg";
-import menuIcon from "../../assets/home-page/menu-icon.svg";
+import register_logo from '../../assets/user_plus.svg';
+import menuIcon from '../../assets/home-page/menu-icon.svg';
 
 const Navbar = (props) => {
   const [showMenu, setshowMenu] = useState(false);
@@ -32,36 +32,31 @@ const Navbar = (props) => {
   const { pathname } = router;
   const [user, setUser] = useState();
 
-  const { session } = props;
+  const { status, data: session } = useSession();
+  // console.log('session from navbar', status);
 
-  useEffect(() => {
-    // setUser(JSON.parse(window?.localStorage?.getItem('profile')) );
-    if (session) {
-      setUser(session?.user);
-      // setUser(JSON.parse(window?.localStorage?.getItem('profile')) );
-    }
-    // session&&setUser(JSON.parse(window?.localStorage?.getItem('profile')) );
-  }, [pathname, session]);
+  // const mySession = useSession();
+  // console.log('session from navbar', mySession);
 
   const logoutUser = async () => {
     await axios
-      .get("http://localhost:5000/user//logout")
+      .get('http://localhost:5000/user//logout')
       .then((res) => {
         if (res) {
-          console.log("logout success");
+          console.log('logout success');
         }
       })
       .catch((err) => {});
     window.sessionStorage.clear();
     setUser(null);
-    window.location = "/";
+    window.location = '/';
   };
 
   const logoutClickHandler = () => {
     window.localStorage.clear();
-    Cookies.remove("next-auth.csrf-token");
-    Cookies.remove("next-auth.session-token");
-    signOut({ callbackUrl: "/" });
+    Cookies.remove('next-auth.csrf-token');
+    Cookies.remove('next-auth.session-token');
+    signOut({ callbackUrl: '/' });
   };
   // console.log('from navbar component', session);
   return (
@@ -71,21 +66,21 @@ const Navbar = (props) => {
           className={styles.hamburger_menu}
           onClick={() => props.openMenu()}
         >
-          {" "}
+          {' '}
           <Image src={menuIcon} width={30} height={30} alt='menu_icon' />
         </button>
         <Link href='/' className={styles.navbar_logo}>
           <p>
-            Forumix <IoLogoFoursquare color='#BE272A' size={25} />{" "}
+            Forumix <IoLogoFoursquare color='#BE272A' size={25} />{' '}
           </p>
           {/* <Image className={styles.logo_image} src={logo} alt='pix-a' /> */}
         </Link>
       </div>
 
       <div className={styles.navbar_btn}>
-        {user ? (
-          <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-            {" "}
+        {session ? (
+          <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+            {' '}
             {/* <h4 style={{ color: ' #04AA6D', fontSize: '12px' }}>{user?.result?.username}</h4>{' '} */}
             <Link href='/'>
               <MdNotificationsNone color='#808080' size={25} />
@@ -95,13 +90,13 @@ const Navbar = (props) => {
             </Link>
           </div>
         ) : (
-          <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+          <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
             <Link href='/signup' className={styles.btn_register}>
               <Image
                 className={styles.user_image}
                 src={register_logo}
                 alt='pix-b'
-              />{" "}
+              />{' '}
               Register
             </Link>
             <Link href='/signin' className={styles.btn_login}>
@@ -109,18 +104,18 @@ const Navbar = (props) => {
             </Link>
           </div>
         )}
-        {user && (
+        {session && (
           <div className={styles.profile_container}>
             <button onClick={toggle} className={styles.btn_profileImage}>
-              {session && user?.username.charAt(0).toUpperCase()}
+              {session && session?.user?.username.charAt(0).toUpperCase()}
               {/* <Image className={styles.profile_image} src={profileImage} alt='profile_pix' /> */}
             </button>
             <button
               style={{
-                cursor: "pointer",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
+                cursor: 'pointer',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
               }}
               onClick={toggle}
             >
@@ -133,7 +128,7 @@ const Navbar = (props) => {
           </div>
         )}
 
-        {user && (
+        {session && (
           <div
             className={
               showMenu ? styles.profile_dropdown : styles.close_profileMenu
@@ -141,9 +136,11 @@ const Navbar = (props) => {
           >
             <ul>
               <li>
-                <h3 className={styles.profile_Name}>{user?.username}</h3>
+                <h3 className={styles.profile_Name}>
+                  {session?.user?.username}
+                </h3>
                 <span className={styles.proile_userName}>
-                  @{user?.username}
+                  @{session?.user?.username}
                 </span>
               </li>
               <hr />
@@ -151,11 +148,16 @@ const Navbar = (props) => {
                 <Link href=''>Dashboard</Link>
               </li>
               <li onClick={toggle} className={styles.profileItems}>
-                <Link href='/create-post'>Write a post</Link>
+                <Link href='/post/create-post'>Write a post</Link>
               </li>
               <li onClick={toggle} className={styles.profileItems}>
-                <Link href=''>Communities</Link>
+                <Link href='/create-community'>Create a communities</Link>
               </li>
+              {session?.user?.isAdmin && (
+                <li onClick={toggle} className={styles.profileItems}>
+                  <Link href='/create-community'>Create an interest</Link>
+                </li>
+              )}
               <li onClick={toggle} className={styles.profileItems}>
                 <Link href=''>Profile</Link>
               </li>

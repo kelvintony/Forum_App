@@ -29,6 +29,7 @@ import { signIn, getSession, useSession } from 'next-auth/react';
 import axios from 'axios';
 
 import { useRouter } from 'next/router';
+import Comment from '../../../components/Comment/Comment';
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);
@@ -160,7 +161,10 @@ export default function Home({ session, myPost }) {
             <h3>{myPost?.title}</h3>
             {replaceWithBr2(myPost?.content)}
           </div>
+          <Comment />
         </div>
+
+        {/* comment section */}
         <RightSideBar />
       </section>
     </div>
