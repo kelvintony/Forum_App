@@ -37,7 +37,7 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
-export async function getStaticProps(context) {
+export async function getServerSideProps(context) {
   const session = await getSession(context);
 
   await db.connect();
@@ -55,7 +55,6 @@ export async function getStaticProps(context) {
       // posts.map(db.convertDocToObj),
       // posts ? JSON.parse(JSON.stringify(posts)) : null
     },
-    revalidate: 5,
   };
 }
 
