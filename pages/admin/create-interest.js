@@ -2,7 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import styles from '../../styles/CreateInterest.module.css';
 import cancelIcon from '../../assets/single_community/cancel_icon.svg';
-// import { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 
 import { signIn, getSession } from 'next-auth/react';
 
