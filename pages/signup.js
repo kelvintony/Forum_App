@@ -4,6 +4,8 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import SiginLoader from '../components/SigninLoader/SiginLoader';
 
+import { signIn, getSession } from 'next-auth/react';
+
 import styles from '../styles/Signup.module.css';
 import Image from 'next/image';
 import registerPix from '../assets/register_pix.png';
@@ -11,14 +13,30 @@ import Navbar from '../components/Navbar/Navbar';
 import LeftSideBar from '../components/leftSideBar/LeftSideBar';
 
 // style={{cursor:loading&&'progress'}}
+export async function getServerSideProps(context) {
+  const session = await getSession(context);
+  // console.log('from session',session)
+  if (session?.user) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/',
+      },
+    };
+  }
 
+  return {
+    props: { session },
+    // revalidate: 5,
+  };
+}
 const authAxios = axios.create({
   baseURL: 'https://reddit-forum-api.vercel.app',
   // baseURL: 'http://localhost:5000'
 });
 
 // style={{cursor:loading&&'progress'}}
-const Signup = () => {
+const Signup = ({ session }) => {
   //toggle menu section
   const [mobileMenu, setmobileMenu] = useState(false);
 
@@ -99,15 +117,6 @@ const Signup = () => {
         });
     }
   };
-
-  if (user !== null) {
-    router.replace('/');
-    return null;
-  }
-
-  if (loadComponent) {
-    return null;
-  }
 
   return (
     <div>
