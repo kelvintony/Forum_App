@@ -10,11 +10,10 @@ import { Suspense } from 'react';
 import db from '../utils/db';
 import postModel from '../models/post';
 
-import styles2 from '../sections/home/MainSection.module.css';
+import styles from '../styles/Moderate.module.css';
 
 import Head from 'next/head';
 import Image from 'next/image';
-import styles from '../styles/Home.module.css';
 import Navbar from '../components/Navbar/Navbar';
 import LeftSideBar from '../components/leftSideBar/LeftSideBar';
 import MainSection from '../sections/home/MainSection';
@@ -40,11 +39,21 @@ import Link from 'next/link';
 export async function getServerSideProps(context) {
   const session = await getSession(context);
 
+  if (!session?.user) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/',
+      },
+    };
+  }
+
   await db.connect();
 
   const posts = await postModel.find().lean();
 
   // console.log('my work', posts);
+  //   console.log('from server', session);
 
   await db.disconnect();
 
@@ -71,7 +80,7 @@ function reducer(state, action) {
   }
 }
 
-export default function Home({ session, myPost }) {
+export default function ModeratePost({ session: serverSession, myPost }) {
   const [{ loading, error, posts }, dispatch] = useReducer(reducer, {
     loading: true,
     posts: [],
@@ -83,9 +92,10 @@ export default function Home({ session, myPost }) {
   // const [loadme, setLoadme] = useState(false);
 
   const router = useRouter();
-  const mySession = useSession();
+  const { status, data: session } = useSession();
 
-  //   console.log("cusSess", mySession);
+  //   console.log('cusSess', session);
+  // console.log('cusSess', serverSession?.user?._id);
   // console.log('cusSess', mySession?.data?.user._id);
 
   const toggle = () => {
@@ -142,98 +152,106 @@ export default function Home({ session, myPost }) {
     <div>
       <Navbar openMenu={toggle} session={session} />
       <LeftSideBar burgerMenu={mobileMenu} closeMenu={toggle} />
-      <section className={styles2.rigtbar_section}>
-        <div className={styles2.rigtbar_section_a}>
-          <button className={styles2.btn_rightbar_trending}>
-            <Image
-              width={12}
-              height={12}
-              src={trendingIcon}
-              alt='trending_icon'
-            />
-            Trending
-          </button>
-          <button className={styles2.btn_rightbar_new}>
-            <Image width={10} height={10} src={newIcon} alt='start_icon' />
-            New
-          </button>
+      <section className={styles.rigtbar_section}>
+        <div className={styles.rigtbar_section_a}>
+          <h3 className={styles.mode_header}>Post Moderation</h3>
           {myPost.map((post) => {
             return (
-              <div
-                // onClick={() => router.push(`/post/community-post/${post?._id}`)}
-                key={post?._id}
-                className={styles2.post_card}
-              >
-                <div className={styles2.container_a}>
-                  {/* <Image width={40} height={40} src={userIcon} alt='user_pix' /> */}
-                  <div className={styles2.profile__image}>
-                    {post?.user?.username?.charAt(0).toUpperCase()}
-                  </div>
-                  <div className={styles2.inner_a}>
-                    <p>{post?.user?.username}</p>
-                    <p>{moment(post?.createdAt).fromNow()}</p>
-                  </div>
-                  {mySession?.data?.user?._id === post?.user?.id ? (
-                    <Link href={`/post/${post?._id}`}>
-                      <Image
-                        width={24}
-                        height={24}
-                        src={futureMoreVertical}
-                        alt='feature_pix'
-                      />
-                    </Link>
-                  ) : (
-                    <a href=''></a>
-                  )}
-                </div>
-                <h3 className={styles2.myHeader}>
-                  <Link href={`/post/community-post/${post?._id}`}>
-                    {post?.title}
-                  </Link>
-                </h3>
-                <Link
-                  className={styles2.myTitle}
-                  href={`/post/community-post/${post?._id}`}
+              serverSession?.user?._id === post?.user?.id && (
+                <div
+                  // onClick={() => router.push(`/post/community-post/${post?._id}`)}
+                  key={post?._id}
+                  className={styles.post_card}
                 >
-                  {replaceWithBr2(cutText(post?.content))}
-                </Link>
+                  <div className={styles.inner_leftSide}>
+                    <div className={styles.container_a}>
+                      {/* <Image width={40} height={40} src={userIcon} alt='user_pix' /> */}
+                      <div className={styles.profile__image}>
+                        {post?.user?.username?.charAt(0).toUpperCase()}
+                      </div>
+                      <div className={styles.inner_a}>
+                        <p>{post?.user?.username}</p>
+                        <p>{moment(post?.createdAt).fromNow()}</p>
+                      </div>
+                      <a href=''></a>
+                    </div>
+                    <h3 className={styles.myHeader}>
+                      <Link href={`/post/community-post/${post?._id}`}>
+                        {post?.title}
+                      </Link>
+                    </h3>
+                    <Link
+                      className={styles.myTitle}
+                      href={`/post/community-post/${post?._id}`}
+                    >
+                      {replaceWithBr2(cutText(post?.content))}
+                    </Link>
 
-                {/* {replaceWithBr2(post.content)} */}
-                {/* <div dangerouslySetInnerHTML={{__html: replaceWithBr(post?.content)}}/> */}
-                <div className={styles2.inner_b}>
-                  <div className={styles2.inner_ba}>
-                    <button className={styles2.btn_post}>
-                      {post.community}
-                      {''} Community
-                    </button>
+                    <div className={styles.inner_b}>
+                      <div className={styles.inner_ba}>
+                        <button className={styles.btn_post}>
+                          {post?.community}
+                          {''} community
+                        </button>
+                      </div>
+                      <div className={styles.inner_bb}>
+                        <a href=''>
+                          <Image src={numberOfViewsIcon} alt='views_pix' />
+                          125
+                        </a>
+                        <a href=''>
+                          <Image src={likeIcon} alt='views_pix' />
+                          125
+                        </a>
+                        <a href=''>
+                          <Image src={dislike} alt='views_pix' />
+                          125
+                        </a>
+                        <a href=''>
+                          <Image src={shareIcon} alt='views_pix' />
+                          155
+                        </a>
+                      </div>
+                    </div>
+                    <div className={styles.btn_container}>
+                      <button className={styles.btn_register}>
+                        Remove Post
+                      </button>
+                      <button className={styles.btn_register}>
+                        Publish Post
+                      </button>
+                    </div>
                   </div>
-                  <div className={styles2.inner_bb}>
-                    <a href=''>
-                      <Image src={numberOfViewsIcon} alt='views_pix' />
-                      125
-                    </a>
-                    <a href=''>
-                      <Image src={likeIcon} alt='views_pix' />
-                      125
-                    </a>
-                    <a href=''>
-                      <Image src={dislike} alt='views_pix' />
-                      125
-                    </a>
-                    <a href=''>
-                      <Image src={shareIcon} alt='views_pix' />
-                      155
-                    </a>
+                  <div className={styles.inner_rightSide}>
+                    <div className={styles.container_a}>
+                      {/* <Image width={40} height={40} src={userIcon} alt='user_pix' /> */}
+                      {/* <div className={styles.profile__image}>
+                      {post?.user?.username?.charAt(0).toUpperCase()}
+                    </div> */}
+                      <div className={styles.inner_a}>
+                        <p> {post?.community} Community</p>
+                        <p>55k Members</p>
+                      </div>
+                      <a href=''></a>
+                    </div>
+                    <div className={styles.btn_container}>
+                      <button className={styles.btn_register}>
+                        Block User
+                      </button>
+                      <button className={styles.btn_unblock}>
+                        Unblock User
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
+              )
             );
           })}
 
-          <div className={styles2.post_card}>
-            <div className={styles2.container_a}>
+          {/* <div className={styles.post_card}>
+            <div className={styles.container_a}>
               <Image width={40} height={40} src={userIcon} alt='user_pix' />
-              <div className={styles2.inner_a}>
+              <div className={styles.inner_a}>
                 <p>Golanginya</p>
                 <p>5 min ago</p>
               </div>
@@ -253,11 +271,11 @@ export default function Home({ session, myPost }) {
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Consequat
               aliquet maecenas ut sit nulla
             </p>
-            <div className={styles2.inner_b}>
-              <div className={styles2.inner_ba}>
-                <button className={styles2.btn_post}>goland community</button>
+            <div className={styles.inner_b}>
+              <div className={styles.inner_ba}>
+                <button className={styles.btn_post}>goland community</button>
               </div>
-              <div className={styles2.inner_bb}>
+              <div className={styles.inner_bb}>
                 <a href=''>
                   <Image src={numberOfViewsIcon} alt='views_pix' />
                   125
@@ -276,9 +294,8 @@ export default function Home({ session, myPost }) {
                 </a>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
-        <RightSideBar />
       </section>
     </div>
   );

@@ -77,9 +77,9 @@ const Createpost = ({ session }) => {
                   setPostData({ ...postData, community: e.target.value })
                 }
               >
-                <option value='design'>lorem Design</option>
-                <option value='javascript'>lorem Javascript</option>
-                <option value='bitcoin'>lorem Bitcoin</option>
+                <option value='Design'>lorem Design</option>
+                <option value='Javascript'>lorem Javascript</option>
+                <option value='Bitcoin'>lorem Bitcoin</option>
               </select>
             </div>
 

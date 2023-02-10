@@ -6,7 +6,7 @@ import sendPostIcon from '../../assets/sendPost_icon.svg';
 const Comment = () => {
   return (
     <div className={styles.wrapper}>
-      <h1>This is the comment section</h1>
+      <h1>Leave a comment</h1>
       <div className={styles.comment_container}>
         <input
           className={styles.txt_community}
