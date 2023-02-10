@@ -34,10 +34,10 @@ import shareIcon from '../assets/home-page/share-icon.svg';
 import { signIn, getSession, useSession } from 'next-auth/react';
 import axios from 'axios';
 
-import Router, { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import Link from 'next/link';
 
-export async function getServerSideProps(context) {
+export async function getStaticProps(context) {
   const session = await getSession(context);
 
   await db.connect();
@@ -55,6 +55,7 @@ export async function getServerSideProps(context) {
       // posts.map(db.convertDocToObj),
       // posts ? JSON.parse(JSON.stringify(posts)) : null
     },
+    revalidate: 5,
   };
 }
 
@@ -138,26 +139,6 @@ export default function Home({ session, myPost }) {
     let result = str.split('\n');
     return result.map((i, key) => <p key={key}>{i + '\n'}</p>);
   }
-
-  const [loadingData, setLoadingData] = React.useState(false);
-  React.useEffect(() => {
-    const start = () => {
-      console.log('start');
-      setLoading(true);
-    };
-    const end = () => {
-      console.log('finished');
-      setLoading(false);
-    };
-    Router.events.on('routeChangeStart', start);
-    Router.events.on('routeChangeComplete', end);
-    Router.events.on('routeChangeError', end);
-    return () => {
-      Router.events.off('routeChangeStart', start);
-      Router.events.off('routeChangeComplete', end);
-      Router.events.off('routeChangeError', end);
-    };
-  }, []);
   return (
     <div>
       <Navbar openMenu={toggle} session={session} />
@@ -177,84 +158,78 @@ export default function Home({ session, myPost }) {
             <Image width={10} height={10} src={newIcon} alt='start_icon' />
             New
           </button>
-          {loadingData ? (
-            <h1 style={{ textAlign: 'center' }}>Loading</h1>
-          ) : (
-            <div className={styles2.testinggg}>
-              {myPost.map((post) => {
-                return (
-                  <div
-                    // onClick={() => router.push(`/post/community-post/${post?._id}`)}
-                    key={post?._id}
-                    className={styles2.post_card}
-                  >
-                    <div className={styles2.container_a}>
-                      {/* <Image width={40} height={40} src={userIcon} alt='user_pix' /> */}
-                      <div className={styles2.profile__image}>
-                        {post?.user?.username?.charAt(0).toUpperCase()}
-                      </div>
-                      <div className={styles2.inner_a}>
-                        <p>{post?.user?.username}</p>
-                        <p>{moment(post?.createdAt).fromNow()}</p>
-                      </div>
-                      {mySession?.data?.user?._id === post?.user?.id ? (
-                        <Link href={`/post/${post?._id}`}>
-                          <Image
-                            width={24}
-                            height={24}
-                            src={futureMoreVertical}
-                            alt='feature_pix'
-                          />
-                        </Link>
-                      ) : (
-                        <a href=''></a>
-                      )}
-                    </div>
-                    <h3 className={styles2.myHeader}>
-                      <Link href={`/post/community-post/${post?._id}`}>
-                        {post?.title}
-                      </Link>
-                    </h3>
-                    <Link
-                      className={styles2.myTitle}
-                      href={`/post/community-post/${post?._id}`}
-                    >
-                      {replaceWithBr2(cutText(post?.content))}
-                    </Link>
-
-                    {/* {replaceWithBr2(post.content)} */}
-                    {/* <div dangerouslySetInnerHTML={{__html: replaceWithBr(post?.content)}}/> */}
-                    <div className={styles2.inner_b}>
-                      <div className={styles2.inner_ba}>
-                        <button className={styles2.btn_post}>
-                          {post.community}
-                          {''} Community
-                        </button>
-                      </div>
-                      <div className={styles2.inner_bb}>
-                        <a href=''>
-                          <Image src={numberOfViewsIcon} alt='views_pix' />
-                          125
-                        </a>
-                        <a href=''>
-                          <Image src={likeIcon} alt='views_pix' />
-                          125
-                        </a>
-                        <a href=''>
-                          <Image src={dislike} alt='views_pix' />
-                          125
-                        </a>
-                        <a href=''>
-                          <Image src={shareIcon} alt='views_pix' />
-                          155
-                        </a>
-                      </div>
-                    </div>
+          {myPost.map((post) => {
+            return (
+              <div
+                // onClick={() => router.push(`/post/community-post/${post?._id}`)}
+                key={post?._id}
+                className={styles2.post_card}
+              >
+                <div className={styles2.container_a}>
+                  {/* <Image width={40} height={40} src={userIcon} alt='user_pix' /> */}
+                  <div className={styles2.profile__image}>
+                    {post?.user?.username?.charAt(0).toUpperCase()}
                   </div>
-                );
-              })}
-            </div>
-          )}
+                  <div className={styles2.inner_a}>
+                    <p>{post?.user?.username}</p>
+                    <p>{moment(post?.createdAt).fromNow()}</p>
+                  </div>
+                  {mySession?.data?.user?._id === post?.user?.id ? (
+                    <Link href={`/post/${post?._id}`}>
+                      <Image
+                        width={24}
+                        height={24}
+                        src={futureMoreVertical}
+                        alt='feature_pix'
+                      />
+                    </Link>
+                  ) : (
+                    <a href=''></a>
+                  )}
+                </div>
+                <h3 className={styles2.myHeader}>
+                  <Link href={`/post/community-post/${post?._id}`}>
+                    {post?.title}
+                  </Link>
+                </h3>
+                <Link
+                  className={styles2.myTitle}
+                  href={`/post/community-post/${post?._id}`}
+                >
+                  {replaceWithBr2(cutText(post?.content))}
+                </Link>
+
+                {/* {replaceWithBr2(post.content)} */}
+                {/* <div dangerouslySetInnerHTML={{__html: replaceWithBr(post?.content)}}/> */}
+                <div className={styles2.inner_b}>
+                  <div className={styles2.inner_ba}>
+                    <button className={styles2.btn_post}>
+                      {post.community}
+                      {''} Community
+                    </button>
+                  </div>
+                  <div className={styles2.inner_bb}>
+                    <a href=''>
+                      <Image src={numberOfViewsIcon} alt='views_pix' />
+                      125
+                    </a>
+                    <a href=''>
+                      <Image src={likeIcon} alt='views_pix' />
+                      125
+                    </a>
+                    <a href=''>
+                      <Image src={dislike} alt='views_pix' />
+                      125
+                    </a>
+                    <a href=''>
+                      <Image src={shareIcon} alt='views_pix' />
+                      155
+                    </a>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
 
           <div className={styles2.post_card}>
             <div className={styles2.container_a}>
