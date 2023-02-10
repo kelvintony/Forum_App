@@ -155,7 +155,7 @@ const Navbar = (props) => {
               </li>
               {session?.user?.isAdmin && (
                 <li onClick={toggle} className={styles.profileItems}>
-                  <Link href='/create-community'>Create an interest</Link>
+                  <Link href='/admin/create-interest'>Create an interest</Link>
                 </li>
               )}
               <li onClick={toggle} className={styles.profileItems}>
