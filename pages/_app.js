@@ -2,6 +2,7 @@ import '../styles/globals.css';
 import { SessionProvider } from 'next-auth/react';
 import React from 'react';
 import Router from 'next/router';
+import Navbar from '../components/Navbar/Navbar';
 
 import Loader from '../components/Loader/Loader';
 
@@ -27,8 +28,9 @@ function MyApp({ Component, pageProps }) {
   }, []);
   return (
     <SessionProvider session={pageProps.session}>
-      {/* {loading ? <Loader /> : <Component {...pageProps} />} */}
-      <Component {...pageProps} />
+      {loading ? <Loader /> : <Component {...pageProps} />}
+      {/* <Navbar /> */}
+      {/* <Component {...pageProps} /> */}
     </SessionProvider>
   );
 }
