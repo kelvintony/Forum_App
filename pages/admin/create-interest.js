@@ -24,18 +24,13 @@ export async function getServerSideProps(context) {
 }
 
 const createinterest = ({ session }) => {
-  // const router = useRouter();
-  // const handleClose = () => {
-  //   router.back();
-  // };
-
-  // console.log('test a');
+  const router = useRouter();
   return (
     <div className={styles.interest_container}>
       <div className={styles.container}>
         <div className={styles.inner_a}>
           <p>Create an Interest</p>
-          <button>
+          <button onClick={() => router.back()}>
             {' '}
             <Image src={cancelIcon} alt='cancel_pix' />{' '}
           </button>
@@ -62,7 +57,9 @@ const createinterest = ({ session }) => {
         </div>
 
         <div className={styles.interest_buttons}>
-          <button className={styles.btn_cancel}>Cancel</button>
+          <button onClick={() => router.back()} className={styles.btn_cancel}>
+            Cancel
+          </button>
           <button className={styles.btn_create}>Create interest</button>
         </div>
       </div>
