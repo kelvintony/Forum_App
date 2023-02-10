@@ -2,7 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import styles from '../../styles/CreateInterest.module.css';
 import cancelIcon from '../../assets/single_community/cancel_icon.svg';
-import { useRouter } from 'next/router';
+// import { useRouter } from 'next/router';
 
 import { getSession } from 'next-auth/react';
 
@@ -24,7 +24,7 @@ export async function getServerSideProps(context) {
 }
 
 const createinterest = ({ session }) => {
-  const router = useRouter();
+  // const router = useRouter();
   return (
     <div className={styles.interest_container}>
       <div className={styles.container}>
