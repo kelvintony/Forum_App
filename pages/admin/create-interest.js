@@ -30,7 +30,7 @@ const createinterest = ({ session }) => {
       <div className={styles.container}>
         <div className={styles.inner_a}>
           <p>Create an Interest</p>
-          <button onClick={() => router.back()}>
+          <button>
             {' '}
             <Image src={cancelIcon} alt='cancel_pix' />{' '}
           </button>
