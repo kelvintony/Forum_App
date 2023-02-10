@@ -2,6 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import styles from '../../styles/CreateInterest.module.css';
 import cancelIcon from '../../assets/single_community/cancel_icon.svg';
+import { useRouter } from 'next/router';
 
 import { signIn, getSession } from 'next-auth/react';
 
@@ -23,12 +24,17 @@ export async function getServerSideProps(context) {
 }
 
 const createinterest = ({ session }) => {
+  const router = useRouter();
+  const handleClose = () => {
+    router.back();
+  };
+
   return (
     <div className={styles.interest_container}>
       <div className={styles.container}>
         <div className={styles.inner_a}>
           <p>Create an Interest</p>
-          <button>
+          <button onClick={handleClose}>
             {' '}
             <Image src={cancelIcon} alt='cancel_pix' />{' '}
           </button>
@@ -55,7 +61,9 @@ const createinterest = ({ session }) => {
         </div>
 
         <div className={styles.interest_buttons}>
-          <button className={styles.btn_cancel}>Cancel</button>
+          <button onClick={handleClose} className={styles.btn_cancel}>
+            Cancel
+          </button>
           <button className={styles.btn_create}>Create interest</button>
         </div>
       </div>
