@@ -4,7 +4,7 @@ import styles from '../../styles/CreateInterest.module.css';
 import cancelIcon from '../../assets/single_community/cancel_icon.svg';
 import { useRouter } from 'next/router';
 
-import { signIn, getSession } from 'next-auth/react';
+import { getSession } from 'next-auth/react';
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);
@@ -57,9 +57,7 @@ const createinterest = ({ session }) => {
         </div>
 
         <div className={styles.interest_buttons}>
-          <button onClick={() => router.back()} className={styles.btn_cancel}>
-            Cancel
-          </button>
+          <button className={styles.btn_cancel}>Cancel</button>
           <button className={styles.btn_create}>Create interest</button>
         </div>
       </div>
