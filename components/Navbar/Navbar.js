@@ -162,7 +162,7 @@ const Navbar = (props) => {
                 <Link href=''>Profile</Link>
               </li>
               <li onClick={toggle} className={styles.profileItems}>
-                <Link href=''>Settings</Link>
+                <Link href='/moderate-post'>Settings</Link>
               </li>
               <hr />
               <li onClick={logoutClickHandler} className={styles.profileItems}>
