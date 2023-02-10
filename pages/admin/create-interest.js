@@ -28,7 +28,8 @@ const createinterest = ({ session }) => {
   const handleClose = () => {
     router.back();
   };
-  console.log('test');
+
+  // console.log('test a');
   return (
     <div className={styles.interest_container}>
       <div className={styles.container}>
