@@ -21,56 +21,55 @@ import register_logo from '../../assets/user_plus.svg';
 import menuIcon from '../../assets/home-page/menu-icon.svg';
 
 const Navbar = (props) => {
-  const [showMenu, setshowMenu] = useState(false);
+const [showMenu, setshowMenu] = useState(false);
 
-  const { status, data: session } = useSession();
+const { status, data: session } = useSession();
 
-  const [user, setUser] = useState('');
+const [user, setUser] = useState('');
 
-  const router = useRouter();
+const router = useRouter();
 
-  const { pathname } = router;
+const { pathname } = router;
 
-  useEffect(() => {
-    localStorage.setItem('User', JSON.stringify(session));
+useEffect(() => {
+localStorage.setItem('User', JSON.stringify(session));
 
     setUser(JSON.parse(localStorage.getItem('User')));
-  }, [session, pathname]);
 
-  const toggle = () => {
-    setshowMenu(!showMenu);
-  };
+}, [session, pathname]);
 
-  console.log('from local storage', user);
+const toggle = () => {
+setshowMenu(!showMenu);
+};
 
-  const logoutClickHandler = () => {
-    window.localStorage.clear();
-    Cookies.remove('next-auth.csrf-token');
-    Cookies.remove('next-auth.session-token');
-    signOut({ callbackUrl: '/' });
-  };
-  // console.log('from navbar component', session);
+console.log('from local storage', user);
 
-  return (
-    <nav className={styles.navbar_container}>
-      <div className={styles.hamburger_container}>
-        <button
-          className={styles.hamburger_menu}
-          onClick={() => props.openMenu()}
-        >
-          {' '}
-          <Image src={menuIcon} width={30} height={30} alt='menu_icon' />
-        </button>
-        <Link href='/' className={styles.navbar_logo}>
-          <p>
-            Forumix222 <IoLogoFoursquare color='#BE272A' size={25} />{' '}
-          </p>
-          {/* <Image className={styles.logo_image} src={logo} alt='pix-a' /> */}
-        </Link>
-      </div>
+const logoutClickHandler = () => {
+window.localStorage.clear();
+Cookies.remove('next-auth.csrf-token');
+Cookies.remove('next-auth.session-token');
+signOut({ callbackUrl: '/' });
+};
+// console.log('from navbar component', session);
+return (
+<nav className={styles.navbar_container}>
+<div className={styles.hamburger_container}>
+<button
+className={styles.hamburger_menu}
+onClick={() => props.openMenu()} >
+{' '}
+<Image src={menuIcon} width={30} height={30} alt='menu_icon' />
+</button>
+<Link href='/' className={styles.navbar_logo}>
+<p>
+Forumix222 <IoLogoFoursquare color='#BE272A' size={25} />{' '}
+</p>
+{/_ <Image className={styles.logo_image} src={logo} alt='pix-a' /> _/}
+</Link>
+</div>
 
       <div className={styles.navbar_btn}>
-        {user ? (
+        {session ? (
           <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
             {' '}
             {/* <h4 style={{ color: ' #04AA6D', fontSize: '12px' }}>{user?.result?.username}</h4>{' '} */}
@@ -96,10 +95,10 @@ const Navbar = (props) => {
             </Link>
           </div>
         )}
-        {user && (
+        {session && (
           <div className={styles.profile_container}>
             <button onClick={toggle} className={styles.btn_profileImage}>
-              {user && user?.user?.username.charAt(0).toUpperCase()}
+              {session && session?.user?.username.charAt(0).toUpperCase()}
               {/* <Image className={styles.profile_image} src={profileImage} alt='profile_pix' /> */}
             </button>
             <button
@@ -120,7 +119,7 @@ const Navbar = (props) => {
           </div>
         )}
 
-        {user && (
+        {session && (
           <div
             className={
               showMenu ? styles.profile_dropdown : styles.close_profileMenu
@@ -128,9 +127,11 @@ const Navbar = (props) => {
           >
             <ul>
               <li>
-                <h3 className={styles.profile_Name}>{user?.user?.username}</h3>
+                <h3 className={styles.profile_Name}>
+                  {session?.user?.username}
+                </h3>
                 <span className={styles.proile_userName}>
-                  @{user?.user?.username}
+                  @{session?.user?.username}
                 </span>
               </li>
               <hr />
@@ -143,7 +144,7 @@ const Navbar = (props) => {
               <li onClick={toggle} className={styles.profileItems}>
                 <Link href='/create-community'>Create a communities</Link>
               </li>
-              {user?.user?.isAdmin && (
+              {session?.user?.isAdmin && (
                 <li onClick={toggle} className={styles.profileItems}>
                   <Link href='/admin/create-interest'>Create an interest</Link>
                 </li>
@@ -162,14 +163,15 @@ const Navbar = (props) => {
                 </button>
               </li>
               {/* <li onClick={logoutUser} className={styles.btn_register}>
-							<Link  href='/'>Logout</Link>
-						</li> */}
+    						<Link  href='/'>Logout</Link>
+    					</li> */}
             </ul>
           </div>
         )}
       </div>
     </nav>
-  );
+
+);
 };
 
 export default Navbar;
