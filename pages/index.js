@@ -37,7 +37,7 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
-export async function getServerSideProps(context) {
+export async function getStaticProps(context) {
   const session = await getSession(context);
 
   await db.connect();
@@ -55,6 +55,7 @@ export async function getServerSideProps(context) {
       // posts.map(db.convertDocToObj),
       // posts ? JSON.parse(JSON.stringify(posts)) : null
     },
+    revalidate: 1,
   };
 }
 
@@ -140,7 +141,7 @@ export default function Home({ session, myPost }) {
   }
   return (
     <div>
-      <Navbar openMenu={toggle} session={session} />
+      {/* <Navbar openMenu={toggle} session={session} /> */}
       <LeftSideBar burgerMenu={mobileMenu} closeMenu={toggle} />
       <section className={styles2.rigtbar_section}>
         <div className={styles2.rigtbar_section_a}>
