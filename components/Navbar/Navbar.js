@@ -71,7 +71,7 @@ const Navbar = (props) => {
         </button>
         <Link href='/' className={styles.navbar_logo}>
           <p>
-            Forumix <IoLogoFoursquare color='#BE272A' size={25} />{' '}
+            Forumix222 <IoLogoFoursquare color='#BE272A' size={25} />{' '}
           </p>
           {/* <Image className={styles.logo_image} src={logo} alt='pix-a' /> */}
         </Link>
