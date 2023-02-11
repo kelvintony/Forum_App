@@ -11,6 +11,9 @@ import loginPix from '../assets/login_pix.png';
 import Navbar from '../components/Navbar/Navbar';
 import LeftSideBar from '../components/leftSideBar/LeftSideBar';
 
+import { useStore } from '../context';
+import { authConstants } from '../context/constants';
+
 const Signin = ({ session }) => {
   //toggle menu section
   const [mobileMenu, setmobileMenu] = useState(false);
@@ -48,6 +51,8 @@ const Signin = ({ session }) => {
 
   const mySession = getSession();
 
+  const [state, dispatch] = useStore();
+
   const submitFormData = async () => {
     if (formData.email.length === 0 || formData.password.length === 0) {
       setFormDataError(true);
@@ -55,6 +60,9 @@ const Signin = ({ session }) => {
 
     if (formData.email && formData.password) {
       setLoading(true);
+      dispatch({
+        type: authConstants.LOGIN_REQUEST,
+      });
       const result = await signIn('credentials', {
         redirect: false,
         email: formData.email,
@@ -64,16 +72,31 @@ const Signin = ({ session }) => {
       try {
         if (result.ok) {
           setLoading(false);
-          console.log(result);
-          console.log(mySession2);
+          //for the context
+          const otherSession = await getSession();
+          dispatch({
+            type: authConstants.LOGIN_SUCCESS,
+            payload: otherSession,
+          });
+          // console.log(mySession2);
           router.replace('/');
         } else {
           setLoading(false);
+          //for the context
+          dispatch({
+            type: authConstants.LOGIN_FAILURE,
+            payload: result.error,
+          });
           setErrorMessage(result.error);
           // console.log(result);
           // console.log(result.error);
         }
       } catch (error) {
+        setLoading(false);
+        // dispatch({
+        //   type: authConstants.LOGIN_FAILURE,
+        //   payload: result.error,
+        // });
         console.log(error);
       }
     }

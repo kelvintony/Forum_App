@@ -5,6 +5,8 @@ import Router from 'next/router';
 import Navbar from '../components/Navbar/Navbar';
 import Layout from '../components/Layout';
 
+import { StoreProvider } from '../context';
+
 import Loader from '../components/Loader/Loader';
 
 function MyApp({ Component, pageProps }) {
@@ -28,13 +30,15 @@ function MyApp({ Component, pageProps }) {
     };
   }, []);
   return (
-    <SessionProvider session={pageProps.session}>
-      {/* {loading ? <Loader /> : <Component {...pageProps} />} */}
-      {/* <Navbar /> */}
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-    </SessionProvider>
+    <StoreProvider>
+      <SessionProvider session={pageProps.session}>
+        {/* {loading ? <Loader /> : <Component {...pageProps} />} */}
+        {/* <Navbar /> */}
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </SessionProvider>
+    </StoreProvider>
   );
 }
 

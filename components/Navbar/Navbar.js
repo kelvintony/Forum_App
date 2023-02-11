@@ -7,6 +7,8 @@ import styles from './Navbar.module.css';
 import logo from '../../assets/logo.svg';
 import profileImage from '../../assets/home-page/user-icon.svg';
 
+import { useStore } from '../../context';
+
 import { signOut, signIn, getSession, useSession } from 'next-auth/react';
 import Cookies from 'js-cookie';
 
@@ -31,17 +33,22 @@ const Navbar = (props) => {
 
   const { pathname } = router;
 
-  useEffect(() => {
-    window.localStorage.setItem('User', JSON.stringify(session));
+  const [state, dispatch] = useStore();
 
-    setUser(JSON.parse(window.localStorage.getItem('User')));
+  // console.log('from store', { state });
+
+  // console.log('from nav', user);
+
+  useEffect(() => {
+    // window.localStorage.setItem('User', JSON.stringify(session));
+
+    // setUser(JSON.parse(window.localStorage.getItem('User')));
+    setUser(state.user);
   }, [session, pathname]);
 
   const toggle = () => {
     setshowMenu(!showMenu);
   };
-
-  console.log('from local storage', user);
 
   const logoutClickHandler = () => {
     window.localStorage.clear();
@@ -70,7 +77,7 @@ const Navbar = (props) => {
       </div>
 
       <div className={styles.navbar_btn}>
-        {user ? (
+        {user.authenticated ? (
           <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
             {' '}
             {/* <h4 style={{ color: ' #04AA6D', fontSize: '12px' }}>{user?.result?.username}</h4>{' '} */}
@@ -96,10 +103,10 @@ const Navbar = (props) => {
             </Link>
           </div>
         )}
-        {user && (
+        {user.authenticated && (
           <div className={styles.profile_container}>
             <button onClick={toggle} className={styles.btn_profileImage}>
-              {user && user?.user?.username.charAt(0).toUpperCase()}
+              {user && user?.username?.charAt(0).toUpperCase()}
               {/* <Image className={styles.profile_image} src={profileImage} alt='profile_pix' /> */}
             </button>
             <button
@@ -120,7 +127,7 @@ const Navbar = (props) => {
           </div>
         )}
 
-        {user && (
+        {user.authenticated && (
           <div
             className={
               showMenu ? styles.profile_dropdown : styles.close_profileMenu
@@ -128,9 +135,9 @@ const Navbar = (props) => {
           >
             <ul>
               <li>
-                <h3 className={styles.profile_Name}>{user?.user?.username}</h3>
+                <h3 className={styles.profile_Name}>{user?.username}</h3>
                 <span className={styles.proile_userName}>
-                  @{user?.user?.username}
+                  @{user?.username}
                 </span>
               </li>
               <hr />
@@ -143,7 +150,7 @@ const Navbar = (props) => {
               <li onClick={toggle} className={styles.profileItems}>
                 <Link href='/create-community'>Create a communities</Link>
               </li>
-              {user?.user?.isAdmin && (
+              {user?.isAdmin && (
                 <li onClick={toggle} className={styles.profileItems}>
                   <Link href='/admin/create-interest'>Create an interest</Link>
                 </li>
