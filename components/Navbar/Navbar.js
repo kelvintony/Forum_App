@@ -32,9 +32,9 @@ const Navbar = (props) => {
   const { pathname } = router;
 
   useEffect(() => {
-    localStorage.setItem('User', JSON.stringify(session));
+    window.localStorage.setItem('User', JSON.stringify(session));
 
-    setUser(JSON.parse(localStorage.getItem('User')));
+    setUser(JSON.parse(window.localStorage.getItem('User')));
   }, [session, pathname]);
 
   const toggle = () => {
