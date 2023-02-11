@@ -23,34 +23,25 @@ import menuIcon from '../../assets/home-page/menu-icon.svg';
 const Navbar = (props) => {
   const [showMenu, setshowMenu] = useState(false);
 
-  const toggle = () => {
-    setshowMenu(!showMenu);
-  };
+  const { status, data: session } = useSession();
+
+  const [user, setUser] = useState('');
 
   const router = useRouter();
 
   const { pathname } = router;
-  const [user, setUser] = useState();
 
-  const { status, data: session } = useSession();
-  // console.log('session from navbar', status);
+  useEffect(() => {
+    localStorage.setItem('User', JSON.stringify(session));
 
-  // const mySession = useSession();
-  // console.log('session from navbar', mySession);
+    setUser(JSON.parse(localStorage.getItem('User')));
+  }, [session, pathname]);
 
-  const logoutUser = async () => {
-    await axios
-      .get('http://localhost:5000/user//logout')
-      .then((res) => {
-        if (res) {
-          console.log('logout success');
-        }
-      })
-      .catch((err) => {});
-    window.sessionStorage.clear();
-    setUser(null);
-    window.location = '/';
+  const toggle = () => {
+    setshowMenu(!showMenu);
   };
+
+  console.log('from local storage', user);
 
   const logoutClickHandler = () => {
     window.localStorage.clear();

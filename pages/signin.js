@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import SiginLoader from '../components/SigninLoader/SiginLoader';
-import { signIn, getSession } from 'next-auth/react';
+import { signIn, getSession, useSession } from 'next-auth/react';
 
 import styles from '../styles/Signup.module.css';
 import Image from 'next/image';
@@ -26,6 +26,8 @@ const Signin = ({ session }) => {
   const { redirect } = router.query;
 
   const [user, setUser] = useState(null);
+
+  const mySession2 = useSession();
 
   // const userDummy=globalThis?.window?.sessionStorage.getItem('profile')
 
@@ -62,8 +64,8 @@ const Signin = ({ session }) => {
       try {
         if (result.ok) {
           setLoading(false);
-          // console.log(result);
-          // console.log(session);
+          console.log(result);
+          console.log(mySession2);
           router.replace('/');
         } else {
           setLoading(false);
@@ -79,7 +81,7 @@ const Signin = ({ session }) => {
 
   return (
     <div>
-      <Navbar openMenu={toggle} />
+      {/* <Navbar openMenu={toggle} /> */}
       {mobileMenu && <LeftSideBar burgerMenu={mobileMenu} closeMenu={toggle} />}
       <section className={styles.register_container}>
         <div className={styles.register_inner_container}>
