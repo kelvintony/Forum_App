@@ -65,6 +65,9 @@ const Navbar = (props) => {
     signOut({ callbackUrl: '/' });
   };
   // console.log('from navbar component', session);
+  if (user === '') {
+    return null;
+  }
 
   return (
     <nav className={styles.navbar_container}>
