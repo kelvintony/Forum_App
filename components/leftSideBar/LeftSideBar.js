@@ -16,9 +16,13 @@ import businessIcon from '../../assets/home-page/business-icon.svg';
 
 import { GrFormClose } from 'react-icons/gr';
 import { IoLogoFoursquare } from 'react-icons/io';
+import { useStore } from '../../context';
+import { authConstants } from '../../context/constants';
 
 const LeftSideBar = (props) => {
   const router = useRouter();
+
+  const [state, dispatch] = useStore();
 
   const navigateToSingleCommunity = () => {
     router.push('/single-community');
@@ -146,7 +150,7 @@ const LeftSideBar = (props) => {
         </div>
       </section>
 
-      {props.burgerMenu && (
+      {state.harmburger && (
         <div className={styles.harmbuger_slide}>
           <section className={styles.leftbar_section}>
             <div className={styles.harmbuger_header}>
@@ -155,7 +159,11 @@ const LeftSideBar = (props) => {
               </p>
               <button
                 className={styles.close_Button}
-                onClick={() => props.closeMenu()}
+                onClick={() => {
+                  dispatch({
+                    type: authConstants.TOGGLE_HARMBUGGER,
+                  });
+                }}
               >
                 <GrFormClose size={25} />
               </button>
@@ -298,7 +306,11 @@ const LeftSideBar = (props) => {
           </section>
           <div
             className={styles.overlay}
-            onClick={() => props.closeMenu()}
+            onClick={() => {
+              dispatch({
+                type: authConstants.TOGGLE_HARMBUGGER,
+              });
+            }}
           ></div>
         </div>
       )}

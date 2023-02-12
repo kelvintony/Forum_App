@@ -150,7 +150,7 @@ export default function ModeratePost({ session: serverSession, myPost }) {
   }
   return (
     <div>
-      <Navbar openMenu={toggle} session={session} />
+      {/* <Navbar openMenu={toggle} session={session} /> */}
       <LeftSideBar burgerMenu={mobileMenu} closeMenu={toggle} />
       <section className={styles.rigtbar_section}>
         <div className={styles.rigtbar_section_a}>

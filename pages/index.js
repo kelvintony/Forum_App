@@ -36,6 +36,7 @@ import axios from 'axios';
 
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import { useStore } from '../context';
 
 export async function getStaticProps(context) {
   const session = await getSession(context);
@@ -93,12 +94,9 @@ export default function Home({ session, myPost }) {
     setmobileMenu(!mobileMenu);
   };
 
-  useEffect(() => {
-    window.localStorage.setItem(
-      'profile',
-      session ? JSON.stringify(session?.user) : ''
-    );
-  }, []);
+  // const toggle2 = () => {
+  //   setmobileMenu(!mobileMenu);
+  // };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -141,7 +139,7 @@ export default function Home({ session, myPost }) {
   }
   return (
     <div>
-      <Navbar openMenu={toggle} session={session} />
+      {/* <Navbar openMenu={toggle} session={session} /> */}
       <LeftSideBar burgerMenu={mobileMenu} closeMenu={toggle} />
       <section className={styles2.rigtbar_section}>
         <div className={styles2.rigtbar_section_a}>
