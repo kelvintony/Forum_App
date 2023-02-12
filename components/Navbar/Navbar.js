@@ -42,8 +42,8 @@ const Navbar = (props) => {
   useEffect(() => {
     // window.localStorage.setItem('User', JSON.stringify(session));
 
-    // setUser(JSON.parse(window.localStorage.getItem('User')));
-    setUser(state.user);
+    setUser(JSON.parse(window.localStorage.getItem('userCredentials')));
+    // setUser(state.user);
   }, [session, pathname]);
 
   const toggle = () => {
@@ -77,7 +77,7 @@ const Navbar = (props) => {
       </div>
 
       <div className={styles.navbar_btn}>
-        {user.authenticated ? (
+        {user ? (
           <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
             {' '}
             {/* <h4 style={{ color: ' #04AA6D', fontSize: '12px' }}>{user?.result?.username}</h4>{' '} */}
@@ -103,10 +103,10 @@ const Navbar = (props) => {
             </Link>
           </div>
         )}
-        {user.authenticated && (
+        {user && (
           <div className={styles.profile_container}>
             <button onClick={toggle} className={styles.btn_profileImage}>
-              {user && user?.username?.charAt(0).toUpperCase()}
+              {user && user?.user?.username?.charAt(0).toUpperCase()}
               {/* <Image className={styles.profile_image} src={profileImage} alt='profile_pix' /> */}
             </button>
             <button
@@ -127,7 +127,7 @@ const Navbar = (props) => {
           </div>
         )}
 
-        {user.authenticated && (
+        {user && (
           <div
             className={
               showMenu ? styles.profile_dropdown : styles.close_profileMenu
@@ -135,9 +135,9 @@ const Navbar = (props) => {
           >
             <ul>
               <li>
-                <h3 className={styles.profile_Name}>{user?.username}</h3>
+                <h3 className={styles.profile_Name}>{user?.user?.username}</h3>
                 <span className={styles.proile_userName}>
-                  @{user?.username}
+                  @{user?.user?.username}
                 </span>
               </li>
               <hr />
@@ -150,7 +150,7 @@ const Navbar = (props) => {
               <li onClick={toggle} className={styles.profileItems}>
                 <Link href='/create-community'>Create a communities</Link>
               </li>
-              {user?.isAdmin && (
+              {user?.user?.isAdmin && (
                 <li onClick={toggle} className={styles.profileItems}>
                   <Link href='/admin/create-interest'>Create an interest</Link>
                 </li>

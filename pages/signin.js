@@ -78,6 +78,10 @@ const Signin = ({ session }) => {
             type: authConstants.LOGIN_SUCCESS,
             payload: otherSession,
           });
+          window.localStorage.setItem(
+            'userCredentials',
+            JSON.stringify(otherSession)
+          );
           // console.log(mySession2);
           router.replace('/');
         } else {
@@ -104,7 +108,7 @@ const Signin = ({ session }) => {
 
   return (
     <div>
-      {/* <Navbar openMenu={toggle} /> */}
+      <Navbar openMenu={toggle} />
       {mobileMenu && <LeftSideBar burgerMenu={mobileMenu} closeMenu={toggle} />}
       <section className={styles.register_container}>
         <div className={styles.register_inner_container}>
