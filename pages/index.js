@@ -37,6 +37,7 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { useStore } from '../context';
+import { authConstants } from '../context/constants';
 
 export async function getStaticProps(context) {
   const session = await getSession(context);
@@ -74,42 +75,35 @@ function reducer(state, action) {
 }
 
 export default function Home({ session, myPost }) {
-  const [{ loading, error, posts }, dispatch] = useReducer(reducer, {
-    loading: true,
-    posts: [],
-    error: '',
-  });
+  // const [{ loading, error, posts }, dispatch] = useReducer(reducer, {
+  //   loading: true,
+  //   posts: [],
+  //   error: '',
+  // });
 
   const [mobileMenu, setmobileMenu] = useState(false);
-  // const [getPost, setGetPost] = useState('');
-  // const [loadme, setLoadme] = useState(false);
 
   const router = useRouter();
   const mySession = useSession();
 
-  //   console.log("cusSess", mySession);
-  // console.log('cusSess', mySession?.data?.user._id);
-
   const toggle = () => {
-    setmobileMenu(!mobileMenu);
+    dispatch({
+      type: authConstants.TOGGLE,
+    });
   };
 
-  // const toggle2 = () => {
-  //   setmobileMenu(!mobileMenu);
-  // };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        dispatch({ type: 'FETCH_REQUEST' });
-        const { data } = await axios.get(`/api/post`);
-        dispatch({ type: 'FETCH_SUCCESS', payload: data });
-      } catch (err) {
-        dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
-      }
-    };
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       dispatch({ type: 'FETCH_REQUEST' });
+  //       const { data } = await axios.get(`/api/post`);
+  //       dispatch({ type: 'FETCH_SUCCESS', payload: data });
+  //     } catch (err) {
+  //       dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
 
   //
   //
@@ -140,7 +134,7 @@ export default function Home({ session, myPost }) {
   return (
     <div>
       {/* <Navbar openMenu={toggle} session={session} /> */}
-      <LeftSideBar burgerMenu={mobileMenu} closeMenu={toggle} />
+      <LeftSideBar />
       <section className={styles2.rigtbar_section}>
         <div className={styles2.rigtbar_section_a}>
           <button className={styles2.btn_rightbar_trending}>

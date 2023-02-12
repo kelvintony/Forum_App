@@ -159,24 +159,39 @@ const Navbar = (props) => {
               </li>
               <hr />
               <li onClick={toggle} className={styles.profileItems}>
-                <Link href=''>Dashboard</Link>
+                <Link style={{ display: 'block' }} href=''>
+                  Dashboard
+                </Link>
               </li>
               <li onClick={toggle} className={styles.profileItems}>
-                <Link href='/post/create-post'>Write a post</Link>
+                <Link style={{ display: 'block' }} href='/post/create-post'>
+                  Write a post
+                </Link>
               </li>
               <li onClick={toggle} className={styles.profileItems}>
-                <Link href='/create-community'>Create a communities</Link>
+                <Link style={{ display: 'block' }} href='/create-community'>
+                  Create a communities
+                </Link>
               </li>
               {user?.user?.isAdmin && (
                 <li onClick={toggle} className={styles.profileItems}>
-                  <Link href='/admin/create-interest'>Create an interest</Link>
+                  <Link
+                    style={{ display: 'block' }}
+                    href='/admin/create-interest'
+                  >
+                    Create an interest
+                  </Link>
                 </li>
               )}
               <li onClick={toggle} className={styles.profileItems}>
-                <Link href=''>Profile</Link>
+                <Link style={{ display: 'block' }} href=''>
+                  Profile
+                </Link>
               </li>
               <li onClick={toggle} className={styles.profileItems}>
-                <Link href='/moderate-post'>Settings</Link>
+                <Link style={{ display: 'block' }} href='/moderate-post'>
+                  Settings
+                </Link>
               </li>
               <hr />
               <li onClick={logoutClickHandler} className={styles.profileItems}>

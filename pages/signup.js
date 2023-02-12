@@ -11,6 +11,8 @@ import Image from 'next/image';
 import registerPix from '../assets/register_pix.png';
 import Navbar from '../components/Navbar/Navbar';
 import LeftSideBar from '../components/leftSideBar/LeftSideBar';
+import { authConstants } from '../context/constants';
+import { useStore } from '../context';
 
 // style={{cursor:loading&&'progress'}}
 export async function getServerSideProps(context) {
@@ -37,13 +39,6 @@ const authAxios = axios.create({
 
 // style={{cursor:loading&&'progress'}}
 const Signup = ({ session }) => {
-  //toggle menu section
-  const [mobileMenu, setmobileMenu] = useState(false);
-
-  const toggle = () => {
-    setmobileMenu(!mobileMenu);
-  };
-
   const router = useRouter();
 
   // const { pathname, asPath } = router;
@@ -51,6 +46,8 @@ const Signup = ({ session }) => {
   // const {redirect}= router.query
 
   const [user, setUser] = useState(null);
+
+  const [state, dispatch] = useStore();
 
   const [formData, setFormData] = useState({
     username: '',
@@ -74,6 +71,13 @@ const Signup = ({ session }) => {
 
     setLoadComponent(false);
   }, []);
+
+  //toggle menu section
+  const toggle = () => {
+    dispatch({
+      type: authConstants.TOGGLE,
+    });
+  };
 
   const submitFormData = async () => {
     if (
@@ -121,7 +125,7 @@ const Signup = ({ session }) => {
   return (
     <div>
       {/* <Navbar openMenu={toggle} /> */}
-      {mobileMenu && <LeftSideBar burgerMenu={mobileMenu} closeMenu={toggle} />}
+      {state.harmburger && <LeftSideBar />}
 
       <section className={styles.register_container}>
         <div className={styles.register_inner_container}>

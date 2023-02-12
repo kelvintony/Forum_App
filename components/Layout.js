@@ -11,7 +11,7 @@ const Layout = ({ children }) => {
     const checkAuthentication = async () => {
       const authenticated = state?.user?.authenticated;
       if (!authenticated) {
-        console.log('from Layout', authenticated);
+        // console.log('from Layout', authenticated);
 
         dispatch({ type: authConstants.LOGIN_REQUEST });
         const session = await getSession();
