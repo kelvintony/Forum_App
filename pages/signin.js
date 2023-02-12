@@ -16,11 +16,11 @@ import { authConstants } from '../context/constants';
 
 const Signin = ({ session }) => {
   //toggle menu section
-  const [mobileMenu, setmobileMenu] = useState(false);
+  // const [mobileMenu, setmobileMenu] = useState(false);
 
-  const toggle = () => {
-    setmobileMenu(!mobileMenu);
-  };
+  // const toggle = () => {
+  //   setmobileMenu(!mobileMenu);
+  // };
 
   const router = useRouter();
 
@@ -52,6 +52,12 @@ const Signin = ({ session }) => {
   const mySession = getSession();
 
   const [state, dispatch] = useStore();
+
+  const toggle = () => {
+    dispatch({
+      type: authConstants.TOGGLE,
+    });
+  };
 
   const submitFormData = async () => {
     if (formData.email.length === 0 || formData.password.length === 0) {
@@ -109,7 +115,7 @@ const Signin = ({ session }) => {
   return (
     <div>
       {/* <Navbar openMenu={toggle} /> */}
-      {mobileMenu && <LeftSideBar burgerMenu={mobileMenu} closeMenu={toggle} />}
+      {state.harmburger && <LeftSideBar />}
       <section className={styles.register_container}>
         <div className={styles.register_inner_container}>
           <div className={styles.container_a}>
