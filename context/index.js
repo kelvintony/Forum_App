@@ -31,12 +31,19 @@ const reducer = (state, action) => {
         error: action.payload,
       },
     };
+  } else if (action.type === authConstants.TOGGLE) {
+    return {
+      ...state,
+      mobileMenu: !state.mobileMenu,
+    };
+  } else if (action.type === authConstants.TOGGLE_HARMBUGGER) {
+    return {
+      ...state,
+      harmburger: !state.harmburger,
+    };
+  } else {
+    return state;
   }
-  //   switch (action.type) {
-  //     default: {
-  //       return state;
-  //     }
-  //   }
 };
 
 export const useStore = () => useContext(Store);
@@ -48,6 +55,8 @@ export const StoreProvider = ({ children }) => {
       authenticating: false,
       error: null,
     },
+    mobileMenu: false,
+    harmburger: false,
   });
 
   return <Store.Provider value={[state, dispatch]}>{children}</Store.Provider>;

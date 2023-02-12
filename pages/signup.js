@@ -120,7 +120,7 @@ const Signup = ({ session }) => {
 
   return (
     <div>
-      <Navbar openMenu={toggle} />
+      {/* <Navbar openMenu={toggle} /> */}
       {mobileMenu && <LeftSideBar burgerMenu={mobileMenu} closeMenu={toggle} />}
 
       <section className={styles.register_container}>

@@ -108,7 +108,7 @@ const Signin = ({ session }) => {
 
   return (
     <div>
-      <Navbar openMenu={toggle} />
+      {/* <Navbar openMenu={toggle} /> */}
       {mobileMenu && <LeftSideBar burgerMenu={mobileMenu} closeMenu={toggle} />}
       <section className={styles.register_container}>
         <div className={styles.register_inner_container}>

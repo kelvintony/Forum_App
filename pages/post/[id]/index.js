@@ -11,6 +11,9 @@ import Image from 'next/image';
 
 import sendPostIcon from '../../../assets/addImage_icon.svg';
 import SiginLoader from '../../../components/SigninLoader/SiginLoader';
+import { useStore } from '../../../context';
+import { authConstants } from '../../../context/constants';
+import LeftSideBar from '../../../components/leftSideBar/LeftSideBar';
 
 // import postModel from '../../../models/post';
 // import db from '../../../utils/db';
@@ -62,6 +65,16 @@ const EditPost = () => {
   const { asPath, pathname } = useRouter();
 
   const { id } = router.query;
+
+  const [state, dispatch] = useStore();
+
+  // const toggle = () => {
+  //   dispatch({
+  //     type: authConstants.TOGGLE,
+  //   });
+  //   // setmobileMenu(!mobileMenu);
+  // };
+  // console.log('from my state', state);
 
   useEffect(() => {
     const getTasks = async () => {
@@ -117,6 +130,9 @@ const EditPost = () => {
   // console.log(id);
   return (
     <div className={styles.editPost_container}>
+      <div className={styles.hide_leftSideBar}>
+        <LeftSideBar />
+      </div>
       <div className={'${styles2.rigtbar_section_a} ${addMargin}'}>
         <div className={styles2.container_a}>
           {loading ? (

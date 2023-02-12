@@ -21,6 +21,7 @@ import { IoLogoFoursquare } from 'react-icons/io';
 
 import register_logo from '../../assets/user_plus.svg';
 import menuIcon from '../../assets/home-page/menu-icon.svg';
+import { authConstants } from '../../context/constants';
 
 const Navbar = (props) => {
   const [showMenu, setshowMenu] = useState(false);
@@ -46,9 +47,16 @@ const Navbar = (props) => {
     // setUser(state.user);
   }, [session, pathname]);
 
+  // const toggle = () => {
+  //   setshowMenu(!showMenu);
+  // };
   const toggle = () => {
-    setshowMenu(!showMenu);
+    dispatch({
+      type: authConstants.TOGGLE,
+    });
   };
+
+  // console.log('from navbar', state);
 
   const logoutClickHandler = () => {
     window.localStorage.clear();
@@ -63,7 +71,11 @@ const Navbar = (props) => {
       <div className={styles.hamburger_container}>
         <button
           className={styles.hamburger_menu}
-          onClick={() => props.openMenu()}
+          onClick={() => {
+            dispatch({
+              type: authConstants.TOGGLE_HARMBUGGER,
+            });
+          }}
         >
           {' '}
           <Image src={menuIcon} width={30} height={30} alt='menu_icon' />
@@ -118,7 +130,7 @@ const Navbar = (props) => {
               }}
               onClick={toggle}
             >
-              {!showMenu ? (
+              {!state.mobileMenu ? (
                 <IoMdArrowDropdown size={25} />
               ) : (
                 <IoMdArrowDropup size={25} />
@@ -130,7 +142,9 @@ const Navbar = (props) => {
         {user && (
           <div
             className={
-              showMenu ? styles.profile_dropdown : styles.close_profileMenu
+              state.mobileMenu
+                ? styles.profile_dropdown
+                : styles.close_profileMenu
             }
           >
             <ul>
