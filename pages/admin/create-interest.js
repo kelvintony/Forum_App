@@ -7,51 +7,53 @@ import Router, { useRouter } from 'next/router';
 import { getSession, useSession } from 'next-auth/react';
 import LeftSideBar from '../../components/leftSideBar/LeftSideBar';
 
-// export async function getServerSideProps(context) {
-//   const session = await getSession(context);
-//   // console.log('from session', session.user.isAdmin);
-//   if (!session?.user?.isAdmin) {
-//     return {
-//       redirect: {
-//         permanent: false,
-//         destination: '/',
-//       },
-//     };
-//   }
+export async function getServerSideProps(context) {
+  const session = await getSession(context);
+  // console.log('from session', session.user.isAdmin);
+  if (!session?.user?.isAdmin) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/',
+      },
+    };
+  }
 
-//   return {
-//     props: { session },
-//   };
-// }
+  return {
+    props: { session },
+  };
+}
 
-const Createinterest = () => {
+const Createinterest = (props) => {
+  const router = useRouter();
+
   const { status, data: session } = useSession();
 
-  const [loadComponent, setLoadComponent] = useState(true);
-  const [isAdmin, setIsAdmin] = useState(false);
+  // const [loadComponent, setLoadComponent] = useState(true);
+  // const [isAdmin, setIsAdmin] = useState(false);
 
-  const router = useRouter();
-  const { redirect } = router.query;
+  // const { redirect } = router.query;
 
-  useEffect(() => {
-    setIsAdmin(session?.user?.isAdmin);
-    setLoadComponent(false);
-  }, []);
+  // useEffect(() => {
+  //   setIsAdmin(session?.user?.isAdmin);
+  //   setLoadComponent(false);
+  // }, []);
 
-  useEffect(() => {
-    if (!session?.user?.isAdmin) {
-      router.push(redirect || '/');
-    }
-  }, [router, session, redirect]);
+  // useEffect(() => {
+  //   if (!session?.user?.isAdmin) {
+  //     router.push(redirect || '/');
+  //   }
+  // }, [router, session, redirect]);
 
-  console.log('from interest', session?.user?.isAdmin);
+  // console.log('from interest', session?.user?.isAdmin);
 
-  if (!isAdmin) {
-    return null;
-  }
-  if (loadComponent) {
-    return null;
-  }
+  // if (!isAdmin) {
+  //   return null;
+  // }
+  // if (loadComponent) {
+  //   return null;
+  // }
+
   return (
     <div className={styles.interest_container}>
       <div className={styles.hide_leftSideBar}>
@@ -60,7 +62,7 @@ const Createinterest = () => {
       <div className={styles.container}>
         <div className={styles.inner_a}>
           <p>Create an Interest</p>
-          <button>
+          <button onClick={() => router.back()}>
             {' '}
             <Image src={cancelIcon} alt='cancel_pix' />{' '}
           </button>

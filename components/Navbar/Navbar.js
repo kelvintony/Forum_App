@@ -36,8 +36,6 @@ const Navbar = (props) => {
 
   const [state, dispatch] = useStore();
 
-  // console.log('from store', { state });
-
   // console.log('from nav', user);
 
   useEffect(() => {
@@ -55,8 +53,6 @@ const Navbar = (props) => {
       type: authConstants.TOGGLE,
     });
   };
-
-  // console.log('from navbar', state);
 
   const logoutClickHandler = () => {
     window.localStorage.clear();
