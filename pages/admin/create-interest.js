@@ -24,7 +24,7 @@ import LeftSideBar from '../../components/leftSideBar/LeftSideBar';
 //   };
 // }
 
-const createinterest = () => {
+const Createinterest = () => {
   const { status, data: session } = useSession();
 
   const [loadComponent, setLoadComponent] = useState(true);
@@ -95,4 +95,4 @@ const createinterest = () => {
   );
 };
 
-export default createinterest;
+export default Createinterest;
