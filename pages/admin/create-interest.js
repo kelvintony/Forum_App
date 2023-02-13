@@ -1,32 +1,62 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import styles from '../../styles/CreateInterest.module.css';
 import cancelIcon from '../../assets/single_community/cancel_icon.svg';
-// import { useRouter } from 'next/router';
+import Router, { useRouter } from 'next/router';
 
-import { getSession } from 'next-auth/react';
+import { getSession, useSession } from 'next-auth/react';
+import LeftSideBar from '../../components/leftSideBar/LeftSideBar';
 
-export async function getServerSideProps(context) {
-  const session = await getSession(context);
-  // console.log('from session', session.user.isAdmin);
-  if (!session?.user?.isAdmin) {
-    return {
-      redirect: {
-        permanent: false,
-        destination: '/',
-      },
-    };
+// export async function getServerSideProps(context) {
+//   const session = await getSession(context);
+//   // console.log('from session', session.user.isAdmin);
+//   if (!session?.user?.isAdmin) {
+//     return {
+//       redirect: {
+//         permanent: false,
+//         destination: '/',
+//       },
+//     };
+//   }
+
+//   return {
+//     props: { session },
+//   };
+// }
+
+const Createinterest = () => {
+  const { status, data: session } = useSession();
+
+  const [loadComponent, setLoadComponent] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  const router = useRouter();
+  const { redirect } = router.query;
+
+  useEffect(() => {
+    setIsAdmin(session?.user?.isAdmin);
+    setLoadComponent(false);
+  }, []);
+
+  useEffect(() => {
+    if (!session?.user?.isAdmin) {
+      router.push(redirect || '/');
+    }
+  }, [router, session, redirect]);
+
+  console.log('from interest', session?.user?.isAdmin);
+
+  if (!isAdmin) {
+    return null;
   }
-
-  return {
-    props: { session },
-  };
-}
-
-const createinterest = ({ session }) => {
-  // const router = useRouter();
+  if (loadComponent) {
+    return null;
+  }
   return (
     <div className={styles.interest_container}>
+      <div className={styles.hide_leftSideBar}>
+        <LeftSideBar />
+      </div>
       <div className={styles.container}>
         <div className={styles.inner_a}>
           <p>Create an Interest</p>
@@ -65,4 +95,4 @@ const createinterest = ({ session }) => {
   );
 };
 
-export default createinterest;
+export default Createinterest;
