@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
 import styles from '../../styles/CreateInterest.module.css';
 import cancelIcon from '../../assets/single_community/cancel_icon.svg';
@@ -7,52 +7,40 @@ import Router, { useRouter } from 'next/router';
 import { getSession, useSession } from 'next-auth/react';
 import LeftSideBar from '../../components/leftSideBar/LeftSideBar';
 
-export async function getServerSideProps(context) {
-  const session = await getSession(context);
-  // console.log('from session', session.user.isAdmin);
-  if (!session?.user?.isAdmin) {
-    return {
-      redirect: {
-        permanent: false,
-        destination: '/',
-      },
-    };
-  }
+// export async function getServerSideProps(context) {
+//   const session = await getSession(context);
+//   // console.log('from session', session.user.isAdmin);
+//   if (!session?.user?.isAdmin) {
+//     return {
+//       redirect: {
+//         permanent: false,
+//         destination: '/',
+//       },
+//     };
+//   }
 
-  return {
-    props: { session },
-  };
-}
+//   return {
+//     props: { session },
+//   };
+// }
 
 const Createinterest = (props) => {
   const router = useRouter();
 
   const { status, data: session } = useSession();
 
-  // const [loadComponent, setLoadComponent] = useState(true);
-  // const [isAdmin, setIsAdmin] = useState(false);
+  const { redirect } = router.query;
 
-  // const { redirect } = router.query;
+  // console.log(session);
+  const effectRan = useRef(false);
 
-  // useEffect(() => {
-  //   setIsAdmin(session?.user?.isAdmin);
-  //   setLoadComponent(false);
-  // }, []);
-
-  // useEffect(() => {
-  //   if (!session?.user?.isAdmin) {
-  //     router.push(redirect || '/');
-  //   }
-  // }, [router, session, redirect]);
-
-  // console.log('from interest', session?.user?.isAdmin);
-
-  // if (!isAdmin) {
+  // if (!session) {
   //   return null;
   // }
-  // if (loadComponent) {
-  //   return null;
-  // }
+
+  if (session?.user.hasOwnProperty('isAdmin') === false) {
+    return null;
+  }
 
   return (
     <div className={styles.interest_container}>
@@ -97,4 +85,5 @@ const Createinterest = (props) => {
   );
 };
 
+Createinterest.auth = { adminOnly: true };
 export default Createinterest;

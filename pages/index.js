@@ -39,7 +39,7 @@ import Link from 'next/link';
 import { useStore } from '../context';
 import { authConstants } from '../context/constants';
 
-export async function getStaticProps(context) {
+export async function getServerSideProps(context) {
   const session = await getSession(context);
 
   await db.connect();
@@ -57,7 +57,6 @@ export async function getStaticProps(context) {
       // posts.map(db.convertDocToObj),
       // posts ? JSON.parse(JSON.stringify(posts)) : null
     },
-    revalidate: 1,
   };
 }
 
@@ -74,18 +73,19 @@ function reducer(state, action) {
   }
 }
 
-export default function Home({ session, myPost }) {
+export default function Home({ myPost }) {
   // const [{ loading, error, posts }, dispatch] = useReducer(reducer, {
   //   loading: true,
   //   posts: [],
   //   error: '',
   // });
+  const { status, data: session } = useSession();
 
   const [mobileMenu, setmobileMenu] = useState(false);
 
   const router = useRouter();
-  const mySession = useSession();
 
+  // console.log('form index', session);
   const toggle = () => {
     dispatch({
       type: authConstants.TOGGLE,
@@ -166,7 +166,7 @@ export default function Home({ session, myPost }) {
                     <p>{post?.user?.username}</p>
                     <p>{moment(post?.createdAt).fromNow()}</p>
                   </div>
-                  {mySession?.data?.user?._id === post?.user?.id ? (
+                  {session?.user?._id === post?.user?.id ? (
                     <Link href={`/post/${post?._id}`}>
                       <Image
                         width={24}
