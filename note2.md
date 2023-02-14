@@ -52,6 +52,7 @@ signOut({ callbackUrl: '/' });
 };
 // console.log('from navbar component', session);
 return (
+
 <nav className={styles.navbar_container}>
 <div className={styles.hamburger_container}>
 <button
@@ -175,3 +176,29 @@ Forumix222 <IoLogoFoursquare color='#BE272A' size={25} />{' '}
 };
 
 export default Navbar;
+
+//
+//
+//
+const [loadComponent, setLoadComponent] = useState(true);
+const [isAdmin, setIsAdmin] = useState(false);
+
+useEffect(() => {
+setIsAdmin(session?.user?.isAdmin);
+setLoadComponent(false);
+}, []);
+
+useEffect(() => {
+if (!session?.user?.isAdmin) {
+router.push(redirect || '/');
+}
+}, [router, session, redirect]);
+
+console.log('from interest', session?.user?.isAdmin);
+
+if (!isAdmin) {
+return null;
+}
+if (loadComponent) {
+return null;
+}

@@ -36,18 +36,6 @@ const Navbar = (props) => {
 
   const [state, dispatch] = useStore();
 
-  // console.log('from nav', user);
-
-  useEffect(() => {
-    // window.localStorage.setItem('User', JSON.stringify(session));
-
-    setUser(JSON.parse(window.localStorage.getItem('userCredentials')));
-    // setUser(state.user);
-  }, [session, pathname]);
-
-  // const toggle = () => {
-  //   setshowMenu(!showMenu);
-  // };
   const toggle = () => {
     dispatch({
       type: authConstants.TOGGLE,
@@ -60,11 +48,10 @@ const Navbar = (props) => {
     Cookies.remove('next-auth.session-token');
     signOut({ callbackUrl: '/' });
   };
-  // console.log('from navbar component', session);
-  if (user === '') {
-    return null;
-  }
 
+  // if (!session) {
+  //   return null;
+  // }
   return (
     <nav className={styles.navbar_container}>
       <div className={styles.hamburger_container}>
@@ -88,7 +75,7 @@ const Navbar = (props) => {
       </div>
 
       <div className={styles.navbar_btn}>
-        {user ? (
+        {session ? (
           <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
             {' '}
             {/* <h4 style={{ color: ' #04AA6D', fontSize: '12px' }}>{user?.result?.username}</h4>{' '} */}
@@ -114,10 +101,10 @@ const Navbar = (props) => {
             </Link>
           </div>
         )}
-        {user && (
+        {session && (
           <div className={styles.profile_container}>
             <button onClick={toggle} className={styles.btn_profileImage}>
-              {user && user?.user?.username?.charAt(0).toUpperCase()}
+              {session && session?.user?.username?.charAt(0).toUpperCase()}
               {/* <Image className={styles.profile_image} src={profileImage} alt='profile_pix' /> */}
             </button>
             <button
@@ -138,7 +125,7 @@ const Navbar = (props) => {
           </div>
         )}
 
-        {user && (
+        {session && (
           <div
             className={
               state.mobileMenu
@@ -148,9 +135,11 @@ const Navbar = (props) => {
           >
             <ul>
               <li>
-                <h3 className={styles.profile_Name}>{user?.user?.username}</h3>
+                <h3 className={styles.profile_Name}>
+                  {session?.user?.username}
+                </h3>
                 <span className={styles.proile_userName}>
-                  @{user?.user?.username}
+                  @{session.user?.username}
                 </span>
               </li>
               <hr />
@@ -169,7 +158,7 @@ const Navbar = (props) => {
                   Create a communities
                 </Link>
               </li>
-              {user?.user?.isAdmin && (
+              {session?.user?.isAdmin && (
                 <li onClick={toggle} className={styles.profileItems}>
                   <Link
                     style={{ display: 'block' }}
