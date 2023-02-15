@@ -85,10 +85,11 @@ export default function LabTabs() {
                 </select>
               </div>
               <p>
-                Select the language you'd like to experience in the Forumix
-                interface. Note that this won't change the language of
-                user-generated content and that this feature is still in
-                development so translations and UI are still under review.
+                Select the language you&rsquo;d like to experience in the
+                Forumix interface. Note that this won&rsquo;t change the
+                language of user-generated content and that this feature is
+                still in development so translations and UI are still under
+                review.
               </p>
             </div>
             <div className={styles.tab_country}>
