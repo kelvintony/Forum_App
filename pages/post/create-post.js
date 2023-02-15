@@ -50,6 +50,7 @@ const Createpost = ({ session }) => {
       .then(function (response) {
         if (response) {
           setLoading(false);
+          window.localStorage.setItem('posts', JSON.stringify(response));
           router.replace('/');
           // console.log(response)
         }
