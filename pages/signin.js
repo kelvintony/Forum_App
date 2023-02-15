@@ -84,10 +84,10 @@ const Signin = ({ session }) => {
             type: authConstants.LOGIN_SUCCESS,
             payload: otherSession,
           });
-          window.sessionStorage.setItem(
-            'userCredentials',
-            JSON.stringify(otherSession)
-          );
+          // window.localStorage.setItem(
+          //   'userCredentials',
+          //   JSON.stringify(otherSession)
+          // );
           // console.log(mySession2);
           router.replace('/');
         } else {

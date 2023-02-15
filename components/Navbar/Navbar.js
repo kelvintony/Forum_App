@@ -158,6 +158,12 @@ const Navbar = (props) => {
                   Create a communities
                 </Link>
               </li>
+              <li onClick={toggle} className={styles.profileItems}>
+                <Link style={{ display: 'block' }} href='/moderate-post'>
+                  Moderate Post
+                </Link>
+              </li>
+
               {session?.user?.isAdmin && (
                 <li onClick={toggle} className={styles.profileItems}>
                   <Link
@@ -174,7 +180,7 @@ const Navbar = (props) => {
                 </Link>
               </li>
               <li onClick={toggle} className={styles.profileItems}>
-                <Link style={{ display: 'block' }} href='/moderate-post'>
+                <Link style={{ display: 'block' }} href='/user-settings'>
                   Settings
                 </Link>
               </li>

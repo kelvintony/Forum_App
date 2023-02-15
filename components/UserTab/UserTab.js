@@ -6,7 +6,11 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import styles from '../../styles/UserTab.module.css';
 
+import { useSession } from 'next-auth/react';
+
 export default function LabTabs() {
+  const { status, data: session } = useSession();
+
   const [value, setValue] = React.useState('1');
 
   const handleChange = (event, newValue) => {
@@ -37,7 +41,7 @@ export default function LabTabs() {
 
             <div className={styles.tab_email}>
               <p>Email Address</p>
-              <p>kelvintony@gmail.com</p>
+              <p>{session?.user?.email}</p>
             </div>
 
             <div className={styles.tab_email}>
