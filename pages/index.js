@@ -39,7 +39,7 @@ import Link from 'next/link';
 import { useStore } from '../context';
 import { authConstants } from '../context/constants';
 
-export async function getServerSideProps(context) {
+export async function getStaticProps(context) {
   const session = await getSession(context);
 
   await db.connect();
@@ -57,6 +57,7 @@ export async function getServerSideProps(context) {
       // posts.map(db.convertDocToObj),
       // posts ? JSON.parse(JSON.stringify(posts)) : null
     },
+    revalidate: 10,
   };
 }
 
