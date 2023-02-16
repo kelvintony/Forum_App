@@ -15,7 +15,7 @@ import { authConstants } from '../context/constants';
 import { useStore } from '../context';
 
 // style={{cursor:loading&&'progress'}}
-export async function getServerSideProps(context) {
+export async function getStaticSideProps(context) {
   const session = await getSession(context);
   // console.log('from session',session)
   if (session?.user) {
