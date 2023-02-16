@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
@@ -75,7 +77,7 @@ const Navbar = (props) => {
       </div>
 
       <div className={styles.navbar_btn}>
-        {session ? (
+        {state?.user?.username ? (
           <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
             {' '}
             {/* <h4 style={{ color: ' #04AA6D', fontSize: '12px' }}>{user?.result?.username}</h4>{' '} */}
@@ -101,10 +103,10 @@ const Navbar = (props) => {
             </Link>
           </div>
         )}
-        {session && (
+        {state?.user?.username && (
           <div className={styles.profile_container}>
             <button onClick={toggle} className={styles.btn_profileImage}>
-              {session && session?.user?.username?.charAt(0).toUpperCase()}
+              {state?.user?.username && state?.user?.username?.charAt(0).toUpperCase()}
               {/* <Image className={styles.profile_image} src={profileImage} alt='profile_pix' /> */}
             </button>
             <button
@@ -125,7 +127,7 @@ const Navbar = (props) => {
           </div>
         )}
 
-        {session && (
+        {state?.user?.username && (
           <div
             className={
               state.mobileMenu
@@ -139,7 +141,7 @@ const Navbar = (props) => {
                   {state?.user?.username} Ai
                 </h3>
                 <span className={styles.proile_userName}>
-                  @{session.user?.username}
+                  @{state.user?.username}
                 </span>
               </li>
               <hr />
@@ -164,7 +166,7 @@ const Navbar = (props) => {
                 </Link>
               </li>
 
-              {session?.user?.isAdmin && (
+              {state?.user?.isAdmin && (
                 <li onClick={toggle} className={styles.profileItems}>
                   <Link
                     style={{ display: 'block' }}
