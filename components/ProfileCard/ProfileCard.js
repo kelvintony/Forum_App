@@ -1,27 +1,73 @@
+import React from 'react';
+import styles from './ProfileCard.module.css';
+import Link from 'next/link';
+
 import Image from 'next/image';
-import styles from './RightSideBar.module.css';
 
 import startIcon from '../../assets/home-page/start-icon.svg';
 import topCommunityIcon from '../../assets/home-page/topCommunity-icon.svg';
 import quickLinksIcon from '../../assets/home-page/quickLinks-icon.svg';
+import profile_pix from '../../assets/profile_builb.png';
+import profile_image22 from '../../assets/profile_image22.png';
+import award from '../../assets/award.png';
 
-const RightSideBar = () => {
+import { BsFacebook } from 'react-icons/bs';
+import { AiFillTwitterCircle } from 'react-icons/ai';
+import { AiFillInstagram } from 'react-icons/ai';
+
+import { AiOutlineInstagram } from 'react-icons/ai';
+import { FiTwitter } from 'react-icons/fi';
+import { AiOutlineFacebook } from 'react-icons/ai';
+
+const ProfileCard = () => {
   return (
     <div className={styles.rigtbar_section_b}>
       {/* first section  */}
       <div className={`${styles.right_sidebar} ${styles.right_sidebarTop}`}>
-        <h4>
-          <Image width={12} height={12} src={startIcon} alt='start_icon' /> Post
-          Of The Moment
-        </h4>
-        <ul className={styles.post_of_moment}>
-          <li>
-            <a href=''>Lorem ipsum dolor sit amet, consectetur adipisicing.</a>
-          </li>
-          <li>
-            <a href=''>Lorem ipsum dolor sit amet, consectetur adipisicing.</a>
-          </li>
-        </ul>
+        <div className={styles.profile_container}>
+          <Image
+            className={styles.profile_image1}
+            src={profile_image22}
+            alt='pix_1'
+          />
+          <p className={styles.profile_name}>&#64; Golanginya</p>
+          <div className={styles.profile_divider}></div>
+          <div className={styles.profile_award}>
+            <Image
+              className={styles.profile_award_image}
+              src={award}
+              alt='pix_1'
+            />
+            <p>125</p>
+            <p> &#91; 8 &#93; </p>
+          </div>
+          <div className={styles.profile_divider}></div>
+          <div className={styles.profile_icons}>
+            <a
+              href='https://facebook.com'
+              className={styles.profile_icons_image}
+            >
+              <AiOutlineInstagram size={30} />
+            </a>
+            <a
+              href='https://twitter.com'
+              className={styles.profile_icons_image}
+            >
+              <FiTwitter size={30} />
+            </a>
+            <a
+              href='https://instagram.com'
+              className={styles.profile_icons_image}
+            >
+              <AiOutlineFacebook size={30} />
+            </a>
+          </div>
+          <div className={styles.btn_container}>
+            <button className={styles.btn_chat}>Chat</button>
+            <button className={styles.btn_register}>Follow</button>
+          </div>
+          <p className={styles.moreOptions}>More options</p>
+        </div>
       </div>
       {/* second section  */}
       <div className={styles.right_sidebar}>
@@ -148,4 +194,4 @@ const RightSideBar = () => {
   );
 };
 
-export default RightSideBar;
+export default ProfileCard;
