@@ -136,7 +136,7 @@ const Navbar = (props) => {
             <ul>
               <li>
                 <h3 className={styles.profile_Name}>
-                  {state?.user?.username}
+                  {state?.user?.username} Ai
                 </h3>
                 <span className={styles.proile_userName}>
                   @{session.user?.username}
