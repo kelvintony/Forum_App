@@ -10,7 +10,7 @@ import { Suspense } from 'react';
 import db from '../utils/db';
 import postModel from '../models/post';
 
-import styles2 from '../sections/home/MainSection.module.css';
+import styles2 from '../sections/Profile/MainSection.module.css';
 
 import Head from 'next/head';
 import Image from 'next/image';

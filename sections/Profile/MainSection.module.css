@@ -221,4 +221,13 @@
     grid-template-columns: 1fr;
     margin-left: 0;
   }
+  .btn_rightbar_trending {
+    display: none;
+  }
+  .btn_rightbar_new {
+    display: none;
+  }
+  .rigtbar_section_a {
+    order: 2;
+  }
 }

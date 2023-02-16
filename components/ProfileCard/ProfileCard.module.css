@@ -332,6 +332,12 @@
     font-size: 16px;
   }
 
+  .rigtbar_section_b .right_sidebar:nth-child(2) {
+    display: none;
+  }
+  .right_sidebar_must_read {
+    display: none;
+  }
   /* utilities */
   .btn_register,
   .btn_chat {
