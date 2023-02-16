@@ -38,6 +38,7 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { useStore } from '../context';
 import { authConstants } from '../context/constants';
+import ProfileCard from '../components/ProfileCard/ProfileCard';
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);
@@ -73,7 +74,7 @@ function reducer(state, action) {
   }
 }
 
-export default function Home({ myPost }) {
+export default function Profile({ myPost }) {
   // const [{ loading, error, posts }, dispatch] = useReducer(reducer, {
   //   loading: true,
   //   posts: [],
@@ -144,11 +145,11 @@ export default function Home({ myPost }) {
               src={trendingIcon}
               alt='trending_icon'
             />
-            Trending
+            Overview
           </button>
           <button className={styles2.btn_rightbar_new}>
             <Image width={10} height={10} src={newIcon} alt='start_icon' />
-            New
+            Post
           </button>
           {myPost.map((post) => {
             return (
@@ -222,8 +223,56 @@ export default function Home({ myPost }) {
               </div>
             );
           })}
+
+          <div className={styles2.post_card}>
+            <div className={styles2.container_a}>
+              <Image width={40} height={40} src={userIcon} alt='user_pix' />
+              <div className={styles2.inner_a}>
+                <p>Golanginya</p>
+                <p>5 min ago</p>
+              </div>
+              <a href=''>
+                <Image
+                  width={24}
+                  height={24}
+                  src={futureMoreVertical}
+                  alt='feature_pix'
+                />
+              </a>
+            </div>
+            <h3>
+              How to patch KDE on FreeBSD? How to patch KDE on FreeBSD? FreeBSD?
+            </h3>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Consequat
+              aliquet maecenas ut sit nulla
+            </p>
+            <div className={styles2.inner_b}>
+              <div className={styles2.inner_ba}>
+                <button className={styles2.btn_post}>goland community</button>
+              </div>
+              <div className={styles2.inner_bb}>
+                <a href=''>
+                  <Image src={numberOfViewsIcon} alt='views_pix' />
+                  125
+                </a>
+                <a href=''>
+                  <Image src={likeIcon} alt='views_pix' />
+                  125
+                </a>
+                <a href=''>
+                  <Image src={dislike} alt='views_pix' />
+                  125
+                </a>
+                <a href=''>
+                  <Image src={shareIcon} alt='views_pix' />
+                  155
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
-        <RightSideBar />
+        <ProfileCard />
       </section>
     </div>
   );
