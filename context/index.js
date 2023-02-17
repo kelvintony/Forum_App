@@ -1,3 +1,5 @@
+'use client'
+
 import { createContext, useContext, useReducer } from 'react';
 import { authConstants } from './constants';
 
