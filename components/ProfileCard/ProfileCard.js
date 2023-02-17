@@ -25,7 +25,7 @@ import { useStore } from '../../context';
 const ProfileCard = () => {
   const { status, data: session } = useSession();
   const [state, dispatch] = useStore();
-  console.log('profile card', state.userProfile);
+  // console.log('profile card', state.userProfile);
 
   return (
     <div className={styles.rigtbar_section_b}>

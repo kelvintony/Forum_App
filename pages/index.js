@@ -9,6 +9,7 @@ import { Suspense } from 'react';
 
 import db from '../utils/db';
 import postModel from '../models/post';
+// import userModel from '../models/user';
 
 import styles2 from '../sections/home/MainSection.module.css';
 
@@ -44,9 +45,13 @@ export async function getStaticProps(context) {
 
   await db.connect();
 
-  const posts = await postModel.find().lean();
+  const posts = await postModel.find({}).lean();
+  // const users = await userModel.find({}).lean();
 
-  // console.log('my work', posts);
+  // const combinedArray = posts.concat(users);
+
+  // console.log('home page server', users);
+  // console.log('home page combinedArray', combinedArray);
 
   await db.disconnect();
 
@@ -54,10 +59,11 @@ export async function getStaticProps(context) {
     props: {
       session,
       myPost: posts ? JSON.parse(JSON.stringify(posts)) : null,
+      // myUsers: users ? JSON.parse(JSON.stringify(posts)) : null,
       // posts.map(db.convertDocToObj),
       // posts ? JSON.parse(JSON.stringify(posts)) : null
     },
-    revalidate:10
+    revalidate: 10,
   };
 }
 
@@ -74,7 +80,7 @@ function reducer(state, action) {
   }
 }
 
-export default function Home({ myPost }) {
+export default function Home({ myPost, users }) {
   // const [{ loading, error, posts }, dispatch] = useReducer(reducer, {
   //   loading: true,
   //   posts: [],
@@ -151,7 +157,7 @@ export default function Home({ myPost }) {
             <Image width={10} height={10} src={newIcon} alt='start_icon' />
             New
           </button>
-          {myPost.map((post) => {
+          {myPost.reverse().map((post) => {
             return (
               <div
                 // onClick={() => router.push(`/post/community-post/${post?._id}`)}
