@@ -41,6 +41,14 @@ const reducer = (state, action) => {
       ...state,
       harmburger: !state.harmburger,
     };
+  } else if (action.type === authConstants.SET_USER_PROFILE) {
+    return {
+      ...state,
+      userProfile: {
+        ...state.userProfile,
+        username: action.payload,
+      },
+    };
   } else {
     return state;
   }
@@ -57,6 +65,10 @@ export const StoreProvider = ({ children }) => {
     },
     mobileMenu: false,
     harmburger: false,
+    userProfile: {
+      image: '',
+      username: '',
+    },
   });
 
   return <Store.Provider value={[state, dispatch]}>{children}</Store.Provider>;

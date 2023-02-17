@@ -19,7 +19,14 @@ import { AiOutlineInstagram } from 'react-icons/ai';
 import { FiTwitter } from 'react-icons/fi';
 import { AiOutlineFacebook } from 'react-icons/ai';
 
+import { signOut, signIn, getSession, useSession } from 'next-auth/react';
+import { useStore } from '../../context';
+
 const ProfileCard = () => {
+  const { status, data: session } = useSession();
+  const [state, dispatch] = useStore();
+  console.log('profile card', state.userProfile);
+
   return (
     <div className={styles.rigtbar_section_b}>
       {/* first section  */}
@@ -30,7 +37,12 @@ const ProfileCard = () => {
             src={profile_image22}
             alt='pix_1'
           />
-          <p className={styles.profile_name}>&#64; Golanginya</p>
+          <p className={styles.profile_name}>
+            &#64;{' '}
+            {state?.userProfile?.username === ''
+              ? session?.user?.username
+              : state?.userProfile?.username}
+          </p>
           <div className={styles.profile_divider}></div>
           <div className={styles.profile_award}>
             <Image
