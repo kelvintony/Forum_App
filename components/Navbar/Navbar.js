@@ -1,5 +1,3 @@
-
-
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
@@ -106,7 +104,8 @@ const Navbar = (props) => {
         {state?.user?.username && (
           <div className={styles.profile_container}>
             <button onClick={toggle} className={styles.btn_profileImage}>
-              {state?.user?.username && state?.user?.username?.charAt(0).toUpperCase()}
+              {state?.user?.username &&
+                state?.user?.username?.charAt(0).toUpperCase()}
               {/* <Image className={styles.profile_image} src={profileImage} alt='profile_pix' /> */}
             </button>
             <button
@@ -137,9 +136,7 @@ const Navbar = (props) => {
           >
             <ul>
               <li>
-                <h3 className={styles.profile_Name}>
-                  {state?.user?.username} Ai
-                </h3>
+                <h3 className={styles.profile_Name}>{state?.user?.username}</h3>
                 <span className={styles.proile_userName}>
                   @{state.user?.username}
                 </span>

@@ -30,10 +30,10 @@ export const createPost = async (req, res) => {
   const username = session.user.username;
 
   // console.log('coming from post route', session);
-  console.log(session);
+  // console.log(session);
 
   const post = req.body;
-  console.log(post);
+  // console.log(post);
 
   await db.connect();
 
