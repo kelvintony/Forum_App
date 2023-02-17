@@ -5,4 +5,6 @@ export const authConstants = {
 
   TOGGLE: 'TOGGLE',
   TOGGLE_HARMBUGGER: 'TOGGLE_HARMBUGGER',
+
+  SET_USER_PROFILE: 'SET_USER_PROFILE',
 };

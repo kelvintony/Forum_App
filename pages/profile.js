@@ -47,8 +47,6 @@ export async function getServerSideProps(context) {
 
   const posts = await postModel.find().lean();
 
-  // console.log('my work', posts);
-
   await db.disconnect();
 
   return {
@@ -61,32 +59,16 @@ export async function getServerSideProps(context) {
   };
 }
 
-function reducer(state, action) {
-  switch (action.type) {
-    case 'FETCH_REQUEST':
-      return { ...state, loading: true, error: '' };
-    case 'FETCH_SUCCESS':
-      return { ...state, loading: false, posts: action.payload, error: '' };
-    case 'FETCH_FAIL':
-      return { ...state, loading: false, error: action.payload };
-    default:
-      state;
-  }
-}
-
 export default function Profile({ myPost }) {
-  // const [{ loading, error, posts }, dispatch] = useReducer(reducer, {
-  //   loading: true,
-  //   posts: [],
-  //   error: '',
-  // });
+  const [state, dispatch] = useStore();
+
   const { status, data: session } = useSession();
 
   const [mobileMenu, setmobileMenu] = useState(false);
 
   const router = useRouter();
 
-  // console.log('form index', session);
+  // console.log('from state', state.userProfile);
   const toggle = () => {
     dispatch({
       type: authConstants.TOGGLE,
@@ -163,7 +145,16 @@ export default function Profile({ myPost }) {
                   <div className={styles2.profile__image}>
                     {post?.user?.username?.charAt(0).toUpperCase()}
                   </div>
-                  <div className={styles2.inner_a}>
+                  <div
+                    style={{ cursor: 'pointer' }}
+                    onClick={() => {
+                      dispatch({
+                        type: authConstants.SET_USER_PROFILE,
+                        payload: post?.user?.username,
+                      });
+                    }}
+                    className={styles2.inner_a}
+                  >
                     <p>{post?.user?.username}</p>
                     <p>{moment(post?.createdAt).fromNow()}</p>
                   </div>
