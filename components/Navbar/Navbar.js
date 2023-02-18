@@ -49,9 +49,10 @@ const Navbar = (props) => {
     signOut({ callbackUrl: '/' });
   };
 
-  // if (!session) {
+  // if (!state?.user?.username) {
   //   return null;
   // }
+
   return (
     <nav className={styles.navbar_container}>
       <div className={styles.hamburger_container}>

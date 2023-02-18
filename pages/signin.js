@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import Router, { useRouter } from 'next/router';
 import axios from 'axios';
 import SiginLoader from '../components/SigninLoader/SiginLoader';
 import { signIn, getSession, useSession } from 'next-auth/react';
@@ -14,25 +14,34 @@ import LeftSideBar from '../components/leftSideBar/LeftSideBar';
 import { useStore } from '../context';
 import { authConstants } from '../context/constants';
 
+// export async function getStaticProps(context) {
+//   const session = await getSession(context);
+//   console.log('from session', session);
+//   if (session?.user) {
+//     return {
+//       redirect: {
+//         permanent: false,
+//         destination: '/',
+//       },
+//     };
+//   }
+
+//   return {
+//     props: { session },
+//     // revalidate: 5,
+//   };
+// }
+
 const Signin = ({ session }) => {
-  //toggle menu section
-  // const [mobileMenu, setmobileMenu] = useState(false);
-
-  // const toggle = () => {
-  //   setmobileMenu(!mobileMenu);
-  // };
-
   const router = useRouter();
 
-  const { pathname, asPath } = router;
+  // const { pathname, asPath } = router;
 
-  const { redirect } = router.query;
+  // const { redirect } = router.query;
 
   const [user, setUser] = useState(null);
 
   const mySession2 = useSession();
-
-  // const userDummy=globalThis?.window?.sessionStorage.getItem('profile')
 
   const [formData, setFormData] = useState({
     email: '',
@@ -52,6 +61,15 @@ const Signin = ({ session }) => {
   const mySession = getSession();
 
   const [state, dispatch] = useStore();
+
+  useEffect(() => {
+    setLoadComponent(false);
+    if (state?.user?.username) {
+      router.push('/');
+    }
+  }, []);
+
+  // console.log('from signin', state.user);
 
   const toggle = () => {
     dispatch({
@@ -84,11 +102,6 @@ const Signin = ({ session }) => {
             type: authConstants.LOGIN_SUCCESS,
             payload: otherSession,
           });
-          // window.localStorage.setItem(
-          //   'userCredentials',
-          //   JSON.stringify(otherSession)
-          // );
-          // console.log(mySession2);
           router.replace('/');
         } else {
           setLoading(false);
@@ -98,8 +111,6 @@ const Signin = ({ session }) => {
             payload: result.error,
           });
           setErrorMessage(result.error);
-          // console.log(result);
-          // console.log(result.error);
         }
       } catch (error) {
         setLoading(false);
@@ -111,6 +122,15 @@ const Signin = ({ session }) => {
       }
     }
   };
+
+  if (state?.user?.username) {
+    Router.replace('/');
+    return null;
+  }
+
+  if (loadComponent) {
+    return null;
+  }
 
   return (
     <div>
@@ -185,23 +205,5 @@ const Signin = ({ session }) => {
     </div>
   );
 };
-
-export async function getStaticProps(context) {
-  const session = await getSession(context);
-  // console.log('from session',session)
-  if (session?.user) {
-    return {
-      redirect: {
-        permanent: false,
-        destination: '/',
-      },
-    };
-  }
-
-  return {
-    props: { session },
-    // revalidate: 5,
-  };
-}
 
 export default Signin;

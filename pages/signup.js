@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import axios from 'axios';
-import { useRouter } from 'next/router';
+import Router, { useRouter } from 'next/router';
 import SiginLoader from '../components/SigninLoader/SiginLoader';
 
 import { signIn, getSession } from 'next-auth/react';
@@ -14,28 +14,23 @@ import LeftSideBar from '../components/leftSideBar/LeftSideBar';
 import { authConstants } from '../context/constants';
 import { useStore } from '../context';
 
-// style={{cursor:loading&&'progress'}}
-export async function getStaticSideProps(context) {
-  const session = await getSession(context);
-  // console.log('from session',session)
-  if (session?.user) {
-    return {
-      redirect: {
-        permanent: false,
-        destination: '/',
-      },
-    };
-  }
+// export async function getServerSideProps(context) {
+//   const session = await getSession(context);
+//   // console.log('from session',session)
+//   if (session?.user) {
+//     return {
+//       redirect: {
+//         permanent: false,
+//         destination: '/',
+//       },
+//     };
+//   }
 
-  return {
-    props: { session },
-    // revalidate: 5,
-  };
-}
-const authAxios = axios.create({
-  baseURL: 'https://reddit-forum-api.vercel.app',
-  // baseURL: 'http://localhost:5000'
-});
+//   return {
+//     props: { session },
+//     // revalidate: 5,
+//   };
+// }
 
 // style={{cursor:loading&&'progress'}}
 const Signup = ({ session }) => {
@@ -67,9 +62,10 @@ const Signup = ({ session }) => {
   const [loadComponent, setLoadComponent] = useState(true);
 
   useEffect(() => {
-    setUser(JSON.parse(window.sessionStorage.getItem('profile')));
-
     setLoadComponent(false);
+    if (state?.user?.username) {
+      router.push('/');
+    }
   }, []);
 
   //toggle menu section
@@ -122,6 +118,14 @@ const Signup = ({ session }) => {
     }
   };
 
+  if (state?.user?.username) {
+    Router.replace('/');
+    return null;
+  }
+
+  if (loadComponent) {
+    return null;
+  }
   return (
     <div>
       {/* <Navbar openMenu={toggle} /> */}
