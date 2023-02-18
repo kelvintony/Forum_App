@@ -14,11 +14,7 @@ import styles2 from '../sections/Profile/MainSection.module.css';
 
 import Head from 'next/head';
 import Image from 'next/image';
-import styles from '../styles/Home.module.css';
-import Navbar from '../components/Navbar/Navbar';
 import LeftSideBar from '../components/leftSideBar/LeftSideBar';
-import MainSection from '../sections/home/MainSection';
-import RightSideBar from '../sections/home/RightSideBar';
 
 import moment from 'moment';
 
@@ -31,7 +27,7 @@ import likeIcon from '../assets/home-page/like-icon.svg';
 import dislike from '../assets/home-page/dislike-icon.svg';
 import shareIcon from '../assets/home-page/share-icon.svg';
 
-import { signIn, getSession, useSession } from 'next-auth/react';
+import { getSession, useSession } from 'next-auth/react';
 import axios from 'axios';
 
 import { useRouter } from 'next/router';
@@ -45,7 +41,7 @@ export async function getServerSideProps(context) {
 
   await db.connect();
 
-  const posts = await postModel.find().lean();
+  const posts = await postModel.find().sort({ _id: -1 }).lean();
 
   await db.disconnect();
 
@@ -183,8 +179,18 @@ export default function Profile({ myPost }) {
                   {replaceWithBr2(cutText(post?.content))}
                 </Link>
 
-                {/* {replaceWithBr2(post.content)} */}
-                {/* <div dangerouslySetInnerHTML={{__html: replaceWithBr(post?.content)}}/> */}
+                {post?.image && (
+                  <div className={styles2.imageContainer}>
+                    <Image
+                      // unoptimized
+                      className={styles2.postImage}
+                      src={post?.image}
+                      alt='post_image'
+                      fill
+                    />
+                  </div>
+                )}
+
                 <div className={styles2.inner_b}>
                   <div className={styles2.inner_ba}>
                     <button className={styles2.btn_post}>
