@@ -119,7 +119,20 @@
   justify-content: center;
   align-items: center;
 }
+.imageContainer {
+  width: 100%;
+  height: 400px;
+  position: relative;
+  overflow: hidden;
+  margin: 25px 0;
+}
 
+.postImage {
+  object-fit: cover;
+  width: 100% !important;
+  position: absolute !important;
+  /* height: unset !important; */
+}
 /* .removeBorder {
 	box-shadow: none;
 	border-bottom: none;
@@ -215,6 +228,13 @@
   .inner_b {
     flex-wrap: wrap;
     gap: 15px;
+  }
+
+  .imageContainer {
+    width: 100%;
+    height: 200px;
+    position: relative;
+    overflow: hidden;
   }
   /* rightbar section */
   .rigtbar_section {
