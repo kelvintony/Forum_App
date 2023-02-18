@@ -21,7 +21,13 @@ export default function LabTabs() {
     <Box sx={{ width: '100%', typography: 'body1' }}>
       <TabContext value={value}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <TabList onChange={handleChange} aria-label='lab API tabs example'>
+          <TabList
+            onChange={handleChange}
+            aria-label='lab API tabs example'
+            variant='scrollable'
+            // scrollButtons='auto'
+            // aria-label="scrollable auto tabs example"
+          >
             <Tab className={styles.userTab} label='Account' value='1' />
             <Tab className={styles.userTab} label='Profile' value='2' />
             <Tab
@@ -42,24 +48,6 @@ export default function LabTabs() {
             <div className={styles.tab_email}>
               <p>Email Address</p>
               <p>{session?.user?.email}</p>
-            </div>
-
-            <div className={styles.tab_email}>
-              <p>Reset Password</p>
-              <p>
-                Leave the pasword field empty if yo do not wish to change it.
-              </p>
-              <input
-                className='password_input'
-                type='password'
-                placeholder='Enter Old Password'
-              />{' '}
-              <br />
-              <input
-                className='password_input'
-                type='password'
-                placeholder='Enter New Password'
-              />
             </div>
 
             <div className={styles.tab_country}>
