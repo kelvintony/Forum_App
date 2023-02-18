@@ -126,7 +126,6 @@
   position: relative;
   overflow: hidden;
   margin: 25px 0;
-  border: 1px solid black;
 }
 
 .postImage {
@@ -237,7 +236,6 @@
     height: 200px;
     position: relative;
     overflow: hidden;
-    border: 1px solid black;
   }
 
   /* rightbar section */
