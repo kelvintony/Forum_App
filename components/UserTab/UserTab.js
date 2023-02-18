@@ -25,6 +25,8 @@ export default function LabTabs() {
             onChange={handleChange}
             aria-label='lab API tabs example'
             variant='scrollable'
+            scrollButtons
+            allowScrollButtonsMobile
             // scrollButtons='auto'
             // aria-label="scrollable auto tabs example"
           >
