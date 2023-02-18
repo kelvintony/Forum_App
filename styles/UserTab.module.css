@@ -287,4 +287,10 @@
     font-size: 13px;
     padding: 5px 8px;
   }
+
+  .profileName p:nth-of-type(3) {
+    font-size: 11px;
+    /* margin-left: 73%; */
+    margin-left: 52%;
+  }
 }
