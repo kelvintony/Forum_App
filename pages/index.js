@@ -41,7 +41,7 @@ export async function getServerSideProps(context) {
 
   await db.connect();
 
-  const posts = await postModel.find({}).lean();
+  const posts = await postModel.find().sort({ _id: -1 }).lean();
   // const users = await userModel.find({}).lean();
 
   // const combinedArray = posts.concat(users);
@@ -153,7 +153,7 @@ export default function Home({ myPost, users }) {
             <Image width={10} height={10} src={newIcon} alt='start_icon' />
             New
           </button>
-          {myPost.reverse().map((post) => {
+          {myPost.map((post) => {
             return (
               <div
                 // onClick={() => router.push(`/post/community-post/${post?._id}`)}

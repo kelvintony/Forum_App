@@ -8,24 +8,14 @@ import styles2 from '../../../sections/home/MainSection.module.css';
 
 import Head from 'next/head';
 import Image from 'next/image';
-import styles from '../../../styles/Home.module.css';
-import Navbar from '../../../components/Navbar/Navbar';
 import LeftSideBar from '../../../components/leftSideBar/LeftSideBar';
-import MainSection from '../../../sections/home/MainSection';
 import RightSideBar from '../../../sections/home/RightSideBar';
 
 import moment from 'moment';
 
-import trendingIcon from '../../../assets/home-page/trending-icon.svg';
-import newIcon from '../../../assets/home-page/new-icon.svg';
-import userIcon from '../../../assets/home-page/user-icon.svg';
 import futureMoreVertical from '../../../assets/home-page/futureMoreVertical-icon.svg';
-import numberOfViewsIcon from '../../../assets/home-page/numberOfViewsIcon.svg';
-import likeIcon from '../../../assets/home-page/like-icon.svg';
-import dislike from '../../../assets/home-page/dislike-icon.svg';
-import shareIcon from '../../../assets/home-page/share-icon.svg';
 
-import { signIn, getSession, useSession } from 'next-auth/react';
+import { getSession, useSession } from 'next-auth/react';
 import axios from 'axios';
 
 import { useRouter } from 'next/router';
@@ -40,7 +30,7 @@ export async function getServerSideProps(context) {
   await db.connect();
   const post = await postModel.findOne({ _id: id }).lean();
 
-  console.log('single post', post);
+  // console.log('single post', post);
   await db.disconnect();
 
   return {
@@ -159,6 +149,17 @@ export default function Home({ session, myPost }) {
               )}
             </div>
             <h3>{myPost?.title}</h3>
+            {myPost?.image && (
+              <div className={styles2.imageContainer}>
+                <Image
+                  // unoptimized
+                  className={styles2.postImage}
+                  src={myPost?.image}
+                  alt='post_image'
+                  fill
+                />
+              </div>
+            )}
             {replaceWithBr2(myPost?.content)}
           </div>
           <Comment />
