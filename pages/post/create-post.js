@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-// import styles from '../styles/CreatePost.module.css';
 import styles2 from '../../sections/CreatePost/CreatePost.module.css';
+import FileBase from 'react-file-base64';
 
 import { getSession } from 'next-auth/react';
 import axios from 'axios';
@@ -9,6 +9,7 @@ import { useRouter } from 'next/router';
 // import loginPix from '../assets/login_pix.png';
 import addImageIcon from '../../assets/addImage_icon.svg';
 import sendPostIcon from '../../assets/sendPost_icon.svg';
+import banner_image from '../../assets/single_community/banner_image.jpg';
 
 import Head from 'next/head';
 import Image from 'next/image';
@@ -25,7 +26,7 @@ const Createpost = ({ session }) => {
   const [postData, setPostData] = useState({
     title: '',
     content: '',
-    community: '',
+    community: 'Design',
     image: '',
   });
 
@@ -37,8 +38,34 @@ const Createpost = ({ session }) => {
     setmobileMenu(!mobileMenu);
   };
 
+  const transformFile = (file) => {
+    const reader = new FileReader();
+
+    if (file) {
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        setPostData({
+          ...postData,
+          image: reader.result,
+        });
+      };
+    } else {
+      setPostData({
+        ...postData,
+        image: '',
+      });
+    }
+  };
+
+  const uploadHandler = async (e) => {
+    const file = e.target.files[0];
+    // console.log(file);
+    transformFile(file);
+  };
+
   const handleSubmit = async () => {
-    const { title, content, community } = postData;
+    const { title, content, community, image } = postData;
+
     // console.log(postData);
     setLoading(true);
     await axios
@@ -46,19 +73,20 @@ const Createpost = ({ session }) => {
         title,
         content,
         community,
+        image,
       })
       .then(function (response) {
         if (response) {
           setLoading(false);
           // window.localStorage.setItem('posts', JSON.stringify(response));
-          router.replace('/');
+          router.push('/');
         }
       })
       .catch(function (error) {
+        setLoading(false);
         console.log(error);
       });
   };
-
   return (
     <div>
       {/* <Navbar openMenu={toggle} session={session} /> */}
@@ -73,13 +101,14 @@ const Createpost = ({ session }) => {
               <select
                 name='interest'
                 id=''
+                value={postData.community}
                 onChange={(e) =>
                   setPostData({ ...postData, community: e.target.value })
                 }
               >
-                <option value='Design'>lorem Design</option>
-                <option value='Javascript'>lorem Javascript</option>
-                <option value='Bitcoin'>lorem Bitcoin</option>
+                <option value='Design'>Design</option>
+                <option value='Javascript'>Javascript</option>
+                <option value='Bitcoin'>Bitcoin</option>
               </select>
             </div>
 
@@ -89,6 +118,7 @@ const Createpost = ({ session }) => {
                 className={styles2.txt_community}
                 type='text'
                 placeholder='enter post title'
+                value={postData.title}
                 onChange={(e) =>
                   setPostData({ ...postData, title: e.target.value })
                 }
@@ -101,22 +131,37 @@ const Createpost = ({ session }) => {
                 placeholder='enter content'
                 className={styles2.txt_post}
                 name='enter_content'
+                value={postData.content}
                 onChange={(e) =>
                   setPostData({ ...postData, content: e.target.value })
                 }
               />
             </div>
-
+            {postData.image && (
+              <div className={styles2.imageContainer}>
+                {postData.image && (
+                  <Image
+                    // unoptimized
+                    className={styles2.postImage}
+                    src={postData.image}
+                    alt='post_image'
+                    fill
+                  />
+                )}
+              </div>
+            )}
             <div className={styles2.interest_buttons}>
-              {/* <button className={`${styles.btn_image} ${styles.btn_create}`}>
-						<Image src={addImageIcon} alt='create_pix' /> Add Image
-					</button> */}
               <input
                 style={{ backgroundColor: 'unset', color: 'black' }}
                 type='file'
                 className={`${styles2.btn_image} ${styles2.btn_create}`}
                 placeholder='choose file'
+                multiple
+                // onChange={uploadHandler}
+
+                onChange={uploadHandler}
               />
+
               <div className={styles2.interet_btnInner}>
                 <button
                   className={`${styles2.btn_draft} ${styles2.btn_create}`}

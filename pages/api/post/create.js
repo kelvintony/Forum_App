@@ -1,6 +1,8 @@
 import db from '../../../utils/db';
 import postModel from '../../../models/post';
 
+import cloudinary from '../cloudinary-sign';
+
 import { getSession } from 'next-auth/react';
 
 // export const config = {
@@ -29,29 +31,48 @@ export const createPost = async (req, res) => {
   const userId = session.user._id;
   const username = session.user.username;
 
+  const cloudImage = req.body.image;
   // console.log('coming from post route', session);
   // console.log(session);
 
   const post = req.body;
   // console.log(post);
-
-  await db.connect();
-
-  const newPost = new postModel({
-    ...post,
-    user: {
-      id: userId,
-      username: username,
-    },
-
-    // content: post.content.replace(/\n/g, '<br />'),
-  });
-
   try {
-    await newPost.save();
+    await db.connect();
 
-    await db.disconnect();
-    res.status(201).json(JSON.stringify(newPost));
+    if (cloudImage) {
+      const uploadRes = await cloudinary.uploader.upload(cloudImage, {
+        upload_preset: 'forumiximages',
+      });
+      if (uploadRes) {
+        const newPost = new postModel({
+          ...post,
+          image: uploadRes.secure_url,
+          user: {
+            id: userId,
+            username: username,
+          },
+        });
+        await newPost.save();
+
+        await db.disconnect();
+
+        return res.status(201).json(JSON.stringify(newPost));
+      }
+    } else {
+      const newPost = new postModel({
+        ...post,
+        user: {
+          id: userId,
+          username: username,
+        },
+      });
+      await newPost.save();
+
+      await db.disconnect();
+
+      return res.status(201).json(JSON.stringify(newPost));
+    }
   } catch (error) {
     res.status(409).json({ message: error.message });
     console.log(error.message);

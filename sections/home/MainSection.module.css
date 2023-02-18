@@ -120,6 +120,22 @@
   align-items: center;
 }
 
+.imageContainer {
+  width: 100%;
+  height: 400px;
+  position: relative;
+  overflow: hidden;
+  margin: 25px 0;
+  border: 1px solid black;
+}
+
+.postImage {
+  object-fit: cover;
+  width: 100% !important;
+  position: absolute !important;
+  /* height: unset !important; */
+}
+
 /* .removeBorder {
 	box-shadow: none;
 	border-bottom: none;
@@ -216,6 +232,14 @@
     flex-wrap: wrap;
     gap: 15px;
   }
+  .imageContainer {
+    width: 100%;
+    height: 200px;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid black;
+  }
+
   /* rightbar section */
   .rigtbar_section {
     grid-template-columns: 1fr;
