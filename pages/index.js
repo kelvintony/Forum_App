@@ -15,17 +15,13 @@ import styles2 from '../sections/home/MainSection.module.css';
 
 import Head from 'next/head';
 import Image from 'next/image';
-import styles from '../styles/Home.module.css';
-import Navbar from '../components/Navbar/Navbar';
 import LeftSideBar from '../components/leftSideBar/LeftSideBar';
-import MainSection from '../sections/home/MainSection';
 import RightSideBar from '../sections/home/RightSideBar';
 
 import moment from 'moment';
 
 import trendingIcon from '../assets/home-page/trending-icon.svg';
 import newIcon from '../assets/home-page/new-icon.svg';
-import userIcon from '../assets/home-page/user-icon.svg';
 import futureMoreVertical from '../assets/home-page/futureMoreVertical-icon.svg';
 import numberOfViewsIcon from '../assets/home-page/numberOfViewsIcon.svg';
 import likeIcon from '../assets/home-page/like-icon.svg';
@@ -40,7 +36,7 @@ import Link from 'next/link';
 import { useStore } from '../context';
 import { authConstants } from '../context/constants';
 
-export async function getStaticProps(context) {
+export async function getServerSideProps(context) {
   const session = await getSession(context);
 
   await db.connect();
@@ -63,7 +59,7 @@ export async function getStaticProps(context) {
       // posts.map(db.convertDocToObj),
       // posts ? JSON.parse(JSON.stringify(posts)) : null
     },
-    revalidate: 10,
+    // revalidate: 10,
   };
 }
 
@@ -198,8 +194,17 @@ export default function Home({ myPost, users }) {
                   {replaceWithBr2(cutText(post?.content))}
                 </Link>
 
-                {/* {replaceWithBr2(post.content)} */}
-                {/* <div dangerouslySetInnerHTML={{__html: replaceWithBr(post?.content)}}/> */}
+                {post?.image && (
+                  <div className={styles2.imageContainer}>
+                    <Image
+                      // unoptimized
+                      className={styles2.postImage}
+                      src={post?.image}
+                      alt='post_image'
+                      fill
+                    />
+                  </div>
+                )}
                 <div className={styles2.inner_b}>
                   <div className={styles2.inner_ba}>
                     <button className={styles2.btn_post}>
