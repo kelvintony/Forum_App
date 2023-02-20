@@ -28,7 +28,12 @@ import likeIcon from '../assets/home-page/like-icon.svg';
 import dislike from '../assets/home-page/dislike-icon.svg';
 import shareIcon from '../assets/home-page/share-icon.svg';
 
-import { signIn, getSession, useSession } from 'next-auth/react';
+import { AiFillDislike } from 'react-icons/ai';
+import { AiOutlineDislike } from 'react-icons/ai';
+import { AiFillLike } from 'react-icons/ai';
+import { AiOutlineLike } from 'react-icons/ai';
+
+import { getSession, useSession } from 'next-auth/react';
 import axios from 'axios';
 
 import { useRouter } from 'next/router';
@@ -63,56 +68,45 @@ export async function getServerSideProps(context) {
   };
 }
 
-function reducer(state, action) {
-  switch (action.type) {
-    case 'FETCH_REQUEST':
-      return { ...state, loading: true, error: '' };
-    case 'FETCH_SUCCESS':
-      return { ...state, loading: false, posts: action.payload, error: '' };
-    case 'FETCH_FAIL':
-      return { ...state, loading: false, error: action.payload };
-    default:
-      state;
-  }
-}
-
-export default function Home({ myPost, users }) {
-  // const [{ loading, error, posts }, dispatch] = useReducer(reducer, {
-  //   loading: true,
-  //   posts: [],
-  //   error: '',
-  // });
+export default function Home({ myPost }) {
   const { status, data: session } = useSession();
 
   const [mobileMenu, setmobileMenu] = useState(false);
 
   const router = useRouter();
 
-  // console.log('form index', session);
-  const toggle = () => {
-    dispatch({
-      type: authConstants.TOGGLE,
-    });
-  };
+  const [state, dispatch] = useStore();
+
+  const [posts, setPosts] = useState([]);
+
+  const [singlePost, setSinglePost] = useState({});
 
   // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       dispatch({ type: 'FETCH_REQUEST' });
-  //       const { data } = await axios.get(`/api/post`);
-  //       dispatch({ type: 'FETCH_SUCCESS', payload: data });
-  //     } catch (err) {
-  //       dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
-  //     }
-  //   };
-  //   fetchData();
-  // }, []);
+  //   setPosts(myPost);
+  // }, [myPost]);
 
-  //
-  //
+  useEffect(() => {
+    const getPosts = async () => {
+      // setLoading(true);
+      await axios
+        .get(`api/post`)
+        .then((res) => {
+          setPosts(res.data);
+          // console.log(res.data);
+          // setLoading(false);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    getPosts();
+  }, []);
+
+  console.log('from home ', posts);
+
   const cutText = (str) => {
-    if (str.length > 45) {
-      str = str.substring(0, 150) + ' ...';
+    if (str?.length > 45) {
+      str = str?.substring(0, 150) + ' ...';
     }
     return str;
   };
@@ -134,6 +128,49 @@ export default function Home({ myPost, users }) {
     let result = str.split('\n');
     return result.map((i, key) => <p key={key}>{i + '\n'}</p>);
   }
+
+  const handleLike = async (id, postx) => {
+    try {
+      const res = await axios.put(`/api/post/likepost/${id}`);
+
+      const spost = await axios.get(`/api/post/${id}`);
+
+      setSinglePost(spost);
+
+      if (res) {
+        if (!postx.likes.includes(id)) {
+          postx.likes.push(id);
+          postx.dislikes.splice(
+            postx.dislikes.findIndex((userId) => userId === id),
+            1
+          );
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleDisLike = async (id, postx) => {
+    try {
+      const res = await axios.put(`/api/post/likepost/${id}`);
+
+      const spost = await axios.get(`/api/post/${id}`);
+
+      setSinglePost(spost);
+
+      if (res) {
+        if (!postx.dislikes.includes(id)) {
+          postx.dislikes.push(id);
+          postx.likes.splice(
+            postx.likes.findIndex((userId) => userId === id),
+            1
+          );
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div>
       {/* <Navbar openMenu={toggle} session={session} /> */}
@@ -153,7 +190,7 @@ export default function Home({ myPost, users }) {
             <Image width={10} height={10} src={newIcon} alt='start_icon' />
             New
           </button>
-          {myPost.map((post) => {
+          {posts.map((post) => {
             return (
               <div
                 // onClick={() => router.push(`/post/community-post/${post?._id}`)}
@@ -213,22 +250,32 @@ export default function Home({ myPost, users }) {
                     </button>
                   </div>
                   <div className={styles2.inner_bb}>
-                    <a href=''>
+                    {/* <a href=''>
                       <Image src={numberOfViewsIcon} alt='views_pix' />
                       125
+                    </a> */}
+                    <a onClick={() => handleLike(post._id, post)}>
+                      {/* <Image src={likeIcon} alt='views_pix' /> */}
+                      {post?.likes?.includes(session?.user?._id) ? (
+                        <AiFillLike />
+                      ) : (
+                        <AiFillLike />
+                      )}
+                      {post?.likes?.length > 0 ? post?.likes?.length : 0}
                     </a>
-                    <a href=''>
-                      <Image src={likeIcon} alt='views_pix' />
-                      125
+                    <a onClick={() => handleDisLike(post._id, post)}>
+                      {/* <Image src={dislike} alt='views_pix' /> */}
+                      {post?.dislikes?.includes(session?.user?._id) ? (
+                        <AiFillDislike />
+                      ) : (
+                        <AiFillDislike />
+                      )}
+                      {post?.dislikes?.length > 0 ? post?.dislikes?.length : 0}
                     </a>
-                    <a href=''>
-                      <Image src={dislike} alt='views_pix' />
-                      125
-                    </a>
-                    <a href=''>
+                    {/* <a href=''> 
                       <Image src={shareIcon} alt='views_pix' />
                       155
-                    </a>
+                    </a> */}
                   </div>
                 </div>
               </div>
