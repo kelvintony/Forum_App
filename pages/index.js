@@ -131,20 +131,29 @@ export default function Home({ myPost }) {
 
   const handleLike = async (id, postx) => {
     try {
-      const res = await axios.put(`/api/post/likepost/${id}`);
+      // const res = await axios.put(`/api/post/likepost/${id}`);
+
+      if (!session?.user?._id) {
+        return alert('you need to signin in other to like a post');
+      }
 
       const spost = await axios.get(`/api/post/${id}`);
 
-      setSinglePost(spost);
+      // console.log(spost.data.likes.includes(session?.user?._id));
 
-      if (res) {
-        if (!postx.likes.includes(id)) {
-          postx.likes.push(id);
-          postx.dislikes.splice(
-            postx.dislikes.findIndex((userId) => userId === id),
-            1
-          );
-        }
+      if (
+        !postx.likes.includes(id) &&
+        !spost.data.likes.includes(session?.user?._id)
+      ) {
+        await axios.put(`/api/post/likepost/${id}`);
+        postx.likes.push(id);
+        postx.dislikes.splice(
+          postx.dislikes.findIndex((userId) => userId === id),
+          1
+        );
+
+        // console.log('it ran');
+        setSinglePost(spost);
       }
     } catch (error) {
       console.log(error);
@@ -152,20 +161,24 @@ export default function Home({ myPost }) {
   };
   const handleDisLike = async (id, postx) => {
     try {
-      const res = await axios.put(`/api/post/dislikepost/${id}`);
-
+      if (!session?.user?._id) {
+        return alert('you need to signin in other to dislike a post');
+      }
       const spost = await axios.get(`/api/post/${id}`);
+      // console.log(spost.data.dislikes.includes(session?.user?._id));
 
-      setSinglePost(spost);
-
-      if (res) {
-        if (!postx.dislikes.includes(id)) {
-          postx.dislikes.push(id);
-          postx.likes.splice(
-            postx.likes.findIndex((userId) => userId === id),
-            1
-          );
-        }
+      if (
+        !postx.dislikes.includes(id) &&
+        !spost.data.dislikes.includes(session?.user?._id)
+      ) {
+        await axios.put(`/api/post/dislikepost/${id}`);
+        postx.dislikes.push(id);
+        postx.likes.splice(
+          postx.likes.findIndex((userId) => userId === id),
+          1
+        );
+        // console.log('it ran');
+        setSinglePost(spost);
       }
     } catch (error) {
       console.log(error);
