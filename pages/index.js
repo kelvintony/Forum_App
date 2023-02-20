@@ -254,7 +254,7 @@ export default function Home({ myPost }) {
                       <Image src={numberOfViewsIcon} alt='views_pix' />
                       125
                     </a> */}
-                    <a onClick={() => handleLike(post._id, post)}>
+                    <button onClick={() => handleLike(post._id, post)}>
                       {/* <Image src={likeIcon} alt='views_pix' /> */}
                       {post?.likes?.includes(session?.user?._id) ? (
                         <AiFillLike />
@@ -262,8 +262,8 @@ export default function Home({ myPost }) {
                         <AiFillLike />
                       )}
                       {post?.likes?.length > 0 ? post?.likes?.length : 0}
-                    </a>
-                    <a onClick={() => handleDisLike(post._id, post)}>
+                    </button>
+                    <button onClick={() => handleDisLike(post._id, post)}>
                       {/* <Image src={dislike} alt='views_pix' /> */}
                       {post?.dislikes?.includes(session?.user?._id) ? (
                         <AiFillDislike />
@@ -271,7 +271,7 @@ export default function Home({ myPost }) {
                         <AiFillDislike />
                       )}
                       {post?.dislikes?.length > 0 ? post?.dislikes?.length : 0}
-                    </a>
+                    </button>
                     {/* <a href=''> 
                       <Image src={shareIcon} alt='views_pix' />
                       155
