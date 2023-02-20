@@ -1,4 +1,4 @@
-// import db from '../../../../utils/db';
+import db from '../../../../utils/db';
 import postModel from '../../../../models/post';
 
 import { getSession } from 'next-auth/react';
@@ -18,6 +18,8 @@ export default async function handler(req, res) {
 
   const id = req.query.id;
 
+  await db.connect();
+
   if (!id) {
     return res.status(404).send('post id not found');
   }
@@ -28,6 +30,7 @@ export default async function handler(req, res) {
       $pull: { likes: userId },
     });
 
+    await db.disconnect();
     res.json({ message: 'the post has been disliked' });
   } catch (error) {
     res.status(409).json({ message: error.message });
