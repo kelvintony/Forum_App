@@ -25,13 +25,13 @@ export default async function handler(req, res) {
   }
 
   try {
-    await postModel.findByIdAndUpdate(id, {
+    const post = await postModel.findByIdAndUpdate(id, {
       $addToSet: { dislikes: userId },
       $pull: { likes: userId },
     });
 
     await db.disconnect();
-    res.json({ message: 'the post has been disliked' });
+    res.json(post);
   } catch (error) {
     res.status(409).json({ message: error.message });
   }
