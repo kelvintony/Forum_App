@@ -152,7 +152,7 @@ export default function Home({ myPost }) {
   };
   const handleDisLike = async (id, postx) => {
     try {
-      const res = await axios.put(`/api/post/likepost/${id}`);
+      const res = await axios.put(`/api/post/dislikepost/${id}`);
 
       const spost = await axios.get(`/api/post/${id}`);
 
