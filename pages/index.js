@@ -141,17 +141,13 @@ export default function Home({ myPost }) {
 
       // console.log(spost.data.likes.includes(session?.user?._id));
 
-      if (
-        !postx.likes.includes(id) &&
-        !spost.data.likes.includes(session?.user?._id)
-      ) {
-        await axios.put(`/api/post/likepost/${id}`);
+      if (!postx.likes.includes(id)) {
         postx.likes.push(id);
         postx.dislikes.splice(
           postx.dislikes.findIndex((userId) => userId === id),
           1
         );
-
+        await axios.put(`/api/post/likepost/${id}`);
         // console.log('it ran');
         setSinglePost(spost);
       }
@@ -167,16 +163,13 @@ export default function Home({ myPost }) {
       const spost = await axios.get(`/api/post/${id}`);
       // console.log(spost.data.dislikes.includes(session?.user?._id));
 
-      if (
-        !postx.dislikes.includes(id) &&
-        !spost.data.dislikes.includes(session?.user?._id)
-      ) {
-        await axios.put(`/api/post/dislikepost/${id}`);
+      if (!postx.dislikes.includes(id)) {
         postx.dislikes.push(id);
         postx.likes.splice(
           postx.likes.findIndex((userId) => userId === id),
           1
         );
+        await axios.put(`/api/post/dislikepost/${id}`);
         // console.log('it ran');
         setSinglePost(spost);
       }
