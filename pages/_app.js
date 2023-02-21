@@ -64,7 +64,8 @@ function Auth({ children, adminOnly }) {
     },
   });
   if (status === 'loading') {
-    return <div>Loading...</div>;
+    // return <div>Loading...</div>;
+    return <div></div>;
   }
   if (adminOnly && !session.user.isAdmin) {
     router.push('/');

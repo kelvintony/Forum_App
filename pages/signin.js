@@ -32,7 +32,7 @@ import { authConstants } from '../context/constants';
 //   };
 // }
 
-const Signin = ({ session }) => {
+const Signin = () => {
   const router = useRouter();
 
   // const { pathname, asPath } = router;
@@ -40,8 +40,6 @@ const Signin = ({ session }) => {
   // const { redirect } = router.query;
 
   const [user, setUser] = useState(null);
-
-  const mySession2 = useSession();
 
   const [formData, setFormData] = useState({
     email: '',
@@ -57,8 +55,6 @@ const Signin = ({ session }) => {
   const [loading, setLoading] = useState(false);
 
   const [loadComponent, setLoadComponent] = useState(true);
-
-  const mySession = getSession();
 
   const [state, dispatch] = useStore();
 
@@ -123,12 +119,22 @@ const Signin = ({ session }) => {
     }
   };
 
-  if (state?.user?.username) {
-    Router.replace('/');
-    return null;
-  }
+  // if (state?.user?.username) {
+  //   Router.replace('/');
+  //   return null;
+  // }
 
-  if (loadComponent) {
+  // if (loadComponent) {
+  //   return null;
+  // }
+
+  const { status, data: session } = useSession();
+
+  if (status === 'loading') {
+    return <p>Loading</p>;
+  }
+  if (session) {
+    router.push('/');
     return null;
   }
 
