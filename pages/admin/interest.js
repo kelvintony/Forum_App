@@ -10,6 +10,7 @@ import LeftSideBar from '../../components/leftSideBar/LeftSideBar';
 
 import { DataGrid } from '@mui/x-data-grid';
 import Link from 'next/link';
+import Loader from '../../components/Loader/Loader';
 
 const columns = [
   { field: '_id', headerName: 'ID', width: 130 },
@@ -93,6 +94,12 @@ const Interest = (props) => {
       });
   };
 
+  const simpleDiv = {
+    marginTop: '20px',
+    height: '300px',
+    width: '300px',
+    paddingLeft: '90px',
+  };
   if (session?.user.hasOwnProperty('isAdmin') === false) {
     return null;
   }
@@ -102,17 +109,23 @@ const Interest = (props) => {
       <h1>Interest</h1>
 
       <Link href='/admin/create-interest' className={styles.btn_register}>
-        Register
+        Create interest
       </Link>
       <div style={{ height: 400, width: '100%' }}>
-        <DataGrid
-          rows={rows}
-          columns={columns}
-          pageSize={5}
-          rowsPerPageOptions={[5]}
-          checkboxSelection
-          getRowId={(row) => row._id}
-        />
+        {loading ? (
+          <div style={simpleDiv}>
+            <Loader />
+          </div>
+        ) : (
+          <DataGrid
+            rows={rows}
+            columns={columns}
+            pageSize={5}
+            rowsPerPageOptions={[5]}
+            checkboxSelection
+            getRowId={(row) => row._id}
+          />
+        )}
       </div>
     </div>
   );

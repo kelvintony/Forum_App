@@ -53,7 +53,7 @@ export const postHandler = async (req, res) => {
 export const getHandler = async (req, res) => {
   try {
     await db.connect();
-    const interests = await interestModel.find({});
+    const interests = await interestModel.find().sort({ _id: -1 });
     await db.disconnect();
     res.send(interests);
   } catch (error) {
