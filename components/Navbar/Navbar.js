@@ -176,6 +176,13 @@ const Navbar = (props) => {
                   </Link>
                 </li>
               )}
+              {state?.user?.isAdmin && (
+                <li onClick={toggle} className={styles.profileItems}>
+                  <Link style={{ display: 'block' }} href='/admin/interest'>
+                    View Interest
+                  </Link>
+                </li>
+              )}
               <li onClick={toggle} className={styles.profileItems}>
                 <Link style={{ display: 'block' }} href='/profile'>
                   Profile

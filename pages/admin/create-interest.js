@@ -56,7 +56,7 @@ const Createinterest = (props) => {
         if (response) {
           setLoading(false);
           console.log(response);
-          // router.push('/');
+          router.push('/admin/interest');
         }
       })
       .catch(function (error) {

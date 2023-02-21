@@ -4,10 +4,7 @@ const interestSchema = new mongoose.Schema(
   {
     interestName: { type: String, required: true },
     description: { type: String, required: true },
-    creator: {
-      id: { type: String, required: true },
-      username: { type: String, required: true },
-    },
+    creator: { type: String, required: true },
   },
   {
     timestamps: true,
