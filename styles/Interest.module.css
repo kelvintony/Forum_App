@@ -1,0 +1,39 @@
+.interest_container {
+  max-width: 1200px;
+  margin: 0 auto;
+  margin-top: 100px;
+  padding: 10px;
+}
+
+.interest_container h1 {
+  margin-bottom: 20px;
+  color: rgb(44, 44, 44);
+  letter-spacing: 0.05em;
+  font-family: 'Poppins', sans-serif;
+}
+
+.btn_register {
+  border: none;
+  outline: none;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  background-color: #f48023;
+  border-radius: 5px;
+  padding: 7px 15px;
+  color: #ffffff;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: all 0.3s ease-in-out;
+}
+
+.btn_register:hover {
+  background-color: #ff9b49;
+}
+@media screen and (max-width: 900px) {
+  .btn_register {
+    font-size: 13px;
+    padding: 5px 8px;
+  }
+}

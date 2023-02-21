@@ -38,10 +38,7 @@ export const postHandler = async (req, res) => {
     const newInterest = new interestModel({
       interestName: req.body.interestName,
       description: req.body.description,
-      creator: {
-        id: userId,
-        username: username,
-      },
+      creator: username,
     });
 
     const interest = await newInterest.save();
