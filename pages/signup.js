@@ -4,7 +4,7 @@ import axios from 'axios';
 import Router, { useRouter } from 'next/router';
 import SiginLoader from '../components/SigninLoader/SiginLoader';
 
-import { signIn, getSession } from 'next-auth/react';
+import { signIn, getSession, useSession } from 'next-auth/react';
 
 import styles from '../styles/Signup.module.css';
 import Image from 'next/image';
@@ -33,7 +33,7 @@ import { useStore } from '../context';
 // }
 
 // style={{cursor:loading&&'progress'}}
-const Signup = ({ session }) => {
+const Signup = () => {
   const router = useRouter();
 
   // const { pathname, asPath } = router;
@@ -118,14 +118,25 @@ const Signup = ({ session }) => {
     }
   };
 
-  if (state?.user?.username) {
-    Router.replace('/');
+  // if (state?.user?.username) {
+  //   Router.replace('/');
+  //   return null;
+  // }
+
+  // if (loadComponent) {
+  //   return null;
+  // }
+
+  const { status, data: session } = useSession();
+
+  if (status === 'loading') {
+    return <p>Loading</p>;
+  }
+  if (session) {
+    router.push('/');
     return null;
   }
 
-  if (loadComponent) {
-    return null;
-  }
   return (
     <div>
       {/* <Navbar openMenu={toggle} /> */}

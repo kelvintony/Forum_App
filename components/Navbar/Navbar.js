@@ -49,10 +49,10 @@ const Navbar = (props) => {
     signOut({ callbackUrl: '/' });
   };
 
-  // if (!state?.user?.username) {
+  // if (status==='authenticated') {
   //   return null;
   // }
-
+  // console.log('from nav', status);
   return (
     <nav className={styles.navbar_container}>
       <div className={styles.hamburger_container}>
@@ -76,7 +76,7 @@ const Navbar = (props) => {
       </div>
 
       <div className={styles.navbar_btn}>
-        {state?.user?.username ? (
+        {status === 'authenticated' && (
           <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
             {' '}
             {/* <h4 style={{ color: ' #04AA6D', fontSize: '12px' }}>{user?.result?.username}</h4>{' '} */}
@@ -87,21 +87,23 @@ const Navbar = (props) => {
               <BiMessageRounded color='#808080' size={25} />
             </Link>
           </div>
-        ) : (
-          <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-            <Link href='/signup' className={styles.btn_register}>
-              <Image
-                className={styles.user_image}
-                src={register_logo}
-                alt='pix-b'
-              />{' '}
-              Register
-            </Link>
-            <Link href='/signin' className={styles.btn_login}>
-              Login
-            </Link>
-          </div>
         )}
+        {status === 'authenticated' ||
+          (status === 'unauthenticated' && (
+            <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+              <Link href='/signup' className={styles.btn_register}>
+                <Image
+                  className={styles.user_image}
+                  src={register_logo}
+                  alt='pix-b'
+                />{' '}
+                Register
+              </Link>
+              <Link href='/signin' className={styles.btn_login}>
+                Login
+              </Link>
+            </div>
+          ))}
         {state?.user?.username && (
           <div className={styles.profile_container}>
             <button onClick={toggle} className={styles.btn_profileImage}>

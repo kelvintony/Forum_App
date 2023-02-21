@@ -102,7 +102,7 @@ export default function Home({ myPost }) {
     getPosts();
   }, []);
 
-  console.log('from home ', posts);
+  // console.log('from home ', posts);
 
   const cutText = (str) => {
     if (str?.length > 45) {

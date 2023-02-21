@@ -16,14 +16,6 @@ export default async (req, res) => {
     case 'DELETE':
       await deletePost(req, res);
       break;
-
-    case 'PUT':
-      await likePost(req, res);
-      break;
-
-    case 'PUT':
-      await dislikePost(req, res);
-      break;
   }
 };
 
@@ -74,52 +66,6 @@ export const deletePost = async (req, res) => {
   try {
     await postModel.findByIdAndRemove(id);
     res.json({ message: 'Post deleted successfully.' });
-  } catch (error) {
-    res.status(409).json({ message: error });
-  }
-};
-
-export const likePost = async (req, res) => {
-  const session = await getSession({ req });
-
-  if (!session) {
-    return res.status(401).send('you are not authenticated');
-  }
-
-  const userId = session.user._id;
-
-  const id = req.query.id;
-
-  try {
-    await postModel.findByIdAndUpdate(id, {
-      $addToSet: { likes: userId },
-      $pull: { dislikes: userId },
-    });
-
-    res.json({ message: 'the vido has been liked' });
-  } catch (error) {
-    res.status(409).json({ message: error });
-  }
-};
-
-export const dislikePost = async (req, res) => {
-  const session = await getSession({ req });
-
-  if (!session) {
-    return res.status(401).send('you are not authenticated');
-  }
-
-  const userId = session.user._id;
-
-  const id = req.query.id;
-
-  try {
-    await postModel.findByIdAndUpdate(id, {
-      $addToSet: { dislikes: userId },
-      $pull: { likes: userId },
-    });
-
-    res.json({ message: 'the vido has been disliked' });
   } catch (error) {
     res.status(409).json({ message: error });
   }
