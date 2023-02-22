@@ -207,7 +207,7 @@ export default function Profile({ myPost, myCommunity }) {
                       {''} Community
                     </button>
                   </div>
-                  <div className={styles2.inner_bb}>
+                  {/* <div className={styles2.inner_bb}>
                     <a href=''>
                       <Image src={numberOfViewsIcon} alt='views_pix' />
                       125
@@ -224,7 +224,7 @@ export default function Profile({ myPost, myCommunity }) {
                       <Image src={shareIcon} alt='views_pix' />
                       155
                     </a>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             );
