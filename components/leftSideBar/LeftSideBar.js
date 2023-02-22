@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import styles from './LeftSideBar.module.css';
 
@@ -18,6 +18,7 @@ import { GrFormClose } from 'react-icons/gr';
 import { IoLogoFoursquare } from 'react-icons/io';
 import { useStore } from '../../context';
 import { authConstants } from '../../context/constants';
+import axios from 'axios';
 
 const LeftSideBar = (props) => {
   const router = useRouter();
@@ -31,6 +32,33 @@ const LeftSideBar = (props) => {
   const navigateCommunityList = () => {
     router.push('/community-list');
   };
+
+  // console.log(
+  //   'from sidebar single',
+  //   state?.forumData[0]?.data[0].communityName
+  // );
+  // console.log(state?.forumData[0]?.data);
+
+  // const [communityData, setCommunityData] = useState([]);
+  // const [loading, setLoading] = useState(false);
+
+  // useEffect(() => {
+  //   const getPosts = async () => {
+  //     setLoading(true);
+  //     await axios
+  //       .get(`/api/community`)
+  //       .then((res) => {
+  //         setCommunityData(res.data);
+  //         // console.log(res.data);
+  //         setLoading(false);
+  //       })
+  //       .catch((err) => {
+  //         setLoading(false);
+  //         console.log('');
+  //       });
+  //   };
+  //   getPosts();
+  // }, []);
   return (
     <>
       <section className={styles.leftbar_section}>
@@ -47,52 +75,48 @@ const LeftSideBar = (props) => {
         </a>
         <div className={styles.popular_community}>
           <h4>POPULAR COMMUNITIES</h4>
-          <div
-            onClick={navigateToSingleCommunity}
-            className={styles.community_container}
-          >
-            <Image width={28} height={28} src={dcIcon} alt='comunityPix' />
-            <div className={styles.community_inner}>
-              <a>Design Community</a>
-              <a>Find the latest Update</a>
-            </div>
-          </div>
-          <div
-            onClick={navigateToSingleCommunity}
-            className={styles.community_container}
-          >
-            <Image width={28} height={28} src={gdcIcon} alt='comunityPix' />
-            <div className={styles.community_inner}>
-              <a>Google Developer Cycle</a>
-              <a>Explore more from this community</a>
-            </div>
-          </div>
-          <div
-            onClick={navigateToSingleCommunity}
-            className={styles.community_container}
-          >
-            <Image width={28} height={28} src={fcIcon} alt='comunityPix' />
-            <div className={styles.community_inner}>
-              <a>Flutter </a>
-              <a>Explore more from this community</a>
-            </div>
-          </div>
+          {state?.forumData[0]?.data.slice(0, 4).map((value) => {
+            return (
+              <div
+                key={value._id}
+                onClick={navigateToSingleCommunity}
+                className={styles.community_container}
+              >
+                <Image width={28} height={28} src={dcIcon} alt='comunityPix' />
+                <div className={styles.community_inner}>
+                  <a>{value.communityName}</a>
+                  <a>Find the latest Update</a>
+                </div>
+              </div>
+            );
+          })}
         </div>
         <div
           className={`${styles.popular_community} ${styles.interestCommunity}`}
         >
           <h4 className={styles.interest_community_heading}>INTEREST</h4>
-          <div
-            onClick={navigateCommunityList}
-            className={`${styles.community_container}  ${styles.fixed_position}`}
-          >
-            <Image width={28} height={28} src={javaIcon} alt='comunityPix' />
-            <div className={styles.community_inner}>
-              <a>#javascript</a>
-              <a>82,645 Communities &middot Trending</a>
-            </div>
-          </div>
-          <div
+          {state?.forumData[1]?.data?.map((value) => {
+            return (
+              <div
+                key={value._id}
+                onClick={navigateCommunityList}
+                className={`${styles.community_container}  ${styles.fixed_position}`}
+              >
+                <Image
+                  width={28}
+                  height={28}
+                  src={javaIcon}
+                  alt='comunityPix'
+                />
+                <div className={styles.community_inner}>
+                  <a># {value?.interestName}</a>
+                  <a>82,645 Communities &middot Trending</a>
+                </div>
+              </div>
+            );
+          })}
+
+          {/* <div
             onClick={navigateCommunityList}
             className={styles.community_container}
           >
@@ -141,7 +165,7 @@ const LeftSideBar = (props) => {
               <a>#business</a>
               <a>82,645 Communities &middot Trending</a>
             </div>
-          </div>
+          </div> */}
         </div>
         <div className={styles.lefttbar_about}>
           <a>About</a>
@@ -187,57 +211,52 @@ const LeftSideBar = (props) => {
             </div>
             <div className={styles.popular_community}>
               <h4>POPULAR COMMUNITIES</h4>
-              <div
-                onClick={navigateToSingleCommunity}
-                className={styles.community_container}
-              >
-                <Image width={28} height={28} src={dcIcon} alt='comunityPix' />
-                <div className={styles.community_inner}>
-                  <a>Design Community</a>
-                  <a>Find the latest Update</a>
-                </div>
-              </div>
-              <div
-                onClick={navigateToSingleCommunity}
-                className={styles.community_container}
-              >
-                <Image width={28} height={28} src={gdcIcon} alt='comunityPix' />
-                <div className={styles.community_inner}>
-                  <a>Google Developer Cycle</a>
-                  <a>Explore more from this community</a>
-                </div>
-              </div>
-              <div
-                onClick={navigateToSingleCommunity}
-                className={styles.community_container}
-              >
-                <Image width={28} height={28} src={fcIcon} alt='comunityPix' />
-                <div className={styles.community_inner}>
-                  <a>Flutter </a>
-                  <a>Explore more from this community</a>
-                </div>
-              </div>
+              {state?.forumData[0]?.data.map((value) => {
+                return (
+                  <div
+                    key={value._id}
+                    onClick={navigateToSingleCommunity}
+                    className={styles.community_container}
+                  >
+                    <Image
+                      width={28}
+                      height={28}
+                      src={dcIcon}
+                      alt='comunityPix'
+                    />
+                    <div className={styles.community_inner}>
+                      <a>{value.communityName}</a>
+                      <a>Find the latest Update</a>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
             <div
               className={`${styles.popular_community} ${styles.interestCommunity}`}
             >
               <h4 className={styles.interest_community_heading}>INTEREST</h4>
-              <div
-                onClick={navigateCommunityList}
-                className={`${styles.community_container}  ${styles.fixed_position}`}
-              >
-                <Image
-                  width={28}
-                  height={28}
-                  src={javaIcon}
-                  alt='comunityPix'
-                />
-                <div className={styles.community_inner}>
-                  <a>#javascript</a>
-                  <a>82,645 Communities &middot Trending</a>
-                </div>
-              </div>
-              <div
+              {state?.forumData[1]?.data?.map((value) => {
+                return (
+                  <div
+                    key={value._id}
+                    onClick={navigateCommunityList}
+                    className={`${styles.community_container}  ${styles.fixed_position}`}
+                  >
+                    <Image
+                      width={28}
+                      height={28}
+                      src={javaIcon}
+                      alt='comunityPix'
+                    />
+                    <div className={styles.community_inner}>
+                      <a># {value?.interestName}</a>
+                      <a>82,645 Communities &middot Trending</a>
+                    </div>
+                  </div>
+                );
+              })}
+              {/* <div
                 onClick={navigateCommunityList}
                 className={styles.community_container}
               >
@@ -296,7 +315,7 @@ const LeftSideBar = (props) => {
                   <a>#business</a>
                   <a>82,645 Communities &middot Trending</a>
                 </div>
-              </div>
+              </div> */}
             </div>
             <div className={styles.lefttbar_about}>
               <a>About</a>

@@ -19,7 +19,40 @@ import MainSection from '../../sections/home/MainSection';
 import RightSideBar from '../../sections/home/RightSideBar';
 import CreatePost from '../../sections/CreatePost/CreatePost';
 
-const Createpost = ({ session }) => {
+import communityModel from '../../models/community';
+import db from '../../utils/db';
+
+export async function getServerSideProps(context) {
+  const session = await getSession(context);
+  // console.log('from session',session)
+  if (!session?.user) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/signin',
+      },
+    };
+  }
+
+  await db.connect();
+
+  const community = await communityModel
+    .find({ 'user.id': session?.user?._id })
+    .sort({ _id: -1 })
+    .lean();
+
+  await db.disconnect();
+
+  console.log('community server', community);
+  return {
+    props: {
+      session,
+      myCommunity: community ? JSON.parse(JSON.stringify(community)) : null,
+    },
+  };
+}
+
+const Createpost = ({ session, myCommunity }) => {
   const router = useRouter();
 
   const [postData, setPostData] = useState({
@@ -107,9 +140,13 @@ const Createpost = ({ session }) => {
                   setPostData({ ...postData, community: e.target.value })
                 }
               >
-                <option value='Design'>Design</option>
-                <option value='Javascript'>Javascript</option>
-                <option value='Bitcoin'>Bitcoin</option>
+                {myCommunity.map((community) => {
+                  return (
+                    <option key={community._id} value={community.communityName}>
+                      {community.communityName}
+                    </option>
+                  );
+                })}
               </select>
             </div>
 
@@ -185,21 +222,5 @@ const Createpost = ({ session }) => {
     </div>
   );
 };
-export async function getServerSideProps(context) {
-  const session = await getSession(context);
-  // console.log('from session',session)
-  if (!session?.user) {
-    return {
-      redirect: {
-        permanent: false,
-        destination: '/signin',
-      },
-    };
-  }
-
-  return {
-    props: { session },
-  };
-}
 
 export default Createpost;

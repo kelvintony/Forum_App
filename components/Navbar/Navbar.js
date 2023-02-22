@@ -36,6 +36,9 @@ const Navbar = (props) => {
 
   const [state, dispatch] = useStore();
 
+  // console.log('from nav', state?.forumData);
+  // console.log('from data', state?.forumData[0]?.data);
+
   const toggle = () => {
     dispatch({
       type: authConstants.TOGGLE,
