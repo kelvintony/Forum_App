@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import styles2 from '../../sections/CreatePost/CreatePost.module.css';
-import FileBase from 'react-file-base64';
 
 import { getSession } from 'next-auth/react';
 import axios from 'axios';
@@ -33,6 +32,8 @@ const Createpost = ({ session }) => {
   const [mobileMenu, setmobileMenu] = useState(false);
 
   const [loading, setLoading] = useState(false);
+
+  // const [interests, setInterest] = useState(false);
 
   const toggle = () => {
     setmobileMenu(!mobileMenu);

@@ -22,11 +22,9 @@ import { AiOutlineFacebook } from 'react-icons/ai';
 import { signOut, signIn, getSession, useSession } from 'next-auth/react';
 import { useStore } from '../../context';
 
-const ProfileCard = () => {
+const ProfileCard = ({ community }) => {
   const { status, data: session } = useSession();
   const [state, dispatch] = useStore();
-  // console.log('profile card', state.userProfile);
-
   return (
     <div className={styles.rigtbar_section_b}>
       {/* first section  */}
@@ -82,6 +80,41 @@ const ProfileCard = () => {
         </div>
       </div>
       {/* second section  */}
+      <div className={styles.right_sidebar}>
+        <div className={styles.right_bar_inner}>
+          <h4>
+            <Image width={12} height={12} src={startIcon} alt='start_icon' />
+            {session?.user?.username} Community
+          </h4>
+
+          {community.map((com) => {
+            return (
+              <div key={com._id} className={styles.right_bar_inner_a}>
+                <a href=''>
+                  <Image
+                    width={16}
+                    height={16}
+                    src={topCommunityIcon}
+                    alt='top_community'
+                  />{' '}
+                  {com?.communityName} Communities
+                </a>{' '}
+                <br />
+                <a className={styles.join_community} href=''>
+                  Join Community
+                </a>
+              </div>
+            );
+          })}
+          {community.length === 0 && (
+            <p style={{ fontSize: '11px' }}>You do not have any community</p>
+          )}
+          {/* {community.length > 0 ? <p>25</p> : <p>You have no communities</p>} */}
+          <a className={styles.btn_see_all_communities}>See All Communities</a>
+        </div>
+      </div>
+
+      {/* Third Section */}
       <div className={styles.right_sidebar}>
         <div className={styles.right_bar_inner}>
           <h4>
@@ -159,7 +192,7 @@ const ProfileCard = () => {
         </div>
       </div>
 
-      {/* Third section  */}
+      {/* Fourth section  */}
       <div className={styles.right_sidebar_must_read}>
         <div className={styles.must_read_inner}>
           <h4>

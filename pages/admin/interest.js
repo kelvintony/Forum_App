@@ -71,29 +71,6 @@ const Interest = (props) => {
     getPosts();
   }, []);
 
-  const handleSubmit = async () => {
-    const { interestName, description } = interestData;
-
-    // console.log(postData);
-    setLoading(true);
-    await axios
-      .post(`/api/admin/interest`, {
-        interestName,
-        description,
-      })
-      .then(function (response) {
-        if (response) {
-          setLoading(false);
-          console.log(response);
-          // router.push('/');
-        }
-      })
-      .catch(function (error) {
-        setLoading(false);
-        console.log(error);
-      });
-  };
-
   const simpleDiv = {
     marginTop: '20px',
     height: '300px',
