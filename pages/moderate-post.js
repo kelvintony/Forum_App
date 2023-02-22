@@ -50,19 +50,16 @@ export async function getServerSideProps(context) {
 
   await db.connect();
 
-  const posts = await postModel.find().lean();
-
-  // console.log('my work', posts);
-  //   console.log('from server', session);
+  const posts = await postModel
+    .find({ 'user.id': session?.user?._id })
+    .sort({ _id: -1 })
+    .lean();
 
   await db.disconnect();
-
   return {
     props: {
       session,
       myPost: posts ? JSON.parse(JSON.stringify(posts)) : null,
-      // posts.map(db.convertDocToObj),
-      // posts ? JSON.parse(JSON.stringify(posts)) : null
     },
   };
 }
@@ -88,15 +85,9 @@ export default function ModeratePost({ session: serverSession, myPost }) {
   });
 
   const [mobileMenu, setmobileMenu] = useState(false);
-  // const [getPost, setGetPost] = useState('');
-  // const [loadme, setLoadme] = useState(false);
 
   const router = useRouter();
   const { status, data: session } = useSession();
-
-  //   console.log('cusSess', session);
-  // console.log('cusSess', serverSession?.user?._id);
-  // console.log('cusSess', mySession?.data?.user._id);
 
   const toggle = () => {
     setmobileMenu(!mobileMenu);
@@ -157,96 +148,94 @@ export default function ModeratePost({ session: serverSession, myPost }) {
           <h3 className={styles.mode_header}>Post Moderation</h3>
           {myPost.map((post) => {
             return (
-              serverSession?.user?._id === post?.user?.id && (
-                <div
-                  // onClick={() => router.push(`/post/community-post/${post?._id}`)}
-                  key={post?._id}
-                  className={styles.post_card}
-                >
-                  <div className={styles.inner_leftSide}>
-                    <div className={styles.container_a}>
-                      {/* <Image width={40} height={40} src={userIcon} alt='user_pix' /> */}
-                      <div className={styles.profile__image}>
-                        {post?.user?.username?.charAt(0).toUpperCase()}
-                      </div>
-                      <div className={styles.inner_a}>
-                        <p>{post?.user?.username}</p>
-                        <p>{moment(post?.createdAt).fromNow()}</p>
-                      </div>
-                      <a href=''></a>
+              <div
+                // onClick={() => router.push(`/post/community-post/${post?._id}`)}
+                key={post?._id}
+                className={styles.post_card}
+              >
+                <div className={styles.inner_leftSide}>
+                  <div className={styles.container_a}>
+                    {/* <Image width={40} height={40} src={userIcon} alt='user_pix' /> */}
+                    <div className={styles.profile__image}>
+                      {post?.user?.username?.charAt(0).toUpperCase()}
                     </div>
-                    <h3 className={styles.myHeader}>
-                      <Link href={`/post/community-post/${post?._id}`}>
-                        {post?.title}
-                      </Link>
-                    </h3>
-                    <Link
-                      className={styles.myTitle}
-                      href={`/post/community-post/${post?._id}`}
-                    >
-                      {replaceWithBr2(cutText(post?.content))}
+                    <div className={styles.inner_a}>
+                      <p>{post?.user?.username}</p>
+                      <p>{moment(post?.createdAt).fromNow()}</p>
+                    </div>
+                    <a href=''></a>
+                  </div>
+                  <h3 className={styles.myHeader}>
+                    <Link href={`/post/community-post/${post?._id}`}>
+                      {post?.title}
                     </Link>
+                  </h3>
+                  <Link
+                    className={styles.myTitle}
+                    href={`/post/community-post/${post?._id}`}
+                  >
+                    {replaceWithBr2(cutText(post?.content))}
+                  </Link>
 
-                    <div className={styles.inner_b}>
-                      <div className={styles.inner_ba}>
-                        <button className={styles.btn_post}>
-                          {post?.community}
-                          {''} community
-                        </button>
-                      </div>
-                      <div className={styles.inner_bb}>
-                        <a href=''>
-                          <Image src={numberOfViewsIcon} alt='views_pix' />
-                          125
-                        </a>
-                        <a href=''>
-                          <Image src={likeIcon} alt='views_pix' />
-                          125
-                        </a>
-                        <a href=''>
-                          <Image src={dislike} alt='views_pix' />
-                          125
-                        </a>
-                        <a href=''>
-                          <Image src={shareIcon} alt='views_pix' />
-                          155
-                        </a>
-                      </div>
+                  <div className={styles.inner_b}>
+                    <div className={styles.inner_ba}>
+                      <button className={styles.btn_post}>
+                        {post?.community}
+                        {''} community
+                      </button>
                     </div>
-                    <div className={styles.btn_container}>
-                      <button className={styles.btn_register}>
-                        Remove Post
-                      </button>
-                      <button className={styles.btn_register}>
-                        Publish Post
-                      </button>
+                    <div className={styles.inner_bb}>
+                      <a href=''>
+                        <Image src={numberOfViewsIcon} alt='views_pix' />
+                        125
+                      </a>
+                      <a href=''>
+                        <Image src={likeIcon} alt='views_pix' />
+                        125
+                      </a>
+                      <a href=''>
+                        <Image src={dislike} alt='views_pix' />
+                        125
+                      </a>
+                      <a href=''>
+                        <Image src={shareIcon} alt='views_pix' />
+                        155
+                      </a>
                     </div>
                   </div>
-                  <div className={styles.inner_rightSide}>
-                    <div className={styles.container_a}>
-                      {/* <Image width={40} height={40} src={userIcon} alt='user_pix' /> */}
-                      {/* <div className={styles.profile__image}>
-                      {post?.user?.username?.charAt(0).toUpperCase()}
-                    </div> */}
-                      <div className={styles.inner_a}>
-                        <p> {post?.community} Community</p>
-                        <p>55k Members</p>
-                      </div>
-                      <a href=''></a>
-                    </div>
-                    <div className={styles.btn_container}>
-                      <button className={styles.btn_register}>
-                        Block User
-                      </button>
-                      <button className={styles.btn_unblock}>
-                        Unblock User
-                      </button>
-                    </div>
+                  <div className={styles.btn_container}>
+                    <button className={styles.btn_register}>Remove Post</button>
+                    <button className={styles.btn_register}>
+                      Publish Post
+                    </button>
                   </div>
                 </div>
-              )
+                <div className={styles.inner_rightSide}>
+                  <div className={styles.container_a}>
+                    {/* <Image width={40} height={40} src={userIcon} alt='user_pix' /> */}
+                    {/* <div className={styles.profile__image}>
+                      {post?.user?.username?.charAt(0).toUpperCase()}
+                    </div> */}
+                    <div className={styles.inner_a}>
+                      <p> {post?.community} Community</p>
+                      <p>55k Members</p>
+                    </div>
+                    <a href=''></a>
+                  </div>
+                  <div className={styles.btn_container}>
+                    <button className={styles.btn_register}>Block User</button>
+                    <button className={styles.btn_unblock}>Unblock User</button>
+                  </div>
+                </div>
+              </div>
             );
           })}
+
+          {myPost?.length === 0 && (
+            <h2 style={{ marginTop: '20px', color: 'gray' }}>
+              Your Mod Que is clean{' '}
+            </h2>
+          )}
 
           {/* <div className={styles.post_card}>
             <div className={styles.container_a}>

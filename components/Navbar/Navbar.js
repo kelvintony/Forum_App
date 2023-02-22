@@ -157,7 +157,7 @@ const Navbar = (props) => {
               </li>
               <li onClick={toggle} className={styles.profileItems}>
                 <Link style={{ display: 'block' }} href='/create-community'>
-                  Create a communities
+                  Create a community
                 </Link>
               </li>
               <li onClick={toggle} className={styles.profileItems}>

@@ -2,7 +2,7 @@
   position: absolute;
   top: 0;
   left: 0;
-  height: 900px;
+  height: 1100px;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -17,7 +17,7 @@
   padding: 20px;
   background-color: #fafafa;
   margin-top: 80px;
-  height: 800px;
+  height: 1000px;
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -267,11 +267,15 @@ hr.comuunity_line {
   color: #808080;
 }
 @media screen and (max-width: 900px) {
+  .community_container {
+    height: 1100px;
+  }
+
   .container {
     max-width: 300px;
     padding: 20px;
     margin-top: 80px;
-    height: 800px;
+    height: 1000px;
     gap: 15px;
   }
   .community_name input {
