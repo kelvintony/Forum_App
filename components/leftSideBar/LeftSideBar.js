@@ -37,7 +37,7 @@ const LeftSideBar = (props) => {
   //   'from sidebar single',
   //   state?.forumData[0]?.data[0].communityName
   // );
-  console.log(state?.forumData[0]?.data);
+  // console.log(state?.forumData[0]?.data);
 
   // const [communityData, setCommunityData] = useState([]);
   // const [loading, setLoading] = useState(false);
@@ -98,6 +98,7 @@ const LeftSideBar = (props) => {
           {state?.forumData[1]?.data?.map((value) => {
             return (
               <div
+                key={value._id}
                 onClick={navigateCommunityList}
                 className={`${styles.community_container}  ${styles.fixed_position}`}
               >
@@ -213,6 +214,7 @@ const LeftSideBar = (props) => {
               {state?.forumData[0]?.data.map((value) => {
                 return (
                   <div
+                    key={value._id}
                     onClick={navigateToSingleCommunity}
                     className={styles.community_container}
                   >
@@ -234,22 +236,27 @@ const LeftSideBar = (props) => {
               className={`${styles.popular_community} ${styles.interestCommunity}`}
             >
               <h4 className={styles.interest_community_heading}>INTEREST</h4>
-              <div
-                onClick={navigateCommunityList}
-                className={`${styles.community_container}  ${styles.fixed_position}`}
-              >
-                <Image
-                  width={28}
-                  height={28}
-                  src={javaIcon}
-                  alt='comunityPix'
-                />
-                <div className={styles.community_inner}>
-                  <a>#javascript</a>
-                  <a>82,645 Communities &middot Trending</a>
-                </div>
-              </div>
-              <div
+              {state?.forumData[1]?.data?.map((value) => {
+                return (
+                  <div
+                    key={value._id}
+                    onClick={navigateCommunityList}
+                    className={`${styles.community_container}  ${styles.fixed_position}`}
+                  >
+                    <Image
+                      width={28}
+                      height={28}
+                      src={javaIcon}
+                      alt='comunityPix'
+                    />
+                    <div className={styles.community_inner}>
+                      <a># {value?.interestName}</a>
+                      <a>82,645 Communities &middot Trending</a>
+                    </div>
+                  </div>
+                );
+              })}
+              {/* <div
                 onClick={navigateCommunityList}
                 className={styles.community_container}
               >
@@ -308,7 +315,7 @@ const LeftSideBar = (props) => {
                   <a>#business</a>
                   <a>82,645 Communities &middot Trending</a>
                 </div>
-              </div>
+              </div> */}
             </div>
             <div className={styles.lefttbar_about}>
               <a>About</a>
