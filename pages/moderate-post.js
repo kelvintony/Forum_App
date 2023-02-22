@@ -184,7 +184,7 @@ export default function ModeratePost({ session: serverSession, myPost }) {
                         {''} community
                       </button>
                     </div>
-                    <div className={styles.inner_bb}>
+                    {/* <div className={styles.inner_bb}>
                       <a href=''>
                         <Image src={numberOfViewsIcon} alt='views_pix' />
                         125
@@ -201,7 +201,7 @@ export default function ModeratePost({ session: serverSession, myPost }) {
                         <Image src={shareIcon} alt='views_pix' />
                         155
                       </a>
-                    </div>
+                    </div> */}
                   </div>
                   <div className={styles.btn_container}>
                     <button className={styles.btn_register}>Remove Post</button>
@@ -236,54 +236,6 @@ export default function ModeratePost({ session: serverSession, myPost }) {
               Your Mod Que is clean{' '}
             </h2>
           )}
-
-          {/* <div className={styles.post_card}>
-            <div className={styles.container_a}>
-              <Image width={40} height={40} src={userIcon} alt='user_pix' />
-              <div className={styles.inner_a}>
-                <p>Golanginya</p>
-                <p>5 min ago</p>
-              </div>
-              <a href=''>
-                <Image
-                  width={24}
-                  height={24}
-                  src={futureMoreVertical}
-                  alt='feature_pix'
-                />
-              </a>
-            </div>
-            <h3>
-              How to patch KDE on FreeBSD? How to patch KDE on FreeBSD? FreeBSD?
-            </h3>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Consequat
-              aliquet maecenas ut sit nulla
-            </p>
-            <div className={styles.inner_b}>
-              <div className={styles.inner_ba}>
-                <button className={styles.btn_post}>goland community</button>
-              </div>
-              <div className={styles.inner_bb}>
-                <a href=''>
-                  <Image src={numberOfViewsIcon} alt='views_pix' />
-                  125
-                </a>
-                <a href=''>
-                  <Image src={likeIcon} alt='views_pix' />
-                  125
-                </a>
-                <a href=''>
-                  <Image src={dislike} alt='views_pix' />
-                  125
-                </a>
-                <a href=''>
-                  <Image src={shareIcon} alt='views_pix' />
-                  155
-                </a>
-              </div>
-            </div>
-          </div> */}
         </div>
       </section>
     </div>
