@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { createContext, useContext, useReducer } from 'react';
 import { authConstants } from './constants';
@@ -51,6 +51,30 @@ const reducer = (state, action) => {
         username: action.payload,
       },
     };
+  } else if (action.type === authConstants.FETCH_DATA_REQUEST) {
+    return {
+      ...state,
+      forumData: {
+        ...state.forumData,
+        loading: true,
+      },
+    };
+  } else if (action.type === authConstants.FETCH_DATA_SUCCESS) {
+    return {
+      ...state,
+      forumData: {
+        ...action.payload,
+        loading: false,
+      },
+    };
+  } else if (action.type === authConstants.FETCH_DATA_FALURE) {
+    return {
+      ...state,
+      forumData: {
+        ...state.forumData,
+        error: action.payload,
+      },
+    };
   } else {
     return state;
   }
@@ -70,6 +94,11 @@ export const StoreProvider = ({ children }) => {
     userProfile: {
       image: '',
       username: '',
+    },
+
+    forumData: {
+      loading: false,
+      error: null,
     },
   });
 
