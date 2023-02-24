@@ -19,10 +19,16 @@ const RightSideBar = () => {
   const [state, dispatch] = useStore();
   const [getThePost, setGetThePost] = useState([]);
 
+  const [getCommunity, setGetCommunity] = useState([]);
+
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setGetThePost(state?.forumData[2]?.data);
+  }, [state, pathname]);
+
+  useEffect(() => {
+    setGetCommunity(state?.forumData[0]?.data);
   }, [state, pathname]);
 
   const cutText = (str) => {
@@ -31,9 +37,7 @@ const RightSideBar = () => {
     }
     return str;
   };
-  // console.log('from rightsideBar', getThePost);
-  // console.log('from rightsideBar', getThePost[0]);
-  // console.log('from single community', state?.forumData[2]?.data);
+  // console.log('from rightsideBar', getCommunity);
 
   const random_item = () => {
     // get random index value
@@ -89,30 +93,34 @@ const RightSideBar = () => {
             Top Sport Communities
           </h4>
           <div className={styles.right_bar_inner_a}>
-            <a href=''>
-              <Image
-                width={16}
-                height={16}
-                src={topCommunityIcon}
-                alt='top_community'
-              />{' '}
-              Chelsea Football Communities
-            </a>{' '}
+            {getCommunity && (
+              <Link href={`/single-community/${getCommunity[2]?._id}`}>
+                <Image
+                  width={16}
+                  height={16}
+                  src={topCommunityIcon}
+                  alt='top_community'
+                />{' '}
+                {getCommunity && getCommunity[2]?.communityName} Community
+              </Link>
+            )}
             <br />
             <a className={styles.join_community} href=''>
               Join Community
             </a>
           </div>
           <div className={styles.right_bar_inner_a}>
-            <a href=''>
-              <Image
-                width={16}
-                height={16}
-                src={topCommunityIcon}
-                alt='top_community'
-              />{' '}
-              PH Vollyball communities
-            </a>{' '}
+            {getCommunity && (
+              <Link href={`/single-community/${getCommunity[3]?._id}`}>
+                <Image
+                  width={16}
+                  height={16}
+                  src={topCommunityIcon}
+                  alt='top_community'
+                />{' '}
+                {getCommunity && getCommunity[3]?.communityName} Community
+              </Link>
+            )}
             <br />
             <a className={styles.join_community} href=''>
               Join Community
@@ -123,24 +131,26 @@ const RightSideBar = () => {
         <div className={styles.right_bar_inner}>
           <h4>
             <Image width={12} height={12} src={startIcon} alt='start_icon' />
-            Top Design Communities
+            Top Health Communities
           </h4>
           <div className={styles.right_bar_inner_a}>
-            <a href=''>
-              <Image
-                width={16}
-                height={16}
-                src={topCommunityIcon}
-                alt='top_community'
-              />{' '}
-              Port Harcourt Design community
-            </a>{' '}
+            {getCommunity && (
+              <Link href={`/single-community/${getCommunity[0]?._id}`}>
+                <Image
+                  width={16}
+                  height={16}
+                  src={topCommunityIcon}
+                  alt='top_community'
+                />{' '}
+                {getCommunity && getCommunity[0]?.communityName} Community
+              </Link>
+            )}
             <br />
             <a className={styles.join_community} href=''>
               Join Community
             </a>
           </div>
-          <div className={styles.right_bar_inner_a}>
+          {/* <div className={styles.right_bar_inner_a}>
             <a href=''>
               <Image
                 width={16}
@@ -155,7 +165,7 @@ const RightSideBar = () => {
               Join Community
             </a>
           </div>
-          <a className={styles.btn_see_all_communities}>See All Communities</a>
+          <a className={styles.btn_see_all_communities}>See All Communities</a> */}
         </div>
       </div>
 
