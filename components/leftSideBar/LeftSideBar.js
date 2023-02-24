@@ -110,7 +110,7 @@ const LeftSideBar = (props) => {
                 />
                 <div className={styles.community_inner}>
                   <a># {value?.interestName}</a>
-                  <a>82,645 Communities &middot Trending</a>
+                  <a>82,645 Communities &middot; Trending</a>
                 </div>
               </div>
             );
@@ -200,7 +200,7 @@ const LeftSideBar = (props) => {
                     />
                     <div className={styles.community_inner}>
                       <a># {value?.interestName}</a>
-                      <a>82,645 Communities &middot Trending</a>
+                      <a>82,645 Communities &middot; Trending</a>
                     </div>
                   </div>
                 );

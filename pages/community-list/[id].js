@@ -92,7 +92,7 @@ const Communitylist = ({ interest }) => {
 
           <div className={`${styles.post_card} ${styles.post_margin}`}>
             <p className={styles.post_card_heading}>
-              Communities related to ' {interest?.interestName} '
+              Communities related to &apos; {interest?.interestName} &apos;
             </p>
           </div>
           {communityList?.map((theList) => {
