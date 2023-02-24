@@ -169,7 +169,9 @@ const Singlecommunity = () => {
       console.log(error);
     }
   };
-
+  const navigateCommunityList = (id) => {
+    router.push(`/community-list/${id}`);
+  };
   return (
     <div>
       <LeftSideBar burgerMenu={mobileMenu} closeMenu={toggle} />
