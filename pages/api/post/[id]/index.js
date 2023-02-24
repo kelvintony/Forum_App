@@ -1,6 +1,8 @@
 import db from '../../../../utils/db';
 import postModel from '../../../../models/post';
 
+import cloudinary from '../../cloudinary-sign';
+
 import { getSession } from 'next-auth/react';
 
 export default async (req, res) => {
@@ -38,16 +40,41 @@ export const editPost = async (req, res) => {
   if (!session) {
     return res.status(401).send('you are not authenticated');
   }
+  const cloudImage = req.body.image;
 
   try {
     await db.connect();
-    const id = req.query.id;
-    const updatedData = req.body;
-    const options = { new: true };
-    const data = await postModel.findByIdAndUpdate(id, updatedData, options);
 
-    await db.disconnect();
-    res.status(200).json({ message: 'updated successfully', data });
+    if (cloudImage) {
+      const uploadRes = await cloudinary.uploader.upload(cloudImage, {
+        upload_preset: 'forumiximages',
+      });
+      if (uploadRes) {
+        const id = req.query.id;
+        const updatedData = {
+          ...req.body,
+          image: uploadRes.secure_url,
+        };
+        const options = { new: true };
+        const data = await postModel.findByIdAndUpdate(
+          id,
+          updatedData,
+          options
+        );
+
+        await db.disconnect();
+        res.status(200).json({ message: 'updated successfully', data });
+      }
+    } else {
+      await db.connect();
+      const id = req.query.id;
+      const updatedData = req.body;
+      const options = { new: true };
+      const data = await postModel.findByIdAndUpdate(id, updatedData, options);
+
+      await db.disconnect();
+      res.status(200).json({ message: 'updated successfully', data });
+    }
   } catch (error) {
     await db.disconnect();
     res.status(500).json({ message: 'something went wrong' });
@@ -70,3 +97,25 @@ export const deletePost = async (req, res) => {
     res.status(409).json({ message: error });
   }
 };
+/*
+export const editPost = async (req, res) => {
+  const session = await getSession({ req });
+
+  if (!session) {
+    return res.status(401).send('you are not authenticated');
+  }
+
+  try {
+    await db.connect();
+    const id = req.query.id;
+    const updatedData = req.body;
+    const options = { new: true };
+    const data = await postModel.findByIdAndUpdate(id, updatedData, options);
+
+    await db.disconnect();
+    res.status(200).json({ message: 'updated successfully', data });
+  } catch (error) {
+    await db.disconnect();
+    res.status(500).json({ message: 'something went wrong' });
+  }
+}; */

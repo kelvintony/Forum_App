@@ -115,7 +115,7 @@ const RightSideBar = () => {
           </h4>
           {communityListTopSport?.slice(0, 3)?.map((value) => {
             return (
-              <div className={styles.right_bar_inner_a}>
+              <div key={value._id} className={styles.right_bar_inner_a}>
                 {communityListTopSport && (
                   <Link href={`/single-community/${value?._id}`}>
                     <Image
@@ -148,7 +148,7 @@ const RightSideBar = () => {
           </h4>
           {communityListTopHealth?.slice(0, 3).map((value) => {
             return (
-              <div className={styles.right_bar_inner_a}>
+              <div key={value._id} className={styles.right_bar_inner_a}>
                 {communityListTopHealth && (
                   <Link href={`/single-community/${value?._id}`}>
                     <Image

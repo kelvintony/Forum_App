@@ -15,6 +15,8 @@ import { useStore } from '../../../context';
 import { authConstants } from '../../../context/constants';
 import LeftSideBar from '../../../components/leftSideBar/LeftSideBar';
 
+// import styles3 from '../../../sections/CreatePost/CreatePost.module.css';
+
 // import postModel from '../../../models/post';
 // import db from '../../../utils/db';
 
@@ -101,7 +103,7 @@ const EditPost = () => {
   }, []);
 
   const handleSubmit = async (e) => {
-    const { title, content, community } = postData;
+    const { title, content, community, image } = postData;
     setLoading(true);
     e.preventDefault();
     await axios
@@ -109,6 +111,7 @@ const EditPost = () => {
         title,
         content,
         community,
+        image,
       })
       .then(function (response) {
         if (response) {
@@ -126,14 +129,39 @@ const EditPost = () => {
     width: '300px',
     paddingLeft: '90px',
   };
-  // console.log(post);
-  // console.log(id);
+
+  const transformFile = (file) => {
+    const reader = new FileReader();
+
+    if (file) {
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        // setImage(reader.result);
+        setPostData({
+          ...postData,
+          image: reader.result,
+        });
+      };
+    } else {
+      // setImage('');
+      setPostData({
+        ...postData,
+        image: '',
+      });
+    }
+  };
+
+  const uploadHandler = async (e) => {
+    const file = e.target.files[0];
+    transformFile(file);
+  };
+
   return (
     <div className={styles.editPost_container}>
       <div className={styles.hide_leftSideBar}>
         <LeftSideBar />
       </div>
-      <div className={'${styles2.rigtbar_section_a} ${addMargin}'}>
+      <div className={`${styles2.rigtbar_section_a}  ${styles2.addMargin}`}>
         <div className={styles2.container_a}>
           {loading ? (
             <div style={simpleDiv}>
@@ -168,13 +196,40 @@ const EditPost = () => {
                   value={postData.content}
                 />
               </div>
+              {/* <div className={styles2.upload_container}>
+                <p>Upload cover image</p>
+                <input
+                  className='custom-file-input'
+                  type='file'
+                  name='uploadFile'
+                  id='uploadFile'
+                  multiple
+                  onChange={uploadHandler}
+                />
+              </div> */}
+              {postData.image && (
+                <div className={styles2.imageContainer}>
+                  {postData.image && (
+                    <Image
+                      // unoptimized
+                      className={styles2.postImage}
+                      src={postData.image}
+                      alt='post_image'
+                      fill
+                    />
+                  )}
+                </div>
+              )}
 
               <div className={styles2.interest_buttons}>
                 <input
                   style={{ backgroundColor: 'unset', color: 'black' }}
                   type='file'
                   className={`${styles2.btn_image} ${styles2.btn_create}`}
-                  placeholder='choose file'
+                  name='uploadFile'
+                  id='uploadFile'
+                  multiple
+                  onChange={uploadHandler}
                 />
                 <div className={styles2.interet_btnInner}>
                   <button
