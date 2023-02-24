@@ -90,7 +90,7 @@ const ProfileCard = ({ community }) => {
           {community.map((com) => {
             return (
               <div key={com._id} className={styles.right_bar_inner_a}>
-                <a href=''>
+                <Link href={`/single-community/${com._id}`}>
                   <Image
                     width={16}
                     height={16}
@@ -98,7 +98,7 @@ const ProfileCard = ({ community }) => {
                     alt='top_community'
                   />{' '}
                   {com?.communityName} Communities
-                </a>{' '}
+                </Link>{' '}
                 <br />
                 <a className={styles.join_community} href=''>
                   Join Community

@@ -10,7 +10,7 @@ const Layout = ({ children }) => {
 
   useEffect(() => {
     const getPosts = async () => {
-      let endpoints = ['/api/community', '/api/admin/interest'];
+      let endpoints = ['/api/community', '/api/admin/interest', '/api/post'];
       dispatch({
         type: authConstants.FETCH_DATA_REQUEST,
       });

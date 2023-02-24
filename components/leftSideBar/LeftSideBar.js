@@ -25,12 +25,12 @@ const LeftSideBar = (props) => {
 
   const [state, dispatch] = useStore();
 
-  const navigateToSingleCommunity = () => {
-    router.push('/single-community');
+  const navigateToSingleCommunity = (id) => {
+    router.push(`/single-community/${id}`);
   };
 
-  const navigateCommunityList = () => {
-    router.push('/community-list');
+  const navigateCommunityList = (id) => {
+    router.push(`/community-list/${id}`);
   };
 
   // console.log(
@@ -75,11 +75,11 @@ const LeftSideBar = (props) => {
         </a>
         <div className={styles.popular_community}>
           <h4>POPULAR COMMUNITIES</h4>
-          {state?.forumData[0]?.data.slice(0, 4).map((value) => {
+          {state?.forumData[0]?.data.slice(0, 3).map((value) => {
             return (
               <div
                 key={value._id}
-                onClick={navigateToSingleCommunity}
+                onClick={() => navigateToSingleCommunity(value._id)}
                 className={styles.community_container}
               >
                 <Image width={28} height={28} src={dcIcon} alt='comunityPix' />
@@ -99,7 +99,7 @@ const LeftSideBar = (props) => {
             return (
               <div
                 key={value._id}
-                onClick={navigateCommunityList}
+                onClick={() => navigateCommunityList(value._id)}
                 className={`${styles.community_container}  ${styles.fixed_position}`}
               >
                 <Image
@@ -110,62 +110,11 @@ const LeftSideBar = (props) => {
                 />
                 <div className={styles.community_inner}>
                   <a># {value?.interestName}</a>
-                  <a>82,645 Communities &middot Trending</a>
+                  <a>82,645 Communities &middot; Trending</a>
                 </div>
               </div>
             );
           })}
-
-          {/* <div
-            onClick={navigateCommunityList}
-            className={styles.community_container}
-          >
-            <Image width={28} height={28} src={bitcoinIcon} alt='comunityPix' />
-            <div className={styles.community_inner}>
-              <a>#bitcoin</a>
-              <a>82,645 Communities &middot Trending</a>
-            </div>
-          </div>
-          <div
-            onClick={navigateToSingleCommunity}
-            className={styles.community_container}
-          >
-            <Image width={28} height={28} src={designIcon} alt='comunityPix' />
-            <div className={styles.community_inner}>
-              <a>#design</a>
-              <a>82,645 Communities &middot Trending</a>
-            </div>
-          </div>
-          <div
-            onClick={navigateCommunityList}
-            className={styles.community_container}
-          >
-            <Image
-              width={28}
-              height={28}
-              src={tutorialIcon}
-              alt='comunityPix'
-            />
-            <div className={styles.community_inner}>
-              <a>#tutorial</a>
-              <a>82,645 Communities &middot Trending</a>
-            </div>
-          </div>
-          <div
-            onClick={navigateCommunityList}
-            className={styles.community_container}
-          >
-            <Image
-              width={28}
-              height={28}
-              src={businessIcon}
-              alt='comunityPix'
-            />
-            <div className={styles.community_inner}>
-              <a>#business</a>
-              <a>82,645 Communities &middot Trending</a>
-            </div>
-          </div> */}
         </div>
         <div className={styles.lefttbar_about}>
           <a>About</a>
@@ -211,11 +160,11 @@ const LeftSideBar = (props) => {
             </div>
             <div className={styles.popular_community}>
               <h4>POPULAR COMMUNITIES</h4>
-              {state?.forumData[0]?.data.map((value) => {
+              {state?.forumData[0]?.data.slice(0, 3).map((value) => {
                 return (
                   <div
                     key={value._id}
-                    onClick={navigateToSingleCommunity}
+                    onClick={() => navigateToSingleCommunity(value._id)}
                     className={styles.community_container}
                   >
                     <Image
@@ -240,7 +189,7 @@ const LeftSideBar = (props) => {
                 return (
                   <div
                     key={value._id}
-                    onClick={navigateCommunityList}
+                    onClick={() => navigateCommunityList(value._id)}
                     className={`${styles.community_container}  ${styles.fixed_position}`}
                   >
                     <Image
@@ -251,71 +200,11 @@ const LeftSideBar = (props) => {
                     />
                     <div className={styles.community_inner}>
                       <a># {value?.interestName}</a>
-                      <a>82,645 Communities &middot Trending</a>
+                      <a>82,645 Communities &middot; Trending</a>
                     </div>
                   </div>
                 );
               })}
-              {/* <div
-                onClick={navigateCommunityList}
-                className={styles.community_container}
-              >
-                <Image
-                  width={28}
-                  height={28}
-                  src={bitcoinIcon}
-                  alt='comunityPix'
-                />
-                <div className={styles.community_inner}>
-                  <a>#bitcoin</a>
-                  <a>82,645 Communities &middot Trending</a>
-                </div>
-              </div>
-              <div
-                onClick={navigateCommunityList}
-                className={styles.community_container}
-              >
-                <Image
-                  width={28}
-                  height={28}
-                  src={designIcon}
-                  alt='comunityPix'
-                />
-                <div className={styles.community_inner}>
-                  <a>#design</a>
-                  <a>82,645 Communities &middot Trending</a>
-                </div>
-              </div>
-              <div
-                onClick={navigateCommunityList}
-                className={styles.community_container}
-              >
-                <Image
-                  width={28}
-                  height={28}
-                  src={tutorialIcon}
-                  alt='comunityPix'
-                />
-                <div className={styles.community_inner}>
-                  <a>#tutorial</a>
-                  <a>82,645 Communities &middot Trending</a>
-                </div>
-              </div>
-              <div
-                onClick={navigateCommunityList}
-                className={styles.community_container}
-              >
-                <Image
-                  width={28}
-                  height={28}
-                  src={businessIcon}
-                  alt='comunityPix'
-                />
-                <div className={styles.community_inner}>
-                  <a>#business</a>
-                  <a>82,645 Communities &middot Trending</a>
-                </div>
-              </div> */}
             </div>
             <div className={styles.lefttbar_about}>
               <a>About</a>

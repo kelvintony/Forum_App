@@ -123,6 +123,7 @@ export default function Home({ myPost }) {
     letterSpacing: '0.05em',
     color: '#808080',
   };
+
   function replaceWithBr2(value) {
     let str = value;
     let result = str.split('\n');

@@ -17,7 +17,7 @@ const CreateCommunity = () => {
 
   const [interests, setInterests] = useState([]);
 
-  const [interestValue, setInterestValue] = useState('Web Development');
+  const [interestValue, setInterestValue] = useState('');
 
   const [communityName, setCommunityName] = useState('');
 
@@ -25,7 +25,7 @@ const CreateCommunity = () => {
 
   const router = useRouter();
 
-  console.log('from create-community');
+  // console.log('from create-community');
   const showFirstClose = () => {
     setfirstClose(true);
   };
@@ -41,6 +41,7 @@ const CreateCommunity = () => {
         .get(`/api/admin/interest`)
         .then((res) => {
           setInterests(res.data);
+          setInterestValue(res.data[1].interestName);
           // console.log(res);
           setLoading(false);
         })
