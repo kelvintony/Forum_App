@@ -84,8 +84,9 @@ const LeftSideBar = (props) => {
               >
                 <Image width={28} height={28} src={dcIcon} alt='comunityPix' />
                 <div className={styles.community_inner}>
-                  <a>{value.communityName}</a>
-                  <a>Find the latest Update</a>
+                  <a>{value?.communityName}</a>
+                  <a>{value?.user?.username}</a>
+                  {/* <a>Find the latest Update</a> */}
                 </div>
               </div>
             );
@@ -110,7 +111,8 @@ const LeftSideBar = (props) => {
                 />
                 <div className={styles.community_inner}>
                   <a># {value?.interestName}</a>
-                  <a>82,645 Communities &middot; Trending</a>
+                  {/* <a>82,645 Communities &middot; Trending</a> */}
+                  <a>{value?.description}</a>
                 </div>
               </div>
             );
@@ -174,8 +176,9 @@ const LeftSideBar = (props) => {
                       alt='comunityPix'
                     />
                     <div className={styles.community_inner}>
-                      <a>{value.communityName}</a>
-                      <a>Find the latest Update</a>
+                      <a>{value?.communityName}</a>
+                      <a>{value?.user.username}</a>
+                      {/* <a>Find the latest Update</a> */}
                     </div>
                   </div>
                 );
@@ -200,7 +203,8 @@ const LeftSideBar = (props) => {
                     />
                     <div className={styles.community_inner}>
                       <a># {value?.interestName}</a>
-                      <a>82,645 Communities &middot; Trending</a>
+                      {/* <a>82,645 Communities &middot; Trending</a> */}
+                      <a>{value?.description}</a>
                     </div>
                   </div>
                 );
