@@ -43,7 +43,7 @@ export async function getServerSideProps(context) {
 
   await db.disconnect();
 
-  console.log('community server', community);
+  // console.log('community server', community);
   return {
     props: {
       session,
@@ -58,7 +58,7 @@ const Createpost = ({ session, myCommunity }) => {
   const [postData, setPostData] = useState({
     title: '',
     content: '',
-    community: 'Design',
+    community: '',
     image: '',
   });
 
@@ -140,6 +140,9 @@ const Createpost = ({ session, myCommunity }) => {
                   setPostData({ ...postData, community: e.target.value })
                 }
               >
+                <option>select a community</option>
+                <option value='General'>General</option>
+
                 {myCommunity.map((community) => {
                   return (
                     <option key={community._id} value={community.communityName}>

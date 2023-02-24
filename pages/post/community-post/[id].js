@@ -121,7 +121,6 @@ export default function Home({ session, myPost }) {
   };
   return (
     <div>
-      {/* <Navbar openMenu={toggle} session={session} /> */}
       <LeftSideBar burgerMenu={mobileMenu} closeMenu={toggle} />
       <section className={styles2.rigtbar_section}>
         <div className={styles2.rigtbar_section_a}>

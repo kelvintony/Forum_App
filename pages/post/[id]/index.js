@@ -58,6 +58,7 @@ const EditPost = () => {
   });
 
   const [loading, setLoading] = useState(false);
+
   const [loadingButton, setLoadingButton] = useState(false);
 
   const router = useRouter();
@@ -95,7 +96,6 @@ const EditPost = () => {
           console.log(err);
         });
     };
-    ``;
 
     getTasks();
   }, []);
