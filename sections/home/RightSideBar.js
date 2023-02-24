@@ -4,8 +4,51 @@ import styles from './RightSideBar.module.css';
 import startIcon from '../../assets/home-page/start-icon.svg';
 import topCommunityIcon from '../../assets/home-page/topCommunity-icon.svg';
 import quickLinksIcon from '../../assets/home-page/quickLinks-icon.svg';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useStore } from '../../context';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 const RightSideBar = () => {
+  const router = useRouter();
+
+  const { asPath, pathname } = useRouter();
+
+  // const { id } = router.query;
+  const [state, dispatch] = useStore();
+  const [getThePost, setGetThePost] = useState([]);
+
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setGetThePost(state?.forumData[2]?.data);
+  }, [state, pathname]);
+
+  const cutText = (str) => {
+    if (str?.length > 45) {
+      str = str?.substring(0, 150) + ' ...';
+    }
+    return str;
+  };
+  // console.log('from rightsideBar', getThePost);
+  // console.log('from rightsideBar', getThePost[0]);
+  // console.log('from single community', state?.forumData[2]?.data);
+
+  const random_item = () => {
+    // get random index value
+    const randomIndex = Math.floor(Math.random() * getThePost?.length);
+
+    // get random item
+    const item = getThePost[randomIndex];
+
+    return [item?.title, item?._id];
+  };
+
+  const pushToPost = (id) => {
+    router.push(`/post/community-post/${id}`);
+  };
+
   return (
     <div className={styles.rigtbar_section_b}>
       {/* first section  */}
@@ -15,11 +58,26 @@ const RightSideBar = () => {
           Of The Moment
         </h4>
         <ul className={styles.post_of_moment}>
-          <li>
-            <a href=''>Lorem ipsum dolor sit amet, consectetur adipisicing.</a>
+          <li onClick={() => pushToPost(getThePost[0]?._id)}>
+            {/* {getThePost && (
+              <Link href={`/post/community-post/${random_item()[1]}`}>
+                {getThePost && random_item()[0]}
+              </Link>
+            )} */}
+            {getThePost && (
+              <Link href={`/post/community-post/${getThePost[0]?._id}`}>
+                {getThePost && getThePost[0]?.title}
+              </Link>
+            )}
           </li>
-          <li>
-            <a href=''>Lorem ipsum dolor sit amet, consectetur adipisicing.</a>
+          <li onClick={() => pushToPost(getThePost[5]?._id)}>
+            {getThePost && (
+              <Link href={`/post/community-post/${getThePost[5]?._id}`}>
+                {getThePost && getThePost[5]?.title}
+              </Link>
+            )}
+            {/* <Link href=''>{getThePost && random_item()[0]}</Link> */}
+            {/* <Link href=''>{getThePost && random_item()}</Link> */}
           </li>
         </ul>
       </div>
