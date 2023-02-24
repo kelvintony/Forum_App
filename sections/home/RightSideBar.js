@@ -23,6 +23,27 @@ const RightSideBar = () => {
 
   const [loading, setLoading] = useState(false);
 
+  const [communityListTopHealth, setCommunityTopHealth] = useState([]);
+
+  const [communityListTopSport, setCommunityTopSport] = useState([]);
+
+  useEffect(() => {
+    setCommunityTopHealth(
+      state?.forumData[0]?.data.filter((data) => {
+        return data?.interest === 'Food And Nutrition';
+      })
+    );
+
+    setCommunityTopSport(
+      state?.forumData[0]?.data.filter((data) => {
+        return data?.interest === 'Football';
+      })
+    );
+  }, [state, pathname]);
+
+  // console.log('from rightbar', state?.forumData[0]?.data);
+  // console.log('rightbar ran');
+
   useEffect(() => {
     setGetThePost(state?.forumData[2]?.data);
   }, [state, pathname]);
@@ -92,80 +113,65 @@ const RightSideBar = () => {
             <Image width={12} height={12} src={startIcon} alt='start_icon' />
             Top Sport Communities
           </h4>
-          <div className={styles.right_bar_inner_a}>
-            {getCommunity && (
-              <Link href={`/single-community/${getCommunity[2]?._id}`}>
-                <Image
-                  width={16}
-                  height={16}
-                  src={topCommunityIcon}
-                  alt='top_community'
-                />{' '}
-                {getCommunity && getCommunity[2]?.communityName} Community
-              </Link>
-            )}
-            <br />
-            <a className={styles.join_community} href=''>
-              Join Community
-            </a>
-          </div>
-          <div className={styles.right_bar_inner_a}>
-            {getCommunity && (
-              <Link href={`/single-community/${getCommunity[3]?._id}`}>
-                <Image
-                  width={16}
-                  height={16}
-                  src={topCommunityIcon}
-                  alt='top_community'
-                />{' '}
-                {getCommunity && getCommunity[3]?.communityName} Community
-              </Link>
-            )}
-            <br />
-            <a className={styles.join_community} href=''>
-              Join Community
-            </a>
-          </div>
+          {communityListTopSport?.slice(0, 3)?.map((value) => {
+            return (
+              <div className={styles.right_bar_inner_a}>
+                {communityListTopSport && (
+                  <Link href={`/single-community/${value?._id}`}>
+                    <Image
+                      width={16}
+                      height={16}
+                      src={topCommunityIcon}
+                      alt='top_community'
+                    />{' '}
+                    {communityListTopSport && value?.communityName} Community
+                  </Link>
+                )}
+                <br />
+                <Link
+                  href={`/single-community/${value?._id}`}
+                  className={styles.join_community}
+                >
+                  Join Community
+                </Link>
+              </div>
+            );
+          })}
+
           <a className={styles.btn_see_all_communities}>See All Communities</a>
         </div>
+
         <div className={styles.right_bar_inner}>
           <h4>
             <Image width={12} height={12} src={startIcon} alt='start_icon' />
             Top Health Communities
           </h4>
-          <div className={styles.right_bar_inner_a}>
-            {getCommunity && (
-              <Link href={`/single-community/${getCommunity[0]?._id}`}>
-                <Image
-                  width={16}
-                  height={16}
-                  src={topCommunityIcon}
-                  alt='top_community'
-                />{' '}
-                {getCommunity && getCommunity[0]?.communityName} Community
-              </Link>
-            )}
-            <br />
-            <a className={styles.join_community} href=''>
-              Join Community
-            </a>
-          </div>
-          {/* <div className={styles.right_bar_inner_a}>
-            <a href=''>
-              <Image
-                width={16}
-                height={16}
-                src={topCommunityIcon}
-                alt='top_community'
-              />{' '}
-              Figma Community
-            </a>{' '}
-            <br />
-            <a className={styles.join_community} href=''>
-              Join Community
-            </a>
-          </div>
-          <a className={styles.btn_see_all_communities}>See All Communities</a> */}
+          {communityListTopHealth?.slice(0, 3).map((value) => {
+            return (
+              <div className={styles.right_bar_inner_a}>
+                {communityListTopHealth && (
+                  <Link href={`/single-community/${value?._id}`}>
+                    <Image
+                      width={16}
+                      height={16}
+                      src={topCommunityIcon}
+                      alt='top_community'
+                    />{' '}
+                    {communityListTopHealth && value?.communityName} Community
+                  </Link>
+                )}
+                <br />
+                <Link
+                  className={styles.join_community}
+                  href={`/single-community/${value?._id}`}
+                >
+                  Join Community
+                </Link>
+              </div>
+            );
+          })}
+
+          <a className={styles.btn_see_all_communities}>See All Communities</a>
         </div>
       </div>
 
