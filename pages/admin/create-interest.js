@@ -42,9 +42,15 @@ const Createinterest = (props) => {
     description: '',
   });
 
+  const [error, setError] = useState(false);
+
   const handleSubmit = async () => {
     const { interestName, description } = interestData;
 
+    if (interestName.length === 0 || description.length === 0) {
+      setError(true);
+      return;
+    }
     // console.log(postData);
     setLoading(true);
     await axios
@@ -96,6 +102,19 @@ const Createinterest = (props) => {
               setInterestData({ ...interestData, interestName: e.target.value })
             }
           />
+          {error && interestData.interestName.length <= 0 ? (
+            <label
+              style={{
+                color: 'red',
+                fontSize: '12px',
+                fontFamily: 'Poppins',
+              }}
+            >
+              *required
+            </label>
+          ) : (
+            ''
+          )}
         </div>
 
         <div className={styles.interest_name}>
@@ -109,6 +128,19 @@ const Createinterest = (props) => {
               setInterestData({ ...interestData, description: e.target.value })
             }
           />
+          {error && interestData.description.length <= 0 ? (
+            <label
+              style={{
+                color: 'red',
+                fontSize: '12px',
+                fontFamily: 'Poppins',
+              }}
+            >
+              *required
+            </label>
+          ) : (
+            ''
+          )}
         </div>
 
         <div className={styles.interest_buttons}>

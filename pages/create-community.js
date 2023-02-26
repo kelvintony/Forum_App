@@ -23,6 +23,12 @@ const CreateCommunity = () => {
 
   const [image, setImage] = useState('');
 
+  const [imageError, setImageError] = useState(false);
+
+  const [error, setError] = useState(false);
+
+  const [imageSize, setImageSize] = useState('Max image size 5mb');
+
   const router = useRouter();
 
   // console.log('from create-community');
@@ -41,7 +47,7 @@ const CreateCommunity = () => {
         .get(`/api/admin/interest`)
         .then((res) => {
           setInterests(res.data);
-          setInterestValue(res.data[1].interestName);
+          setInterestValue(res.data[0].interestName);
           // console.log(res);
           setLoading(false);
         })
@@ -70,15 +76,45 @@ const CreateCommunity = () => {
       };
     } else {
       setImage('');
+      setImageSize('No image was selected');
     }
   };
 
   const uploadHandler = async (e) => {
     const file = e.target.files[0];
+    if (file?.size / 1024 > 5120) {
+      setImageSize('*Image size too large');
+      return;
+    }
+
+    if (file?.size / 1024 < 5120) {
+      setImageSize('Image is okay');
+    }
     transformFile(file);
+
+    const MIN_FILE_SIZE = 1024; // 1MB
+    const MAX_FILE_SIZE = 5120; // 5MB
   };
 
   const handleSubmit = async () => {
+    if (
+      interestValue.length === 0 ||
+      communityName.length === 0 ||
+      image.length === 0
+    ) {
+      setError(true);
+      setImageError(true);
+      return;
+    }
+    // if (!image) {
+    //   setImageSize('*Image is required');
+    //   return;
+    // }
+
+    if (imageSize === '*Image size too large') {
+      setImageSize('*Image size too large');
+      return;
+    }
     // console.log(postData);
     setLoading(true);
     await axios
@@ -128,6 +164,19 @@ const CreateCommunity = () => {
               );
             })}
           </select>
+          {error && interestValue.length <= 0 ? (
+            <label
+              style={{
+                color: 'red',
+                fontSize: '12px',
+                fontFamily: 'Poppins',
+              }}
+            >
+              *required
+            </label>
+          ) : (
+            ''
+          )}
         </div>
 
         <div className={styles.community_name}>
@@ -141,6 +190,19 @@ const CreateCommunity = () => {
             onChange={(e) => setCommunityName(e.target.value)}
           />
           <p> 21 Characters remaining</p>
+          {error && communityName.length <= 0 ? (
+            <label
+              style={{
+                color: 'red',
+                fontSize: '12px',
+                fontFamily: 'Poppins',
+              }}
+            >
+              *name is required
+            </label>
+          ) : (
+            ''
+          )}
         </div>
 
         <div className={styles.radio_communityType}>
@@ -199,6 +261,34 @@ const CreateCommunity = () => {
 
         <div className={styles.upload_container}>
           <p>Upload cover image</p>
+          {imageError && image.length <= 0 ? (
+            <label
+              style={{
+                color: 'red',
+                fontSize: '12px',
+                fontFamily: 'Poppins',
+                fontWeight: 'Bold',
+              }}
+            >
+              *image is required
+            </label>
+          ) : (
+            ''
+          )}
+
+          <span
+            style={{
+              fontSize: '12px',
+              margin: '5px 0px',
+              fontFamily: 'Poppins',
+              color: imageSize === '*Image size too large' ? 'red' : '#0ECC8D',
+              fontWeight: 'Bold',
+              fontFamily: 'Poppins',
+            }}
+          >
+            {imageSize}
+          </span>
+
           <input
             className='custom-file-input'
             type='file'
@@ -222,6 +312,7 @@ const CreateCommunity = () => {
             )}
           </div>
         )}
+
         <div className={styles.community_buttons}>
           <button onClick={() => router.back()} className={styles.btn_cancel}>
             Cancel
