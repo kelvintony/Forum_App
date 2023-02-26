@@ -76,6 +76,7 @@ const Singlecommunity = () => {
   const { status, data: session } = useSession();
 
   // console.log('from single community', state?.forumData[2]?.data);
+  console.log('from single community');
 
   useEffect(() => {
     const getCommunity = async () => {
@@ -96,7 +97,8 @@ const Singlecommunity = () => {
         });
     };
     getCommunity();
-  }, [id, state]);
+    console.log('effect ran');
+  }, [id, state, singlePost]);
 
   const toggle = () => {
     setmobileMenu(!mobileMenu);
@@ -204,12 +206,17 @@ const Singlecommunity = () => {
 
           <div className={styles.singlePost_btnContainer}>
             <button className={styles.btn_rightbar_trending}>
-              <Image
+              {/* <Image
                 width={12}
                 height={12}
                 src={trending_icon}
                 alt='trending_icon'
-              />{' '}
+              />{' '} */}
+              Create a post
+            </button>
+
+            <button className={styles.btn_rightbar_new}>
+              <Image width={15} height={15} src={post_icon} alt='start_icon' />
               Hot
             </button>
             <button className={styles.btn_rightbar_new}>
@@ -294,7 +301,7 @@ const Singlecommunity = () => {
                         {post?.likes?.includes(session?.user?._id) ? (
                           <AiFillLike />
                         ) : (
-                          <AiFillLike />
+                          <AiOutlineLike />
                         )}
                         {post?.likes?.length > 0 ? post?.likes?.length : 0}
                       </button>
@@ -303,7 +310,7 @@ const Singlecommunity = () => {
                         {post?.dislikes?.includes(session?.user?._id) ? (
                           <AiFillDislike />
                         ) : (
-                          <AiFillDislike />
+                          <AiOutlineDislike />
                         )}
                         {post?.dislikes?.length > 0
                           ? post?.dislikes?.length

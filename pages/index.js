@@ -81,6 +81,8 @@ export default function Home({ myPost }) {
 
   const [singlePost, setSinglePost] = useState({});
 
+  // console.log('from index');
+
   // useEffect(() => {
   //   setPosts(myPost);
   // }, [myPost]);
@@ -100,9 +102,9 @@ export default function Home({ myPost }) {
         });
     };
     getPosts();
-  }, []);
+  }, [singlePost]);
 
-  // console.log('from home ', posts);
+  // console.log('from home ', singlePost);
 
   const cutText = (str) => {
     if (str?.length > 45) {
@@ -273,7 +275,7 @@ export default function Home({ myPost }) {
                       {post?.likes?.includes(session?.user?._id) ? (
                         <AiFillLike />
                       ) : (
-                        <AiFillLike />
+                        <AiOutlineLike />
                       )}
                       {post?.likes?.length > 0 ? post?.likes?.length : 0}
                     </button>
@@ -282,7 +284,7 @@ export default function Home({ myPost }) {
                       {post?.dislikes?.includes(session?.user?._id) ? (
                         <AiFillDislike />
                       ) : (
-                        <AiFillDislike />
+                        <AiOutlineDislike />
                       )}
                       {post?.dislikes?.length > 0 ? post?.dislikes?.length : 0}
                     </button>
