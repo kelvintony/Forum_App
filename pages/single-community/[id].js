@@ -97,7 +97,7 @@ const Singlecommunity = () => {
         });
     };
     getCommunity();
-    console.log('effect ran');
+    // console.log('effect ran');
   }, [id, state, singlePost]);
 
   const toggle = () => {

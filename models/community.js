@@ -11,6 +11,14 @@ const communitySchema = new mongoose.Schema(
       username: { type: String, required: true },
       image: { type: String },
     },
+    subscribers: {
+      type: Number,
+      default: 0,
+    },
+    subscribedUsers: {
+      type: [String],
+      default: [],
+    },
   },
   {
     timestamps: true,
