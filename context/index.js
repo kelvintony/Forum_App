@@ -31,6 +31,8 @@ const reducer = (state, action) => {
       user: {
         ...state.user,
         error: action.payload,
+        authenticating: false,
+        authenticated: false,
       },
     };
   } else if (action.type === authConstants.TOGGLE) {
@@ -73,6 +75,7 @@ const reducer = (state, action) => {
       forumData: {
         ...state.forumData,
         error: action.payload,
+        loading: false,
       },
     };
   } else {

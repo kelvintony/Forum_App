@@ -59,7 +59,7 @@ const Signin = () => {
   const [state, dispatch] = useStore();
 
   useEffect(() => {
-    setLoadComponent(false);
+    // setLoadComponent(false);
     if (state?.user?.username) {
       router.push('/');
     }

@@ -66,6 +66,10 @@ const Createpost = ({ session, myCommunity }) => {
 
   const [loading, setLoading] = useState(false);
 
+  const [error, setError] = useState(false);
+
+  const [imageSize, setImageSize] = useState('Max image size 5mb');
+
   // const [interests, setInterest] = useState(false);
 
   const toggle = () => {
@@ -88,17 +92,39 @@ const Createpost = ({ session, myCommunity }) => {
         ...postData,
         image: '',
       });
+      setImageSize('No image was selected');
     }
   };
 
   const uploadHandler = async (e) => {
     const file = e.target.files[0];
-    // console.log(file);
+
+    if (file?.size / 1024 > 5120) {
+      setImageSize('*Image size too large');
+      return;
+    }
+
+    if (file?.size / 1024 < 5120) {
+      setImageSize('Image is okay');
+    }
     transformFile(file);
+
+    const MIN_FILE_SIZE = 1024; // 1MB
+    const MAX_FILE_SIZE = 5120; // 5MB
   };
 
   const handleSubmit = async () => {
     const { title, content, community, image } = postData;
+
+    if (title.length === 0 || content.length === 0 || content.community === 0) {
+      setError(true);
+      return;
+    }
+
+    if (imageSize === '*Image size too large') {
+      setImageSize('*Image size too large');
+      return;
+    }
 
     // console.log(postData);
     setLoading(true);
@@ -151,6 +177,19 @@ const Createpost = ({ session, myCommunity }) => {
                   );
                 })}
               </select>
+              {error && postData.community.length <= 0 ? (
+                <label
+                  style={{
+                    color: 'red',
+                    fontSize: '12px',
+                    fontFamily: 'Poppins',
+                  }}
+                >
+                  *required
+                </label>
+              ) : (
+                ''
+              )}
             </div>
 
             <div className={styles2.interest_name}>
@@ -164,6 +203,19 @@ const Createpost = ({ session, myCommunity }) => {
                   setPostData({ ...postData, title: e.target.value })
                 }
               />
+              {error && postData.title.length <= 0 ? (
+                <label
+                  style={{
+                    color: 'red',
+                    fontSize: '12px',
+                    fontFamily: 'Poppins',
+                  }}
+                >
+                  *required
+                </label>
+              ) : (
+                ''
+              )}
             </div>
 
             <div className={styles2.interest_name}>
@@ -177,6 +229,19 @@ const Createpost = ({ session, myCommunity }) => {
                   setPostData({ ...postData, content: e.target.value })
                 }
               />
+              {error && postData.content.length <= 0 ? (
+                <label
+                  style={{
+                    color: 'red',
+                    fontSize: '12px',
+                    fontFamily: 'Poppins',
+                  }}
+                >
+                  *required
+                </label>
+              ) : (
+                ''
+              )}
             </div>
             {postData.image && (
               <div className={styles2.imageContainer}>
@@ -191,6 +256,19 @@ const Createpost = ({ session, myCommunity }) => {
                 )}
               </div>
             )}
+            <span
+              style={{
+                fontSize: '12px',
+                margin: '5px 0px',
+                fontFamily: 'Poppins',
+                color:
+                  imageSize === '*Image size too large' ? 'red' : '#0ECC8D',
+                fontWeight: 'Bold',
+                fontFamily: 'Poppins',
+              }}
+            >
+              {imageSize}
+            </span>
             <div className={styles2.interest_buttons}>
               <input
                 style={{ backgroundColor: 'unset', color: 'black' }}
