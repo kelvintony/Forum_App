@@ -297,7 +297,14 @@ hr.banner_line {
     /* margin-right: -50vw; */
     width: 100%;
   }
+  .singlePost_btnContainer {
+    display: flex;
+    flex-wrap: wrap;
+  }
 
+  .singlePost_btnContainer img:nth-child(5) {
+    margin-left: 0px;
+  }
   /* .banner_image_container .postImage {
      max-width: 100vw; 
      position: relative; 
