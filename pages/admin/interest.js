@@ -33,7 +33,7 @@ const Interest = (props) => {
   //   },
   // ];
 
-  console.log('from interest');
+  // console.log('from interest');
 
   const [rows, setRows] = useState([]);
   const router = useRouter();

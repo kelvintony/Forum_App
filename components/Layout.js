@@ -4,9 +4,13 @@ import { useStore } from '../context';
 import { authConstants } from '../context/constants';
 import { getSession } from 'next-auth/react';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 
 const Layout = ({ children }) => {
   const [state, dispatch] = useStore();
+  const router = useRouter();
+
+  const { asPath, pathname } = useRouter();
 
   useEffect(() => {
     const getPosts = async () => {
@@ -34,7 +38,8 @@ const Layout = ({ children }) => {
         });
     };
     getPosts();
-  }, []);
+    console.log('layout ran');
+  }, [dispatch, router]);
 
   useEffect(() => {
     const checkAuthentication = async () => {
