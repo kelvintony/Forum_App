@@ -37,6 +37,7 @@ import { AiOutlineLike } from 'react-icons/ai';
 import { FaRegEdit } from 'react-icons/fa';
 
 import { authConstants } from '../../context/constants';
+import Loader from '../../components/Loader/Loader';
 
 // export async function getServerSideProps(context) {
 //   const session = await getSession(context);
@@ -81,7 +82,7 @@ const Singlecommunity = () => {
   // console.log('from single community', state?.forumData[2]?.data);
   // console.log('from single community');
 
-  const [setAllCommunity, setGetAllCommunity] = useState([]);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -223,8 +224,6 @@ const Singlecommunity = () => {
     });
   };
 
-  const [showModal, setShowModal] = useState(false);
-
   const toggleModal = () => {
     setShowModal(!showModal);
   };
@@ -236,17 +235,7 @@ const Singlecommunity = () => {
           <div className={styles.banner_container}>
             <div className={styles.banner_image_container}>
               {/* <Image src={banner_image2} alt='pix_1' fill /> */}
-              {state?.communityData?.image && (
-                <Image
-                  className={styles.postImage}
-                  src={state?.communityData?.image}
-                  alt='pix_1'
-                  fill
-                />
-              )}
-              {/* {loading ? (
-                <p>loading...</p>
-              ) : (
+              {/* {state?.communityData?.image && (
                 <Image
                   className={styles.postImage}
                   src={state?.communityData?.image}
@@ -254,6 +243,16 @@ const Singlecommunity = () => {
                   fill
                 />
               )} */}
+              {loading ? (
+                <Loader />
+              ) : (
+                <Image
+                  className={styles.postImage}
+                  src={state?.communityData?.image}
+                  alt='pix_1'
+                  fill
+                />
+              )}
             </div>
 
             <div className={styles.banner_container_inner}>
@@ -333,7 +332,7 @@ const Singlecommunity = () => {
           )}
 
           {loading ? (
-            <p>Loading...</p>
+            <Loader />
           ) : (
             getThePost?.map((post) => {
               return (
