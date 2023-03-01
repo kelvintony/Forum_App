@@ -1,4 +1,86 @@
-import React, { useEffect, useState, useRef } from 'react';
+```js
+//! main koko
+return {
+      ...state,
+      communityData: {
+        ...state.communityData,
+        data: action.payload,
+        users: state.communityData.subscribedUsers,
+        loading: false,
+      },
+    };
+//
+//
+let x = [];
+    if (
+      state?.communityData?.subscribedUsers?.includes(
+        action.payload
+      )
+    ) {
+      state?.communityData?.subscribedUsers?.splice(
+        state?.communityData?.subscribedUsers?.findIndex(
+          (channelId) => channelId === action.payload
+        ),
+        1
+      );
+    } else {
+      state?.communityData?.subscribedUsers?.push(
+        action.payload
+      );
+    }
+    return {
+      ...state,
+      communityData: {
+        ...state.communityData,
+       subscribedUsers: x ,
+        loading: false,
+      },
+    };
+//
+ return {
+      ...state,
+      communityData: {
+        ...state.communityData,
+        'currentCommunity.subscribedUsers':
+          state?.communityData?.currentCommunity?.subscribedUsers?.includes(
+            action.payload
+          )
+            ? state?.communityData?.currentCommunity?.subscribedUsers?.splice(
+                state?.communityData?.currentCommunity?.subscribedUsers?.findIndex(
+                  (channelId) => channelId === action?.payload
+                ),
+                1
+              )
+            : state?.communityData?.currentCommunity?.subscribedUsers?.push(
+                action.payload
+              ),
+      },
+    };
+//
+//
+return {
+      ...state,
+      communityData: {
+        ...state.communityData,
+        currentCommunity: action.payload,
+        test: !state.communityData.test,
+      },
+    };
+//
+ if (state.communityData.currentUser.subscribedUsers.includes(action.payload)) {
+
+       return state.communityData.currentUser.subscribedUsers.splice(
+          state.communityData.currentUser.subscribedUsers.findIndex(
+            (channelId) => channelId === action.payload
+          ),
+          1
+        );
+      } else {
+       return state.communityData.currentUser.subscribedUsers.push(action.payload);
+      }
+//
+
+import React, { useEffect, useState } from 'react';
 import styles from '../../styles/SingleCommunity.module.css';
 import styles2 from '../../sections/home/MainSection.module.css';
 
@@ -35,65 +117,73 @@ import { AiOutlineLike } from 'react-icons/ai';
 import { authConstants } from '../../context/constants';
 
 // export async function getServerSideProps(context) {
-//   const session = await getSession(context);
+// const session = await getSession(context);
 
-//   const { params } = context;
-//   const { id } = params;
+// const { params } = context;
+// const { id } = params;
 
-//   console.log(id);
+// console.log(id);
 
-//   // await db.connect();
-//   // const post = await postModel.findOne({ _id: id });
+// // await db.connect();
+// // const post = await postModel.findOne({ \_id: id });
 
-//   // const { updatedAt, ...others } = post._doc;
-//   // await db.disconnect();
-//   return {
-//     props: {
-//       session,
-//       // post: others ? JSON.parse(JSON.stringify(others)) : null,
-//     },
-//   };
+// // const { updatedAt, ...others } = post.\_doc;
+// // await db.disconnect();
+// return {
+// props: {
+// session,
+// // post: others ? JSON.parse(JSON.stringify(others)) : null,
+// },
+// };
 // }
 
 const Singlecommunity = () => {
-  const router = useRouter();
+const router = useRouter();
 
-  const { asPath, pathname } = useRouter();
+// const { asPath, pathname } = useRouter();
 
-  const { id } = router.query;
+const { id } = router.query;
 
-  const [mobileMenu, setmobileMenu] = useState(false);
+const [mobileMenu, setmobileMenu] = useState(false);
 
-  const [loading, setLoading] = useState(false);
+const [loading, setLoading] = useState(false);
 
-  const [commuinityData, setCommunityData] = useState();
+const [commuinityData, setCommunityData] = useState();
 
-  const [getThePost, setGetThePost] = useState([]);
+const [getThePost, setGetThePost] = useState([]);
 
-  const [state, dispatch] = useStore();
+const [state, dispatch] = useStore();
 
-  const [singlePost, setSinglePost] = useState({});
+const [singlePost, setSinglePost] = useState({});
 
-  const [renderComponent, setRenderComponent] = useState(false);
+const [renderComponent, setRenderComponent] = useState(false);
 
-  const { status, data: session } = useSession();
+const [myUsername, setMyUsername] = useState('');
 
-  // console.log('from single community', state?.forumData[2]?.data);
-  console.log('from single community');
+const [communityNumber, setCommunityNumber] = useState('');
 
-  useEffect(() => {
-    const getCommunity = async () => {
-      // setRenderComponent(!renderComponent);
-      setLoading(true);
-      await axios
-        .get(`/api/community/${id}`)
-        .then((res) => {
-          setCommunityData(res.data);
-          setGetThePost(
-            state?.forumData[2]?.data.filter((data) => {
-              return data?.community === res.data?.communityName;
-            })
-          );
+const { status, data: session } = useSession();
+
+// console.log('from single community', state?.forumData[2]?.data);
+// console.log('from single community');
+
+useEffect(() => {
+setMyUsername(session?.user?.\_id);
+const getCommunity = async () => {
+// setRenderComponent(!renderComponent);
+setLoading(true);
+await axios
+.get(`/api/community/${id}`)
+.then((res) => {
+setCommunityData(res.data);
+setCommunityNumber(res.data.subscribers);
+setGetThePost(
+state?.forumData[2]?.data.filter((data) => {
+return data?.community === res.data?.communityName;
+})
+);
+console.log('effect ran');
+
           setLoading(false);
         })
         .catch((err) => {
@@ -101,56 +191,28 @@ const Singlecommunity = () => {
         });
     };
     getCommunity();
-    console.log('effect ran');
-  }, [id, router, dispatch]);
 
-  useEffect(() => {
-    const getCommunity2 = async () => {
-      dispatch({
-        type: authConstants.FETCH_SINGLE_COMMUNITY_REQUEST,
-      });
-      // setRenderComponent(!renderComponent);
-      setLoading(true);
-      await axios
-        .get(`/api/community/${id}`)
-        .then((res) => {
-          dispatch({
-            type: authConstants.FETCH_SINGLE_COMMUNITY_SUCCESS,
-            payload: res.data,
-          });
+}, [id, state, singlePost, dispatch, myUsername]);
 
-          setLoading(false);
-        })
-        .catch((err) => {
-          console.log('');
-          console.log(err);
-        });
-    };
-    getCommunity2();
-  }, [dispatch, router, id]);
+const toggle = () => {
+setmobileMenu(!mobileMenu);
+};
 
-  // console.log('from state', state?.communityData?.currentCommunity);
-  // console.log('from state', state?.communityData);
+const cutText = (str) => {
+if (str?.length > 45) {
+str = str?.substring(0, 150) + ' ...';
+}
+return str;
+};
+function replaceWithBr2(value) {
+let str = value;
+let result = str.split('\n');
+return result.map((i, key) => <p key={key}>{i + '\n'}</p>);
+}
 
-  const toggle = () => {
-    setmobileMenu(!mobileMenu);
-  };
-
-  const cutText = (str) => {
-    if (str?.length > 45) {
-      str = str?.substring(0, 150) + ' ...';
-    }
-    return str;
-  };
-  function replaceWithBr2(value) {
-    let str = value;
-    let result = str.split('\n');
-    return result.map((i, key) => <p key={key}>{i + '\n'}</p>);
-  }
-
-  const handleLike = async (id, postx) => {
-    try {
-      // const res = await axios.put(`/api/post/likepost/${id}`);
+const handleLike = async (id, postx) => {
+try {
+// const res = await axios.put(`/api/post/likepost/${id}`);
 
       if (!session?.user?._id) {
         return alert('you need to signin in other to like a post');
@@ -177,14 +239,15 @@ const Singlecommunity = () => {
     } catch (error) {
       console.log(error);
     }
-  };
-  const handleDisLike = async (id, postx) => {
-    try {
-      if (!session?.user?._id) {
-        return alert('you need to signin in other to dislike a post');
-      }
-      const spost = await axios.get(`/api/post/${id}`);
-      // console.log(spost.data.dislikes.includes(session?.user?._id));
+
+};
+const handleDisLike = async (id, postx) => {
+try {
+if (!session?.user?.\_id) {
+return alert('you need to signin in other to dislike a post');
+}
+const spost = await axios.get(`/api/post/${id}`);
+// console.log(spost.data.dislikes.includes(session?.user?.\_id));
 
       if (
         !postx.dislikes.includes(id) &&
@@ -202,64 +265,73 @@ const Singlecommunity = () => {
     } catch (error) {
       console.log(error);
     }
-  };
 
-  // const navigateCommunityList = (id) => {
-  //   router.push(`/community-list/${id}`);
-  // };
+};
 
-  const handleJoin = async () => {
-    state?.communityData?.users?.includes(session?.user?._id)
+// const navigateCommunityList = (id) => {
+// router.push(`/community-list/${id}`);
+// };
+// console.log(state);
+console.log('from community');
+const handleJoin = async () => {
+dispatch({
+type: authConstants.SET_USER_PROFILE,
+payload: 'kelvin',
+});
+
+    // setMyUsername('');
+    setMyUsername(session?.user?._id);
+    commuinityData?.subscribedUsers?.includes(myUsername)
       ? await axios.put(`/api/community/unsubscribe/${id}`)
       : await axios.put(`/api/community/subscribe/${id}`);
 
-    dispatch({
-      type: authConstants.JOIN_COMMUNITY,
-      payload: session?.user?._id,
-    });
+    if (commuinityData?.subscribedUsers?.includes(myUsername)) {
+      commuinityData?.subscribedUsers?.splice(
+        commuinityData?.subscribedUsers?.findIndex(
+          (channelId) => channelId === myUsername
+        ),
+        1
+      );
+      // setCommunityNumber((prev) => prev - 1);
+    } else {
+      commuinityData.subscribedUsers.push(myUsername);
+      // setCommunityNumber((prev) => prev + 1);
+    }
 
     console.log('it ran');
-  };
+    // setRenderComponent(!renderComponent);
 
-  console.log('single community ran');
-  return (
-    <div>
-      <LeftSideBar burgerMenu={mobileMenu} closeMenu={toggle} />
-      <section className={styles.rigtbar_section}>
-        <div className={styles.rigtbar_section_a}>
-          <div className={styles.banner_container}>
-            <div className={styles.banner_image_container}>
-              {/* <Image src={banner_image2} alt='pix_1' fill /> */}
-              {state?.communityData?.image && (
-                <Image
+};
+
+return (
+<div>
+<LeftSideBar burgerMenu={mobileMenu} closeMenu={toggle} />
+<section className={styles.rigtbar_section}>
+<div className={styles.rigtbar_section_a}>
+<div className={styles.banner_container}>
+<div className={styles.banner_image_container}>
+{/_ <Image src={banner_image2} alt='pix_1' fill /> _/}
+{commuinityData?.image && (
+<Image
                   className={styles.postImage}
-                  src={state?.communityData?.image}
+                  src={commuinityData?.image}
                   alt='pix_1'
                   fill
                 />
-              )}
-              {/* {loading ? (
-                <p>loading...</p>
-              ) : (
-                <Image
-                  className={styles.postImage}
-                  src={state?.communityData?.image}
-                  alt='pix_1'
-                  fill
-                />
-              )} */}
-            </div>
+)}
+</div>
 
             <div className={styles.banner_container_inner}>
               <Image width={40} height={40} src={profile_pic} alt='user_pix' />
               <div className={styles.banner_inner_a}>
-                <p>{state?.communityData?.communityName} Community</p>
-                <p>{state?.communityData?.users?.length} Members </p>
+                <p>{commuinityData?.communityName} Community</p>
+                <p>{communityNumber} Members </p>
               </div>
               <button onClick={handleJoin} className={styles.btn_join}>
-                {state?.communityData?.users?.includes(session?.user?._id)
+                {commuinityData?.subscribedUsers?.includes(myUsername)
                   ? 'Leave'
                   : 'Join'}
+                {/* Join */}
               </button>
             </div>
           </div>
@@ -268,12 +340,17 @@ const Singlecommunity = () => {
 
           <div className={styles.singlePost_btnContainer}>
             <button className={styles.btn_rightbar_trending}>
-              <Image
+              {/* <Image
                 width={12}
                 height={12}
                 src={trending_icon}
                 alt='trending_icon'
-              />{' '}
+              />{' '} */}
+              Create a post
+            </button>
+
+            <button className={styles.btn_rightbar_new}>
+              <Image width={15} height={15} src={post_icon} alt='start_icon' />
               Hot
             </button>
             <button className={styles.btn_rightbar_new}>
@@ -287,16 +364,7 @@ const Singlecommunity = () => {
             <Image src={feather_more_horizontal} alt='more_icon' />
             <Image src={dropdown} alt='more_icon' />
           </div>
-          {state?.communityData?.users?.includes(session?.user?._id) && (
-            <div
-              style={{ marginTop: '20px' }}
-              className={styles.singlePost_btnContainer}
-            >
-              <button className={styles.btn_rightbar_trending}>
-                Create a post
-              </button>
-            </div>
-          )}
+
           {getThePost?.length > 0 ? (
             getThePost?.map((post) => {
               return (
@@ -382,7 +450,7 @@ const Singlecommunity = () => {
                           ? post?.dislikes?.length
                           : 0}
                       </button>
-                      {/* <a href=''> 
+                      {/* <a href=''>
                       <Image src={shareIcon} alt='views_pix' />
                       155
                     </a> */}
@@ -401,7 +469,9 @@ const Singlecommunity = () => {
         <RightSideBar />
       </section>
     </div>
-  );
+
+);
 };
 
 export default Singlecommunity;
+```

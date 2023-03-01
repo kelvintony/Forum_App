@@ -54,8 +54,9 @@ const Communitylist = ({ interest }) => {
         return data?.interest === interest?.interestName;
       })
     );
-  }, [id, state]);
+  }, [id, state, dispatch]);
 
+  console.log('from community list');
   // console.log('from community list - community', state?.forumData[0]?.data);
 
   const toggle = () => {
@@ -108,7 +109,7 @@ const Communitylist = ({ interest }) => {
                   <div className={styles.inner_a}>
                     <p>{theList?.communityName} Community</p>
                     {/* <p>55k Members</p> */}
-                    <p>0 Members</p>
+                    <p>{theList?.subscribers} Members</p>
                   </div>
                 </div>
                 <p>

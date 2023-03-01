@@ -256,8 +256,8 @@ hr.banner_line {
 .btn_join {
   padding: 5px 10px;
   gap: 5px;
-  width: 48px;
-  height: 25px;
+  /* width: 48px; */
+  /* height: 25px; */
   color: #ffffff;
   background: #ff6934;
   border-radius: 100px;
@@ -265,7 +265,7 @@ hr.banner_line {
   font-family: 'Roboto', sans-serif;
   font-style: normal;
   font-weight: 400;
-  font-size: 13px;
+  font-size: 11px;
   line-height: 15px;
   letter-spacing: 0.05em;
 }
@@ -301,6 +301,10 @@ hr.banner_line {
     display: flex;
     flex-wrap: wrap;
   }
+
+  /* .btn_join {
+    font-size: 10px;
+  } */
 
   .singlePost_btnContainer img:nth-child(5) {
     margin-left: 0px;

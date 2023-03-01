@@ -78,6 +78,58 @@ const reducer = (state, action) => {
         loading: false,
       },
     };
+  }
+  if (action.type === authConstants.FETCH_SINGLE_COMMUNITY_REQUEST) {
+    return {
+      ...state,
+      communityData: {
+        ...state.communityData,
+        loading: true,
+      },
+    };
+  } else if (action.type === authConstants.FETCH_SINGLE_COMMUNITY_SUCCESS) {
+    return {
+      ...state,
+      communityData: {
+        ...state.communityData,
+        ...action.payload,
+        users: action.payload.subscribedUsers,
+        loading: false,
+      },
+    };
+  } else if (action.type === authConstants.FETCH_SINGLE_COMMUNITY_FALURE) {
+    return {
+      ...state,
+      communityData: {
+        ...state.communityData,
+        error: action.payload,
+      },
+    };
+  } else if (action.type === authConstants.JOIN_COMMUNITY) {
+    let newArray = [];
+
+    if (state?.communityData.users?.includes(action.payload)) {
+      newArray = state?.communityData.users?.filter((value) => {
+        return value !== action.payload;
+      });
+
+      return {
+        ...state,
+        communityData: {
+          ...state.communityData,
+          data: action?.payload,
+          users: newArray,
+        },
+      };
+    } else {
+      return {
+        ...state,
+        communityData: {
+          ...state.communityData,
+          users: [...state?.communityData?.subscribedUsers, action?.payload],
+        },
+      };
+    }
   } else {
     return state;
   }
@@ -102,6 +154,12 @@ export const StoreProvider = ({ children }) => {
     forumData: {
       loading: false,
       error: null,
+    },
+
+    communityData: {
+      users: [],
+      loading: false,
+      data: '',
     },
   });
 
