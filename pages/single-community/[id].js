@@ -2,6 +2,8 @@ import React, { useEffect, useState, useRef } from 'react';
 import styles from '../../styles/SingleCommunity.module.css';
 import styles2 from '../../sections/home/MainSection.module.css';
 
+import PostModal from '../../components/PostModal/PostModal';
+
 import Image from 'next/image';
 
 import LeftSideBar from '../../components/leftSideBar/LeftSideBar';
@@ -68,51 +70,52 @@ const Singlecommunity = () => {
 
   const [loading, setLoading] = useState(false);
 
-  const [commuinityData, setCommunityData] = useState();
-
   const [getThePost, setGetThePost] = useState([]);
 
   const [state, dispatch] = useStore();
 
   const [singlePost, setSinglePost] = useState({});
 
-  const [renderComponent, setRenderComponent] = useState(false);
-
   const { status, data: session } = useSession();
 
   // console.log('from single community', state?.forumData[2]?.data);
-  console.log('from single community');
+  // console.log('from single community');
+
+  const [setAllCommunity, setGetAllCommunity] = useState([]);
 
   useEffect(() => {
+    setLoading(true);
+
     const getCommunity = async () => {
-      // setRenderComponent(!renderComponent);
-      setLoading(true);
-      await axios
-        .get(`/api/community/${id}`)
-        .then((res) => {
-          setCommunityData(res.data);
-          setGetThePost(
-            state?.forumData[2]?.data.filter((data) => {
-              return data?.community === res.data?.communityName;
-            })
-          );
+      try {
+        const singleCommunity = await axios.get(`/api/community/${id}`);
+
+        const allPost = await axios.get('/api/post');
+
+        if (singleCommunity) {
           setLoading(false);
-        })
-        .catch((err) => {
-          console.log('');
-        });
+        }
+        setGetThePost(
+          allPost?.data?.filter((data) => {
+            return data?.community === singleCommunity.data?.communityName;
+          })
+        );
+
+        // console.log('all community', allCommunity?.data);
+        // console.log('single community', singleCommunity?.data);
+      } catch (error) {
+        console.log('');
+      }
     };
     getCommunity();
-    console.log('effect ran');
-  }, [id, router, dispatch]);
+    // console.log('effect ran');
+  }, [dispatch, router, id]);
 
   useEffect(() => {
     const getCommunity2 = async () => {
       dispatch({
         type: authConstants.FETCH_SINGLE_COMMUNITY_REQUEST,
       });
-      // setRenderComponent(!renderComponent);
-      setLoading(true);
       await axios
         .get(`/api/community/${id}`)
         .then((res) => {
@@ -120,20 +123,14 @@ const Singlecommunity = () => {
             type: authConstants.FETCH_SINGLE_COMMUNITY_SUCCESS,
             payload: res.data,
           });
-
-          setLoading(false);
         })
         .catch((err) => {
           console.log('');
-          console.log(err);
+          // console.log(err);
         });
     };
     getCommunity2();
   }, [dispatch, router, id]);
-
-  // console.log('from state', state?.communityData?.currentCommunity);
-  console.log('from state1', state?.communityData?.user?._id);
-  console.log('from state2', session?.user?._id);
 
   const toggle = () => {
     setmobileMenu(!mobileMenu);
@@ -224,15 +221,17 @@ const Singlecommunity = () => {
       type: authConstants.JOIN_COMMUNITY,
       payload: session?.user?._id,
     });
-
-    console.log('it ran');
   };
 
-  console.log('single community ran');
+  const [showModal, setShowModal] = useState(false);
+
+  const toggleModal = () => {
+    setShowModal(!showModal);
+  };
   return (
     <div>
-      <LeftSideBar burgerMenu={mobileMenu} closeMenu={toggle} />
       <section className={styles.rigtbar_section}>
+        <LeftSideBar burgerMenu={mobileMenu} closeMenu={toggle} />
         <div className={styles.rigtbar_section_a}>
           <div className={styles.banner_container}>
             <div className={styles.banner_image_container}>
@@ -310,7 +309,10 @@ const Singlecommunity = () => {
               style={{ marginTop: '20px' }}
               className={styles.singlePost_btnContainer}
             >
-              <button className={styles.btn_rightbar_trending}>
+              <button
+                onClick={toggleModal}
+                className={styles.btn_rightbar_trending}
+              >
                 Create a post
               </button>
             </div>
@@ -321,12 +323,18 @@ const Singlecommunity = () => {
               style={{ marginTop: '20px' }}
               className={styles.singlePost_btnContainer}
             >
-              <button className={styles.btn_rightbar_trending}>
+              <button
+                onClick={toggleModal}
+                className={styles.btn_rightbar_trending}
+              >
                 Create a post
               </button>
             </div>
           )}
-          {getThePost?.length > 0 ? (
+
+          {loading ? (
+            <p>Loading...</p>
+          ) : (
             getThePost?.map((post) => {
               return (
                 <div
@@ -420,7 +428,8 @@ const Singlecommunity = () => {
                 </div>
               );
             })
-          ) : (
+          )}
+          {getThePost?.length === 0 && (
             <h3 style={{ marginTop: '30px' }}>
               No Post related to the community at the moment
             </h3>
@@ -429,6 +438,13 @@ const Singlecommunity = () => {
 
         <RightSideBar />
       </section>
+
+      {showModal && (
+        <PostModal
+          community={state?.communityData?.communityName}
+          closeModal={toggleModal}
+        />
+      )}
     </div>
   );
 };
