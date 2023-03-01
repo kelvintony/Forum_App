@@ -212,6 +212,10 @@ const Singlecommunity = () => {
   // };
 
   const handleJoin = async () => {
+    if (!session?.user?._id) {
+      router.push('/signin');
+      return;
+    }
     state?.communityData?.users?.includes(session?.user?._id)
       ? await axios.put(`/api/community/unsubscribe/${id}`)
       : await axios.put(`/api/community/subscribe/${id}`);
@@ -268,11 +272,13 @@ const Singlecommunity = () => {
                 </div>
                 <p>{state?.communityData?.users?.length} Members </p>
               </div>
-              <button onClick={handleJoin} className={styles.btn_join}>
-                {state?.communityData?.users?.includes(session?.user?._id)
-                  ? 'Leave'
-                  : 'Join'}
-              </button>
+              {session?.user?._id === state?.communityData?.user?.id ? null : (
+                <button onClick={handleJoin} className={styles.btn_join}>
+                  {state?.communityData?.users?.includes(session?.user?._id)
+                    ? 'Leave'
+                    : 'Join'}
+                </button>
+              )}
             </div>
           </div>
 
@@ -300,6 +306,17 @@ const Singlecommunity = () => {
             <Image src={dropdown} alt='more_icon' />
           </div>
           {state?.communityData?.users?.includes(session?.user?._id) && (
+            <div
+              style={{ marginTop: '20px' }}
+              className={styles.singlePost_btnContainer}
+            >
+              <button className={styles.btn_rightbar_trending}>
+                Create a post
+              </button>
+            </div>
+          )}
+
+          {session?.user?._id === state?.communityData?.user?.id && (
             <div
               style={{ marginTop: '20px' }}
               className={styles.singlePost_btnContainer}
