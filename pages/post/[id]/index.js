@@ -124,12 +124,6 @@ const EditPost = () => {
       });
   };
 
-  const simpleDiv = {
-    height: '300px',
-    width: '300px',
-    paddingLeft: '90px',
-  };
-
   const transformFile = (file) => {
     const reader = new FileReader();
 
@@ -164,9 +158,7 @@ const EditPost = () => {
       <div className={`${styles2.rigtbar_section_a}  ${styles2.addMargin}`}>
         <div className={styles2.container_a}>
           {loading ? (
-            <div style={simpleDiv}>
-              <Loader />
-            </div>
+            <Loader />
           ) : (
             <div>
               <h3 style={{ marginBottom: '40px' }}>Edit Post</h3>

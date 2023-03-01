@@ -71,12 +71,6 @@ const Interest = (props) => {
     getPosts();
   }, []);
 
-  const simpleDiv = {
-    marginTop: '20px',
-    height: '300px',
-    width: '300px',
-    paddingLeft: '90px',
-  };
   if (session?.user.hasOwnProperty('isAdmin') === false) {
     return null;
   }
@@ -90,9 +84,7 @@ const Interest = (props) => {
       </Link>
       <div style={{ height: 400, width: '100%' }}>
         {loading ? (
-          <div style={simpleDiv}>
-            <Loader />
-          </div>
+          <Loader />
         ) : (
           <DataGrid
             rows={rows}

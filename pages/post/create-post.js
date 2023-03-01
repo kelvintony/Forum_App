@@ -13,11 +13,8 @@ import banner_image from '../../assets/single_community/banner_image.jpg';
 import Head from 'next/head';
 import Image from 'next/image';
 import styles from '../../styles/Home.module.css';
-import Navbar from '../../components/Navbar/Navbar';
 import LeftSideBar from '../../components/leftSideBar/LeftSideBar';
-import MainSection from '../../sections/home/MainSection';
 import RightSideBar from '../../sections/home/RightSideBar';
-import CreatePost from '../../sections/CreatePost/CreatePost';
 
 import communityModel from '../../models/community';
 import db from '../../utils/db';
