@@ -32,6 +32,8 @@ import { AiFillDislike } from 'react-icons/ai';
 import { AiOutlineDislike } from 'react-icons/ai';
 import { AiFillLike } from 'react-icons/ai';
 import { AiOutlineLike } from 'react-icons/ai';
+import { FaRegEdit } from 'react-icons/fa';
+
 import { authConstants } from '../../context/constants';
 
 // export async function getServerSideProps(context) {
@@ -130,7 +132,8 @@ const Singlecommunity = () => {
   }, [dispatch, router, id]);
 
   // console.log('from state', state?.communityData?.currentCommunity);
-  // console.log('from state', state?.communityData);
+  console.log('from state1', state?.communityData?.user?._id);
+  console.log('from state2', session?.user?._id);
 
   const toggle = () => {
     setmobileMenu(!mobileMenu);
@@ -253,7 +256,16 @@ const Singlecommunity = () => {
             <div className={styles.banner_container_inner}>
               <Image width={40} height={40} src={profile_pic} alt='user_pix' />
               <div className={styles.banner_inner_a}>
-                <p>{state?.communityData?.communityName} Community</p>
+                <div className={styles.edit_container}>
+                  <h3 className={styles.title}>
+                    {state?.communityData?.communityName} Community
+                  </h3>
+                  {session?.user?._id === state?.communityData?.user?.id && (
+                    <button className={styles.editBtn}>
+                      <FaRegEdit size={18} />
+                    </button>
+                  )}
+                </div>
                 <p>{state?.communityData?.users?.length} Members </p>
               </div>
               <button onClick={handleJoin} className={styles.btn_join}>

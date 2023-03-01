@@ -55,7 +55,12 @@
 .banner_container_inner .btn_join {
   margin-left: auto;
 }
-.banner_inner_a p:nth-child(1) {
+.edit_container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.title {
   font-family: 'Roboto', sans-serif;
   font-style: normal;
   font-weight: 700;
@@ -65,7 +70,11 @@
   color: #202020;
 }
 
-.banner_inner_a p:nth-child(2) {
+.editBtn {
+  color: #f57f1f;
+}
+
+.banner_inner_a p:nth-of-type(1) {
   font-style: normal;
   font-weight: 400;
   font-size: 11px;
@@ -331,12 +340,18 @@ hr.banner_line {
     margin-right: -20px;
     border: none;
   } */
-
-  .banner_inner_a p:nth-child(1) {
+  .edit_container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3px;
+  }
+  .title {
     font-size: 14px;
     line-height: 17px;
   }
-
+  /* .editBtn {
+    display: none;
+  } */
   /* hr.banner_line {
     display: block;
     margin-left: -30px;
