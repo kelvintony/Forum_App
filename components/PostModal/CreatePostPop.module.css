@@ -8,7 +8,7 @@
   left: 0;
   width: 100%;
   height: 1000px;
-  opacity: 0.9;
+  /* opacity: 1; */
 
   display: flex;
   justify-content: center;

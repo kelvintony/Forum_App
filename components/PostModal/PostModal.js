@@ -137,6 +137,7 @@ const Createpost = (props) => {
           setLoading(false);
           // window.localStorage.setItem('posts', JSON.stringify(response));
           router.reload();
+          // props.closeModal();
         }
       })
       .catch(function (error) {
