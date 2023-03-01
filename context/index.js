@@ -121,7 +121,7 @@ const reducer = (state, action) => {
           users: newArray,
         },
       };
-    } else {
+    } else if (!state?.communityData.users?.includes(action.payload)) {
       return {
         ...state,
         communityData: {
