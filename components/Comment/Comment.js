@@ -86,11 +86,12 @@ const Comment = () => {
         postId: id,
         content: commentDescription,
       });
+      setCommentDescription('');
+
       dispatch({
         type: authConstants.CREATE_COMMENT,
         payload: res.data,
       });
-      // console.log('comment response', res.data);
     } catch (err) {}
   };
 
@@ -200,23 +201,19 @@ const Comment = () => {
                 <p>{moment(post?.createdAt).fromNow()}</p>
               </div>
               {session?.user?._id === post?.user?.id ? (
-                <Link href={`/post/${post?._id}`}>
+                <a href='#'>
                   <Image
                     width={24}
                     height={24}
                     src={futureMoreVertical}
                     alt='feature_pix'
                   />
-                </Link>
+                </a>
               ) : (
                 <a href=''></a>
               )}
             </div>
-            {/* <h3 className={styles.myHeader}>
-              <Link href={`/post/community-post/${post?._id}`}>
-                {post?.title}
-              </Link>
-            </h3> */}
+
             <Link
               className={styles.myTitle}
               href={`/post/community-post/${post?._id}`}
