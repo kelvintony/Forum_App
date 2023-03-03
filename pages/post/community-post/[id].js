@@ -162,6 +162,7 @@ export default function Home({ session, myPost }) {
             {replaceWithBr2(myPost?.content)}
           </div>
           <Comment />
+          {/* <Comment /> */}
         </div>
 
         {/* comment section */}
