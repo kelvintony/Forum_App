@@ -173,7 +173,7 @@ const Singlecommunity = () => {
         await axios.put(`/api/post/likepost/${id}`);
 
         // console.log('it ran');
-        setSinglePost(spost);
+        // setSinglePost(spost);
       }
     } catch (error) {
       console.log(error);
@@ -198,7 +198,7 @@ const Singlecommunity = () => {
         );
         await axios.put(`/api/post/dislikepost/${id}`);
         // console.log('it ran');
-        setSinglePost(spost);
+        // setSinglePost(spost);
       }
     } catch (error) {
       console.log(error);
@@ -428,7 +428,7 @@ const Singlecommunity = () => {
               );
             })
           )}
-          {getThePost?.length === 0 && (
+          {getThePost.length === 0 && loading === false && (
             <h3 style={{ marginTop: '30px' }}>
               No Post related to the community at the moment
             </h3>

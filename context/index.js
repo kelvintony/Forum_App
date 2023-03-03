@@ -130,6 +130,39 @@ const reducer = (state, action) => {
         },
       };
     }
+  } else if (action.type === authConstants.FETCH_COMMENT_REQUEST) {
+    return {
+      ...state,
+      commentData: {
+        ...state.commentData,
+        loading: true,
+      },
+    };
+  } else if (action.type === authConstants.FETCH_COMMENT_SUCCESS) {
+    return {
+      ...state,
+      commentData: {
+        comments: action?.payload,
+        loading: false,
+      },
+    };
+  } else if (action.type === authConstants.FETCH_COMMENT_FALURE) {
+    return {
+      ...state,
+      commentData: {
+        ...state.commentData,
+        error: action?.payload,
+        loading: false,
+      },
+    };
+  } else if (action.type === authConstants.CREATE_COMMENT) {
+    return {
+      ...state,
+      commentData: {
+        comments: [...state?.commentData?.comments, action?.payload],
+        loading: false,
+      },
+    };
   } else {
     return state;
   }
@@ -160,6 +193,12 @@ export const StoreProvider = ({ children }) => {
       users: [],
       loading: false,
       data: '',
+    },
+
+    commentData: {
+      comments: [],
+      loading: false,
+      error: null,
     },
   });
 
