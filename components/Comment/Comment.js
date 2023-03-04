@@ -40,6 +40,8 @@ const Comment = () => {
 
   const [singlePost, setSinglePost] = useState({});
 
+  const [loading, setLoading] = useState(false);
+
   console.log('from comment');
   // console.log('from comment', state?.commentData.comments);
 
@@ -83,17 +85,20 @@ const Comment = () => {
   }, [dispatch, router, id, singlePost]);
 
   const createComment = async () => {
+    setLoading(true);
     try {
       const res = await axios.post(`/api/comment`, {
         postId: id,
         content: commentDescription,
       });
-      setCommentDescription('');
 
       dispatch({
         type: authConstants.CREATE_COMMENT,
         payload: res.data,
       });
+      setCommentDescription('');
+
+      setLoading(false);
     } catch (err) {}
   };
 
@@ -186,8 +191,8 @@ const Comment = () => {
             onClick={createComment}
             className={`${styles.btn_image} ${styles.btn_create}`}
           >
-            <Image src={sendPostIcon} alt='create_pix' />
-            {/* {loading ? 'loading...' : 'Post'} */} Comment
+            {!loading && <Image src={sendPostIcon} alt='create_pix' />}
+            {loading ? 'Submiting...' : 'Comment'}
           </button>
         </div>
       </div>
