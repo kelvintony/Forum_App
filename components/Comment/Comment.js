@@ -38,6 +38,8 @@ const Comment = () => {
 
   const [commentDescription, setCommentDescription] = useState('');
 
+  const [singlePost, setSinglePost] = useState({});
+
   console.log('from comment');
   // console.log('from comment', state?.commentData.comments);
 
@@ -78,7 +80,7 @@ const Comment = () => {
         });
     };
     getCommunity2();
-  }, [dispatch, router, id]);
+  }, [dispatch, router, id, singlePost]);
 
   const createComment = async () => {
     try {
@@ -86,11 +88,12 @@ const Comment = () => {
         postId: id,
         content: commentDescription,
       });
+      setCommentDescription('');
+
       dispatch({
         type: authConstants.CREATE_COMMENT,
         payload: res.data,
       });
-      // console.log('comment response', res.data);
     } catch (err) {}
   };
 
@@ -102,7 +105,7 @@ const Comment = () => {
         return alert('you need to signin in other to like a post');
       }
 
-      const spost = await axios.get(`/api/post/${id}`);
+      const spost = await axios.get(`/api/comment/${id}`);
 
       // console.log(spost.data.likes.includes(session?.user?._id));
 
@@ -115,7 +118,9 @@ const Comment = () => {
           postx.dislikes.findIndex((userId) => userId === id),
           1
         );
-        await axios.put(`/api/post/likepost/${id}`);
+        await axios.put(`/api/comment/likecomment/${id}`);
+
+        setSinglePost(spost);
 
         // console.log('it ran');
       }
@@ -128,7 +133,7 @@ const Comment = () => {
       if (!session?.user?._id) {
         return alert('you need to signin in other to dislike a post');
       }
-      const spost = await axios.get(`/api/post/${id}`);
+      const spost = await axios.get(`/api/comment/${id}`);
       // console.log(spost.data.dislikes.includes(session?.user?._id));
 
       if (
@@ -140,7 +145,10 @@ const Comment = () => {
           postx.likes.findIndex((userId) => userId === id),
           1
         );
-        await axios.put(`/api/post/dislikepost/${id}`);
+        await axios.put(`/api/comment/dislikecomment/${id}`);
+
+        setSinglePost(spost);
+
         // console.log('it ran');
       }
     } catch (error) {
@@ -200,29 +208,22 @@ const Comment = () => {
                 <p>{moment(post?.createdAt).fromNow()}</p>
               </div>
               {session?.user?._id === post?.user?.id ? (
-                <Link href={`/post/${post?._id}`}>
+                <a href='#'>
                   <Image
                     width={24}
                     height={24}
                     src={futureMoreVertical}
                     alt='feature_pix'
                   />
-                </Link>
+                </a>
               ) : (
                 <a href=''></a>
               )}
             </div>
-            {/* <h3 className={styles.myHeader}>
-              <Link href={`/post/community-post/${post?._id}`}>
-                {post?.title}
-              </Link>
-            </h3> */}
-            <Link
-              className={styles.myTitle}
-              href={`/post/community-post/${post?._id}`}
-            >
+
+            <a className={styles.myTitle} href='#'>
               {replaceWithBr2(cutText(post?.content))}
-            </Link>
+            </a>
 
             <hr className={styles.comment_divider} />
             <div className={styles.inner_b}>
