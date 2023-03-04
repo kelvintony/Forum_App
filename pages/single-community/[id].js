@@ -101,16 +101,12 @@ const Singlecommunity = () => {
             return data?.community === singleCommunity.data?.communityName;
           })
         );
-
-        // console.log('all community', allCommunity?.data);
-        // console.log('single community', singleCommunity?.data);
       } catch (error) {
         console.log('');
       }
     };
     getCommunity();
-    // console.log('effect ran');
-  }, [dispatch, router, id]);
+  }, [dispatch, router, id, singlePost]);
 
   useEffect(() => {
     const getCommunity2 = async () => {
@@ -173,7 +169,7 @@ const Singlecommunity = () => {
         await axios.put(`/api/post/likepost/${id}`);
 
         // console.log('it ran');
-        // setSinglePost(spost);
+        setSinglePost(spost);
       }
     } catch (error) {
       console.log(error);
@@ -198,7 +194,7 @@ const Singlecommunity = () => {
         );
         await axios.put(`/api/post/dislikepost/${id}`);
         // console.log('it ran');
-        // setSinglePost(spost);
+        setSinglePost(spost);
       }
     } catch (error) {
       console.log(error);
@@ -256,7 +252,10 @@ const Singlecommunity = () => {
             </div>
 
             <div className={styles.banner_container_inner}>
-              <Image width={40} height={40} src={profile_pic} alt='user_pix' />
+              {/* <Image width={40} height={40} src={profile_pic} alt='user_pix' /> */}
+              <div className={styles.profile__image}>
+                {state?.communityData?.user?.username?.charAt(0).toUpperCase()}
+              </div>
               <div className={styles.banner_inner_a}>
                 <div className={styles.edit_container}>
                   <h3 className={styles.title}>
@@ -331,103 +330,98 @@ const Singlecommunity = () => {
             </div>
           )}
 
-          {loading ? (
-            <Loader />
-          ) : (
-            getThePost?.map((post) => {
-              return (
-                <div
-                  // onClick={() => router.push(`/post/community-post/${post?._id}`)}
-                  key={post?._id}
-                  className={styles2.post_card}
-                >
-                  <div className={styles2.container_a}>
-                    {/* <Image width={40} height={40} src={userIcon} alt='user_pix' /> */}
-                    <div className={styles2.profile__image}>
-                      {post?.user?.username?.charAt(0).toUpperCase()}
-                    </div>
-                    <div className={styles2.inner_a}>
-                      <p>{post?.user?.username}</p>
-                      <p>{moment(post?.createdAt).fromNow()}</p>
-                    </div>
-                    {session?.user?._id === post?.user?.id ? (
-                      <Link href={`/post/${post?._id}`}>
-                        <Image
-                          width={24}
-                          height={24}
-                          src={futureMoreVertical_icon}
-                          alt='feature_pix'
-                        />
-                      </Link>
-                    ) : (
-                      <a href=''></a>
-                    )}
+          {getThePost?.map((post) => {
+            return (
+              <div
+                // onClick={() => router.push(`/post/community-post/${post?._id}`)}
+                key={post?._id}
+                className={styles2.post_card}
+              >
+                <div className={styles2.container_a}>
+                  {/* <Image width={40} height={40} src={userIcon} alt='user_pix' /> */}
+                  <div className={styles2.profile__image}>
+                    {post?.user?.username?.charAt(0).toUpperCase()}
                   </div>
-                  <h3 className={styles2.myHeader}>
-                    <Link href={`/post/community-post/${post?._id}`}>
-                      {post?.title}
-                    </Link>
-                  </h3>
-                  <Link
-                    className={styles2.myTitle}
-                    href={`/post/community-post/${post?._id}`}
-                  >
-                    {replaceWithBr2(cutText(post?.content))}
-                  </Link>
-
-                  {post?.image && (
-                    <div className={styles2.imageContainer}>
+                  <div className={styles2.inner_a}>
+                    <p>{post?.user?.username}</p>
+                    <p>{moment(post?.createdAt).fromNow()}</p>
+                  </div>
+                  {session?.user?._id === post?.user?.id ? (
+                    <Link href={`/post/${post?._id}`}>
                       <Image
-                        // unoptimized
-                        className={styles2.postImage}
-                        src={post?.image}
-                        alt='post_image'
-                        fill
+                        width={24}
+                        height={24}
+                        src={futureMoreVertical_icon}
+                        alt='feature_pix'
                       />
-                    </div>
+                    </Link>
+                  ) : (
+                    <a href=''></a>
                   )}
-                  <div className={styles2.inner_b}>
-                    <div className={styles2.inner_ba}>
-                      <button className={styles2.btn_post}>
-                        {post?.community}
-                        {''} Community
-                      </button>
-                    </div>
-                    <div className={styles2.inner_bb}>
-                      {/* <a href=''>
+                </div>
+                <h3 className={styles2.myHeader}>
+                  <Link href={`/post/community-post/${post?._id}`}>
+                    {post?.title}
+                  </Link>
+                </h3>
+                <Link
+                  className={styles2.myTitle}
+                  href={`/post/community-post/${post?._id}`}
+                >
+                  {replaceWithBr2(cutText(post?.content))}
+                </Link>
+
+                {post?.image && (
+                  <div className={styles2.imageContainer}>
+                    <Image
+                      // unoptimized
+                      className={styles2.postImage}
+                      src={post?.image}
+                      alt='post_image'
+                      fill
+                    />
+                  </div>
+                )}
+                <div className={styles2.inner_b}>
+                  <div className={styles2.inner_ba}>
+                    <button className={styles2.btn_post}>
+                      {post?.community}
+                      {''} Community
+                    </button>
+                  </div>
+                  <div className={styles2.inner_bb}>
+                    {/* <a href=''>
                       <Image src={numberOfViewsIcon} alt='views_pix' />
                       125
                     </a> */}
-                      <button onClick={() => handleLike(post._id, post)}>
-                        {/* <Image src={likeIcon} alt='views_pix' /> */}
-                        {post?.likes?.includes(session?.user?._id) ? (
-                          <AiFillLike />
-                        ) : (
-                          <AiOutlineLike />
-                        )}
-                        {post?.likes?.length > 0 ? post?.likes?.length : 0}
-                      </button>
-                      <button onClick={() => handleDisLike(post._id, post)}>
-                        {/* <Image src={dislike} alt='views_pix' /> */}
-                        {post?.dislikes?.includes(session?.user?._id) ? (
-                          <AiFillDislike />
-                        ) : (
-                          <AiOutlineDislike />
-                        )}
-                        {post?.dislikes?.length > 0
-                          ? post?.dislikes?.length
-                          : 0}
-                      </button>
-                      {/* <a href=''> 
+                    <button onClick={() => handleLike(post._id, post)}>
+                      {/* <Image src={likeIcon} alt='views_pix' /> */}
+                      {post?.likes?.includes(session?.user?._id) ? (
+                        <AiFillLike />
+                      ) : (
+                        <AiOutlineLike />
+                      )}
+                      {post?.likes?.length > 0 ? post?.likes?.length : 0}
+                    </button>
+                    <button onClick={() => handleDisLike(post._id, post)}>
+                      {/* <Image src={dislike} alt='views_pix' /> */}
+                      {post?.dislikes?.includes(session?.user?._id) ? (
+                        <AiFillDislike />
+                      ) : (
+                        <AiOutlineDislike />
+                      )}
+                      {post?.dislikes?.length > 0 ? post?.dislikes?.length : 0}
+                    </button>
+                    {/* <a href=''> 
                       <Image src={shareIcon} alt='views_pix' />
                       155
                     </a> */}
-                    </div>
                   </div>
                 </div>
-              );
-            })
-          )}
+              </div>
+            );
+          })}
+
           {getThePost.length === 0 && loading === false && (
             <h3 style={{ marginTop: '30px' }}>
               No Post related to the community at the moment

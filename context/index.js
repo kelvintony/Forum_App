@@ -163,6 +163,17 @@ const reducer = (state, action) => {
         loading: false,
       },
     };
+  } else if (action.type === authConstants.LIKE_COMMENT) {
+    // if (state?.commentData?.comment) {
+
+    return {
+      ...state,
+      commentData: {
+        comments: [...state?.commentData?.comments, action?.payload],
+        loading: false,
+      },
+    };
+    // }
   } else {
     return state;
   }
