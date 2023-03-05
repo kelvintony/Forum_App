@@ -5,7 +5,6 @@ import styles2 from '../sections/CreatePost/CreatePost.module.css';
 import cancelIcon from '../assets/single_community/cancel_icon.svg';
 import axios from 'axios';
 
-import image22 from '../assets/jackson-so-_t-l5FFH8VA-unsplash.jpg';
 import { useRouter } from 'next/router';
 
 const CreateCommunity = () => {

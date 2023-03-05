@@ -34,15 +34,44 @@
   object-fit: cover;
   border-radius: 50%;
 }
-.profile_container > p:nth-of-type(1) {
+
+.biodata_container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.profile_edit {
+  color: #f48023;
+}
+.bio_data {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.bio_data > p:nth-of-type(1) {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.05em;
+  color: #000000;
+}
+.bio_data > p:nth-of-type(2) {
   font-family: 'Roboto', sans-serif;
   font-style: normal;
-  font-weight: 700;
   font-size: 18px;
   letter-spacing: 0.05em;
   color: #000000;
 }
-
+.about_me {
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  /* font-weight: 700; */
+  font-size: 14px;
+  letter-spacing: 0.05em;
+  color: #000000;
+}
 /* .profile_name {
   display: inline-flex;
   justify-content: center;
@@ -321,8 +350,13 @@
     width: 180px;
     height: 180px;
   }
-  .profile_container > p:nth-of-type(1) {
-    font-size: 16px;
+  .bio_data > p:nth-of-type(2) {
+    font-size: 15px;
+  }
+
+  .about_me {
+    font-size: 13px;
+    text-align: center;
   }
   .profile_award_image {
     width: 20px;

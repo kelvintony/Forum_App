@@ -262,6 +262,14 @@
   letter-spacing: 0.05em;
   color: #464646;
 }
+
+.error_message {
+  margin-bottom: 10px;
+  font-size: 14px;
+  background-color: rgb(245, 118, 118);
+  padding: 10px;
+  font-family: 'Poppins', sans-serif;
+}
 /* UTILITIES */
 .tab_button {
   border: none;

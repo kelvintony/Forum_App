@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './ProfileCard.module.css';
 import Link from 'next/link';
 
@@ -19,12 +19,39 @@ import { AiOutlineInstagram } from 'react-icons/ai';
 import { FiTwitter } from 'react-icons/fi';
 import { AiOutlineFacebook } from 'react-icons/ai';
 
+import { BiEdit } from 'react-icons/bi';
+import axios from 'axios';
+
 import { signOut, signIn, getSession, useSession } from 'next-auth/react';
 import { useStore } from '../../context';
 
 const ProfileCard = ({ community }) => {
   const { status, data: session } = useSession();
+
   const [state, dispatch] = useStore();
+
+  const [userProfile, setUserProfile] = useState('');
+
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const getUserProfile = async () => {
+      setLoading(true);
+      await axios
+        .get(`/api/user/profile/`)
+        .then((res) => {
+          setUserProfile(res.data);
+
+          setLoading(false);
+          // console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+
+    getUserProfile();
+  }, []);
   return (
     <div className={styles.rigtbar_section_b}>
       {/* first section  */}
@@ -35,12 +62,23 @@ const ProfileCard = ({ community }) => {
             src={profile_image22}
             alt='pix_1'
           />
-          <p className={styles.profile_name}>
-            &#64;{' '}
-            {state?.userProfile?.username === ''
-              ? session?.user?.username
-              : state?.userProfile?.username}
-          </p>
+          <div className={styles.biodata_container}>
+            <div className={styles.bio_data}>
+              <p>{userProfile?.displayName}</p>
+              <p className={styles.profile_name}>
+                &#64;{' '}
+                {state?.userProfile?.username === ''
+                  ? session?.user?.username
+                  : state?.userProfile?.username}
+              </p>
+            </div>
+            <Link href='/user-settings' className={styles.profile_edit}>
+              <BiEdit size={20} />
+            </Link>
+          </div>
+
+          <p className={styles.about_me}>{userProfile?.about}</p>
+
           <div className={styles.profile_divider}></div>
           <div className={styles.profile_award}>
             <Image
