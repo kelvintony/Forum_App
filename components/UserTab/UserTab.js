@@ -1,22 +1,135 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import styles from '../../styles/UserTab.module.css';
+import axios from 'axios';
 
 import { useSession } from 'next-auth/react';
 
 export default function LabTabs() {
   const { status, data: session } = useSession();
 
-  const [value, setValue] = React.useState('1');
+  const [value, setValue] = useState('1');
 
+  const [userProfile, setUserProfile] = useState({
+    displayName: '',
+    about: '',
+    language: '',
+    country: '',
+    gender: '',
+    image: '',
+    twitterUrl: '',
+    facebookUrl: '',
+    instagramUrl: '',
+  });
+  const [loading, setLoading] = useState(false);
+
+  const [oldPassword, setOldPassword] = useState('');
+
+  const [newPassword, setNewPassword] = useState('');
+
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const [formDataError, setFormDataError] = useState(false);
+
+  useEffect(() => {
+    const getUserProfile = async () => {
+      setLoading(true);
+      await axios
+        .get(`/api/user/profile/`)
+        .then((res) => {
+          setUserProfile({
+            ...userProfile,
+            displayName: res.data.displayName || '',
+            about: res.data.about || '',
+            language: res.data.language || '',
+            country: res.data.country || '',
+            gender: res.data.gender || '',
+            image: res.data.image || '',
+            facebookUrl: res.data.facebookUrl || '',
+            twitterUrl: res.data.twitterUrl || '',
+            instagramUrl: res.data.instagramUrl || '',
+          });
+
+          setLoading(false);
+          // console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+
+    getUserProfile();
+  }, []);
+
+  // console.log('from settings', userProfile);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
+  const submitRecord = async () => {
+    const {
+      displayName,
+      about,
+      language,
+      country,
+      gender,
+      image,
+      twitterUrl,
+      facebookUrl,
+      instagramUrl,
+    } = userProfile;
+    setLoading(true);
+
+    await axios
+      .put(`/api/user/profile`, {
+        displayName,
+        about,
+        language,
+        country,
+        gender,
+        image,
+        twitterUrl,
+        facebookUrl,
+        instagramUrl,
+      })
+      .then(function (response) {
+        if (response) {
+          setLoading(false);
+          alert('Profile updated successfully');
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  const changePasssword = async () => {
+    if (oldPassword.length === 0 || newPassword.length === 0) {
+      setFormDataError(true);
+      return;
+    }
+
+    await axios
+      .post(`/api/user/updatepassword`, {
+        oldPassword,
+        newPassword,
+      })
+      .then(function (response) {
+        if (response) {
+          // setLoading(false);
+          setErrorMessage('');
+          alert('password Change successful');
+        }
+      })
+      .catch(function (error) {
+        // console.log(error);
+        setErrorMessage(error?.response?.data);
+      });
+  };
   return (
     <Box sx={{ width: '100%', typography: 'body1' }}>
       <TabContext value={value}>
@@ -32,12 +145,13 @@ export default function LabTabs() {
           >
             <Tab className={styles.userTab} label='Account' value='1' />
             <Tab className={styles.userTab} label='Profile' value='2' />
-            <Tab
+            <Tab className={styles.userTab} label='Password Reset' value='3' />
+
+            {/* <Tab
               className={styles.userTab}
               label='Safety &amp; Security'
-              value='3'
-            />
-            <Tab className={styles.userTab} label='Password Reset' value='4' />
+              value='4'
+            /> */}
           </TabList>
         </Box>
         <TabPanel value='1'>
@@ -57,7 +171,20 @@ export default function LabTabs() {
                 className={`${styles.tab_country_inner} ${styles.tab_countryGender}`}
               >
                 <p>Gender</p>
-                <select name='gender' id=''>
+                <select
+                  name='gender'
+                  id=''
+                  onChange={(e) =>
+                    setUserProfile({
+                      ...userProfile,
+                      gender: e.target.value,
+                    })
+                  }
+                  value={userProfile.gender}
+                >
+                  {/* <option value={userProfile?.gender || 'Male'}>
+                    {userProfile?.gender || 'Male'}
+                  </option> */}
                   <option value='Male'>Male</option>
                   <option value='Female'>Female</option>
                   <option value='Others'>Others</option>
@@ -72,7 +199,21 @@ export default function LabTabs() {
             <div className={styles.tab_country}>
               <div className={styles.tab_country_inner}>
                 <p>Display Language</p>
-                <select name='language' id=''>
+                <select
+                  name='language'
+                  id=''
+                  onChange={(e) =>
+                    setUserProfile({
+                      ...userProfile,
+                      language: e.target.value,
+                    })
+                  }
+                  value={userProfile.language}
+                >
+                  {/* <option value={userProfile?.language || 'English'}>
+                    {userProfile?.language || 'English'}
+                  </option> */}
+
                   <option value='English'>English</option>
                   <option value='French'>French</option>
                   <option value='German'>German</option>
@@ -89,7 +230,21 @@ export default function LabTabs() {
             <div className={styles.tab_country}>
               <div className={styles.tab_country_inner}>
                 <p>Country</p>
-                <select name='country' id=''>
+                <select
+                  name='country'
+                  id=''
+                  onChange={(e) =>
+                    setUserProfile({
+                      ...userProfile,
+                      country: e.target.value,
+                    })
+                  }
+                  value={userProfile.country}
+                >
+                  {/* <option value={userProfile?.country || 'Ngeria'}>
+                    {userProfile?.country || 'Ngeria'}
+                  </option> */}
+
                   <option value='Ngeria'>Nigeria</option>
                   <option value='Ghana'>Ghana</option>
                   <option value='USA'>USA</option>
@@ -98,7 +253,9 @@ export default function LabTabs() {
               <p>This is your primary location.</p>
             </div>
 
-            <button className={styles.tab_button}>Save Settings</button>
+            <button onClick={submitRecord} className={styles.tab_button}>
+              Save Settings
+            </button>
           </div>
         </TabPanel>
         <TabPanel value='2'>
@@ -115,9 +272,18 @@ export default function LabTabs() {
                 type='text'
                 placeholder='display name (optional)'
                 id='displayName'
+                onChange={(e) =>
+                  setUserProfile({
+                    ...userProfile,
+                    displayName: e.target.value,
+                  })
+                }
+                value={userProfile.displayName}
               />{' '}
               <br />
-              <p>20 Characters remaining</p>
+              <p>
+                {20 - userProfile?.displayName?.length} Characters remaining
+              </p>
             </div>
             <div className={styles.profileName}>
               <p>About (optional)</p>
@@ -127,16 +293,124 @@ export default function LabTabs() {
                 id='displayName'
                 rows='4'
                 cols='50'
+                onChange={(e) =>
+                  setUserProfile({ ...userProfile, about: e.target.value })
+                }
+                value={userProfile.about}
               >
                 {' '}
               </textarea>
               <br />
-              <p>20 Characters remaining</p>
+              <p>{100 - userProfile?.about?.length} Characters remaining</p>
             </div>
-            <button className={styles.tab_button}>Save Settings</button>
+            <div className={styles.profileName}>
+              <p>Twitter Account (optional)</p>
+              <p>Set a Twitter Handle</p>
+              <input
+                type='text'
+                placeholder='Twitter'
+                id='Twitter'
+                onChange={(e) =>
+                  setUserProfile({
+                    ...userProfile,
+                    twitterUrl: e.target.value,
+                  })
+                }
+                value={userProfile.twitterUrl}
+              />{' '}
+              <br />
+            </div>
+            <div className={styles.profileName}>
+              <p>Facebook Account (optional)</p>
+              <p>Set a Facebook Handle</p>
+              <input
+                type='text'
+                placeholder='Facebook'
+                id='Facebook'
+                onChange={(e) =>
+                  setUserProfile({
+                    ...userProfile,
+                    facebookUrl: e.target.value,
+                  })
+                }
+                value={userProfile.facebookUrl}
+              />{' '}
+              <br />
+            </div>
+            <div className={styles.profileName}>
+              <p>Instagram Account (optional)</p>
+              <p>Set an Instagram Handle</p>
+              <input
+                type='text'
+                placeholder='Instagram'
+                id='Instagram'
+                onChange={(e) =>
+                  setUserProfile({
+                    ...userProfile,
+                    instagramUrl: e.target.value,
+                  })
+                }
+                value={userProfile.instagramUrl}
+              />{' '}
+              <br />
+            </div>
+            <button onClick={submitRecord} className={styles.tab_button}>
+              Save Settings
+            </button>
           </div>
         </TabPanel>
         <TabPanel value='3'>
+          <div className={styles.tab_container}>
+            <div className={styles.tab_title}>
+              <p>Password Settings</p>
+              <p>If password is compromised, try restting it.</p>
+            </div>
+
+            <div className={styles.tab_email}>
+              {errorMessage && (
+                <div className={styles.error_message}>{errorMessage}</div>
+              )}
+              <p>Reset Password</p>
+              <p>
+                Leave the pasword field empty if you do not wish to change it.
+              </p>
+              <input
+                className='password_input'
+                type='password'
+                placeholder='Enter Old Password'
+                value={oldPassword}
+                onChange={(e) => setOldPassword(e.target.value)}
+              />{' '}
+              <br />
+              {formDataError && oldPassword.length <= 0 ? (
+                <span style={{ color: 'red', fontSize: '12px' }}>
+                  * required
+                </span>
+              ) : (
+                ''
+              )}
+              <input
+                className='password_input'
+                type='password'
+                placeholder='Enter New Password'
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+              />
+              {formDataError && newPassword.length <= 0 ? (
+                <span style={{ color: 'red', fontSize: '12px' }}>
+                  * required
+                </span>
+              ) : (
+                ''
+              )}
+            </div>
+
+            <button onClick={changePasssword} className={styles.tab_button}>
+              Reset password
+            </button>
+          </div>
+        </TabPanel>
+        {/* <TabPanel value='4'>
           <div className={styles.tab_container}>
             <div className={styles.tab_title_safety}>
               <p>Safety &amp; Security</p>
@@ -166,35 +440,7 @@ export default function LabTabs() {
               <button className={styles.tab_button}>Save Settings</button>
             </div>
           </div>
-        </TabPanel>
-        <TabPanel value='4'>
-          <div className={styles.tab_container}>
-            <div className={styles.tab_title}>
-              <p>Password Settings</p>
-              <p>If password is compromised, try restting it.</p>
-            </div>
-
-            <div className={styles.tab_email}>
-              <p>Reset Password</p>
-              <p>
-                Leave the pasword field empty if yo do not wish to change it.
-              </p>
-              <input
-                className='password_input'
-                type='password'
-                placeholder='Enter Old Password'
-              />{' '}
-              <br />
-              <input
-                className='password_input'
-                type='password'
-                placeholder='Enter New Password'
-              />
-            </div>
-
-            <button className={styles.tab_button}>Reset password</button>
-          </div>
-        </TabPanel>
+        </TabPanel> */}
       </TabContext>
     </Box>
   );
