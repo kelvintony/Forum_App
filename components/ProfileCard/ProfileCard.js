@@ -92,19 +92,19 @@ const ProfileCard = ({ community }) => {
           <div className={styles.profile_divider}></div>
           <div className={styles.profile_icons}>
             <a
-              href='https://facebook.com'
+              href={userProfile?.instagramUrl || '#'}
               className={styles.profile_icons_image}
             >
               <AiOutlineInstagram size={30} />
             </a>
             <a
-              href='https://twitter.com'
+              href={userProfile?.twitterUrl || '#'}
               className={styles.profile_icons_image}
             >
               <FiTwitter size={30} />
             </a>
             <a
-              href='https://instagram.com'
+              href={userProfile?.facebookUrl || '#'}
               className={styles.profile_icons_image}
             >
               <AiOutlineFacebook size={30} />
