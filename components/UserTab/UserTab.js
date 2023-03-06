@@ -25,6 +25,7 @@ export default function LabTabs() {
     facebookUrl: '',
     instagramUrl: '',
   });
+
   const [loading, setLoading] = useState(false);
 
   const [oldPassword, setOldPassword] = useState('');
@@ -118,14 +119,13 @@ export default function LabTabs() {
         oldPassword,
         newPassword,
       })
-      .then(function (response) {
+      .then((response) => {
         if (response) {
-          // setLoading(false);
           setErrorMessage('');
           alert('password Change successful');
         }
       })
-      .catch(function (error) {
+      .catch((error) => {
         // console.log(error);
         setErrorMessage(error?.response?.data);
       });
