@@ -1,0 +1,38 @@
+import mongoose from 'mongoose';
+
+const repliedcommentSchema = new mongoose.Schema(
+  {
+    commentId: { type: String, required: true },
+    content: { type: String, required: true },
+    user: {
+      id: { type: String, required: true },
+      username: { type: String, required: true },
+      image: { type: String },
+    },
+    numberOfSubPost: {
+      type: Number,
+      default: 0,
+    },
+    subPost: {
+      type: [String],
+      default: [],
+    },
+    likes: {
+      type: [String],
+      default: [],
+    },
+    dislikes: {
+      type: [String],
+      default: [],
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
+
+const repliedcomment =
+  mongoose.models.repliedcomment ||
+  mongoose.model('repliedcomment', repliedcommentSchema);
+
+export default repliedcomment;

@@ -55,6 +55,11 @@
   gap: 15px;
 }
 
+.post_card2 {
+  border-left: 1px solid #eaeaea;
+  /* border-left: 3px solid #9dc9fc; */
+}
+
 .post_card > h3 {
   font-weight: 700;
   font-size: 16px;
@@ -179,6 +184,13 @@ hr.comment_divider {
   display: inline-flex;
   align-items: center;
   gap: 5px;
+}
+
+.comment_container2 {
+  margin-left: 25px;
+}
+.single_comment2 {
+  margin-bottom: 20px;
 }
 /* utilities */
 .interest_buttons {

@@ -174,6 +174,22 @@ const reducer = (state, action) => {
       },
     };
     // }
+  } else if (action.type === authConstants.FETCH_REPLIED_COMMENT) {
+    return {
+      ...state,
+      repliedCommentData: {
+        comments: action?.payload,
+        loading: false,
+      },
+    };
+  } else if (action.type === authConstants.CREATE_REPLIED_COMMENT) {
+    return {
+      ...state,
+      repliedCommentData: {
+        comments: [...state?.repliedCommentData?.comments, action?.payload],
+        loading: false,
+      },
+    };
   } else {
     return state;
   }
@@ -207,6 +223,12 @@ export const StoreProvider = ({ children }) => {
     },
 
     commentData: {
+      comments: [],
+      loading: false,
+      error: null,
+    },
+
+    repliedCommentData: {
       comments: [],
       loading: false,
       error: null,

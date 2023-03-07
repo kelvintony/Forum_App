@@ -30,7 +30,7 @@ async function handler(req, res) {
     );
 
     if (!isPasswordCorrect) {
-      return res.status(400).send('Password does not match');
+      return res.status(400).send('Old password is incorrect');
     }
 
     if (!newPassword) {
