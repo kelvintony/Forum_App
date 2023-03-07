@@ -96,7 +96,7 @@ const CommentModal = (props) => {
                 className={`${styles2.btn_image} ${styles2.btn_create}`}
               >
                 <Image src={sendPostIcon} alt='create_pix' />
-                'Post'
+                Post
               </button>
             </div>
           </div>
