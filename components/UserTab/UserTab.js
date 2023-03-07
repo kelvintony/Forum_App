@@ -186,8 +186,8 @@ export default function LabTabs() {
                     {userProfile?.gender || 'Male'}
                   </option> */}
                   <option value='Male'>Male</option>
-                  <option value='Female'>Female</option>
-                  <option value='Others'>Others</option>
+                 {/* <option value='Female'>Female</option>
+                  <option value='Others'>Others</option> */}
                 </select>
               </div>
               <p>
@@ -215,8 +215,8 @@ export default function LabTabs() {
                   </option> */}
 
                   <option value='English'>English</option>
-                  <option value='French'>French</option>
-                  <option value='German'>German</option>
+                  {/* <option value='French'>French</option>
+                  <option value='German'>German</option> */}
                 </select>
               </div>
               <p>
