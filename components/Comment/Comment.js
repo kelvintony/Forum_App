@@ -102,6 +102,9 @@ const Comment = () => {
   }, [dispatch, router, id, singlePost]);
 
   const createComment = async () => {
+    if (!session?.user?._id) {
+      return alert('you need to signin in other to make a comment');
+    }
     setLoading(true);
     try {
       const res = await axios.post(`/api/comment`, {
@@ -208,6 +211,12 @@ const Comment = () => {
     return result.map((i, key) => <p key={key}>{i + '\n'}</p>);
   }
 
+  const replyComment = (id) => {
+    if (!session?.user?._id) {
+      return alert('you need to signin in other to reply a comment');
+    }
+    router.push(`/replycomment/${id}`);
+  };
   return (
     <div className={styles.wrapper}>
       <h1>Leave a comment</h1>
@@ -302,7 +311,7 @@ const Comment = () => {
                   Show all replies
                 </button>
                 <button
-                  onClick={() => router.push(`/replycomment/${post._id}`)}
+                  onClick={() => replyComment(post._id)}
                   className={styles.reply}
                 >
                   <BsArrowReturnRight size={12} />
@@ -385,9 +394,7 @@ const Comment = () => {
                           </button> */}
                           <button></button>
                           <button
-                            onClick={() =>
-                              router.push(`/replycomment/${post._id}`)
-                            }
+                            onClick={() => replyComment(post._id)}
                             className={styles.reply}
                           >
                             <BsArrowReturnRight size={12} />
