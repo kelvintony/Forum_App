@@ -149,7 +149,7 @@ const Navbar = (props) => {
               </li>
               <hr />
               <li onClick={toggle} className={styles.profileItems}>
-                <Link style={{ display: 'block' }} href=''>
+                <Link style={{ display: 'block' }} href='/'>
                   Dashboard
                 </Link>
               </li>

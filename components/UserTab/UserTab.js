@@ -186,8 +186,8 @@ export default function LabTabs() {
                     {userProfile?.gender || 'Male'}
                   </option> */}
                   <option value='Male'>Male</option>
-                 {/* <option value='Female'>Female</option>
-                  <option value='Others'>Others</option> */}
+                  <option value='Female'>Female</option>
+                  <option value='Others'>Others</option>
                 </select>
               </div>
               <p>
@@ -227,7 +227,7 @@ export default function LabTabs() {
                 review.
               </p>
             </div>
-            <div className={styles.tab_country}>
+            {/* <div className={styles.tab_country}>
               <div className={styles.tab_country_inner}>
                 <p>Country</p>
                 <select
@@ -241,17 +241,13 @@ export default function LabTabs() {
                   }
                   value={userProfile.country}
                 >
-                  {/* <option value={userProfile?.country || 'Ngeria'}>
-                    {userProfile?.country || 'Ngeria'}
-                  </option> */}
-
                   <option value='Ngeria'>Nigeria</option>
                   <option value='Ghana'>Ghana</option>
                   <option value='USA'>USA</option>
                 </select>
               </div>
               <p>This is your primary location.</p>
-            </div>
+            </div> */}
 
             <button onClick={submitRecord} className={styles.tab_button}>
               Save Settings
