@@ -201,6 +201,10 @@ export default function Home({ myPost }) {
     // router.push(`/single-community/${communityId}`);
     // console.log('this ran');
   };
+
+  const navigateToProfile = (id) => {
+    router.push(`/user-profile/${id}`);
+  };
   return (
     <div>
       {/* <Navbar openMenu={toggle} session={session} /> */}
@@ -227,7 +231,11 @@ export default function Home({ myPost }) {
                 key={post?._id}
                 className={styles2.post_card}
               >
-                <div className={styles2.container_a}>
+                <div
+                  onClick={() => navigateToProfile(post?.user?.id)}
+                  className={styles2.container_a}
+                  style={{ cursor: 'pointer' }}
+                >
                   {/* <Image width={40} height={40} src={userIcon} alt='user_pix' /> */}
                   <div className={styles2.profile__image}>
                     {post?.user?.username?.charAt(0).toUpperCase()}
