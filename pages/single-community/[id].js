@@ -223,6 +223,18 @@ const Singlecommunity = () => {
   const toggleModal = () => {
     setShowModal(!showModal);
   };
+
+  const moveToCommunity = (communityName2) => {
+    // let comeName = '';
+    state?.forumData[0]?.data.map((data) => {
+      if (data?.communityName === communityName2) {
+        console.log(data);
+        router.push(`/single-community/${data?._id}`);
+      }
+    });
+    // router.push(`/single-community/${communityId}`);
+    // console.log('this ran');
+  };
   return (
     <div>
       <section className={styles.rigtbar_section}>
@@ -384,7 +396,10 @@ const Singlecommunity = () => {
                 )}
                 <div className={styles2.inner_b}>
                   <div className={styles2.inner_ba}>
-                    <button className={styles2.btn_post}>
+                    <button
+                      onClick={() => moveToCommunity(post.community)}
+                      className={styles2.btn_post}
+                    >
                       {post?.community}
                       {''} Community
                     </button>
