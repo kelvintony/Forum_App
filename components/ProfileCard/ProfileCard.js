@@ -66,10 +66,7 @@ const ProfileCard = ({ community }) => {
             <div className={styles.bio_data}>
               <p>{userProfile?.displayName}</p>
               <p className={styles.profile_name}>
-                &#64;{' '}
-                {state?.userProfile?.username === ''
-                  ? session?.user?.username
-                  : state?.userProfile?.username}
+                &#64; {session?.user?.username}
               </p>
             </div>
             <Link href='/user-settings' className={styles.profile_edit}>

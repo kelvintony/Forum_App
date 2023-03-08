@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useReducer } from 'react';
-import Loader from '../components/Loader/Loader';
+import Loader from '../../components/Loader/Loader';
 import { Suspense } from 'react';
 
 {
@@ -7,48 +7,51 @@ import { Suspense } from 'react';
 </Suspense> */
 }
 
-import db from '../utils/db';
-import postModel from '../models/post';
-import communityModel from '../models/community';
+import db from '../../utils/db';
+import postModel from '../../models/post';
+import communityModel from '../../models/community';
 
-import styles2 from '../sections/Profile/MainSection.module.css';
+import styles2 from '../../sections/Profile/MainSection.module.css';
 
 import Head from 'next/head';
 import Image from 'next/image';
-import LeftSideBar from '../components/leftSideBar/LeftSideBar';
+import LeftSideBar from '../../components/leftSideBar/LeftSideBar';
 
 import moment from 'moment';
 
-import trendingIcon from '../assets/home-page/trending-icon.svg';
-import newIcon from '../assets/home-page/new-icon.svg';
-import userIcon from '../assets/home-page/user-icon.svg';
-import futureMoreVertical from '../assets/home-page/futureMoreVertical-icon.svg';
-import numberOfViewsIcon from '../assets/home-page/numberOfViewsIcon.svg';
-import likeIcon from '../assets/home-page/like-icon.svg';
-import dislike from '../assets/home-page/dislike-icon.svg';
-import shareIcon from '../assets/home-page/share-icon.svg';
+import trendingIcon from '../../assets/home-page/trending-icon.svg';
+import newIcon from '../../assets/home-page/new-icon.svg';
+import userIcon from '../../assets/home-page/user-icon.svg';
+import futureMoreVertical from '../../assets/home-page/futureMoreVertical-icon.svg';
+import numberOfViewsIcon from '../../assets/home-page/numberOfViewsIcon.svg';
+import likeIcon from '../../assets/home-page/like-icon.svg';
+import dislike from '../../assets/home-page/dislike-icon.svg';
+import shareIcon from '../../assets/home-page/share-icon.svg';
 
 import { getSession, useSession } from 'next-auth/react';
 import axios from 'axios';
 
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import { useStore } from '../context';
-import { authConstants } from '../context/constants';
-import ProfileCard from '../components/ProfileCard/ProfileCard';
+import { useStore } from '../../context';
+import { authConstants } from '../../context/constants';
+import ProfileCard from '../../components/UserProfileCard/ProfileCard';
 
 export async function getServerSideProps(context) {
-  const session = await getSession(context);
+  //   const session = await getSession(context);
+
+  const { params } = context;
+  const { id } = params;
 
   await db.connect();
 
   const posts = await postModel
-    .find({ 'user.id': session?.user?._id })
+    .find({ 'user.id': id })
     .sort({ _id: -1 })
     .lean();
 
   const community = await communityModel
-    .find({ 'user.id': session?.user?._id })
+    .find({ 'user.id': id })
     .sort({ _id: -1 })
     .lean();
 
@@ -56,7 +59,6 @@ export async function getServerSideProps(context) {
 
   return {
     props: {
-      session,
       myPost: posts ? JSON.parse(JSON.stringify(posts)) : null,
       myCommunity: community ? JSON.parse(JSON.stringify(community)) : null,
       // posts.map(db.convertDocToObj),

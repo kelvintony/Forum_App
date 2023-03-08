@@ -119,13 +119,22 @@ export default function Home({ session, myPost }) {
     paddingLeft: '90px',
     zIndex: '-1',
   };
+
+  const navigateToProfile = (id) => {
+    router.push(`/user-profile/${id}`);
+  };
+
   return (
     <div>
       <LeftSideBar burgerMenu={mobileMenu} closeMenu={toggle} />
       <section className={styles2.rigtbar_section}>
         <div className={styles2.rigtbar_section_a}>
           <div key={myPost?._id} className={styles2.post_card}>
-            <div className={styles2.container_a}>
+            <div
+              onClick={() => navigateToProfile(myPost?.user?.id)}
+              style={{ cursor: 'pointer' }}
+              className={styles2.container_a}
+            >
               {/* <Image width={40} height={40} src={userIcon} alt='user_pix' /> */}
               <div className={styles2.profile__image}>
                 {myPost?.user?.username?.charAt(0).toUpperCase()}
