@@ -187,6 +187,12 @@ export default function Home({ myPost }) {
       console.log(error);
     }
   };
+
+  console.log('from fome', state?.forumData[0]?.data);
+
+  const moveToCommunity = (communityId) => {
+    router.push(`/single-community/${communityId}`);
+  };
   return (
     <div>
       {/* <Navbar openMenu={toggle} session={session} /> */}
