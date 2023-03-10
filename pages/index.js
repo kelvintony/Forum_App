@@ -283,10 +283,10 @@ export default function Home({ myPost }) {
                 <div className={styles2.inner_b}>
                   <div className={styles2.inner_ba}>
                     <button
-                      onClick={() => moveToCommunity(post.community)}
+                      onClick={() => moveToCommunity(post?.community)}
                       className={styles2.btn_post}
                     >
-                      {post.community}
+                      {post?.community}
                       {''} Community
                     </button>
                   </div>
@@ -295,7 +295,7 @@ export default function Home({ myPost }) {
                       <Image src={numberOfViewsIcon} alt='views_pix' />
                       125
                     </a> */}
-                    <button onClick={() => handleLike(post._id, post)}>
+                    <button onClick={() => handleLike(post?._id, post)}>
                       {/* <Image src={likeIcon} alt='views_pix' /> */}
                       {post?.likes?.includes(session?.user?._id) ? (
                         <AiFillLike />

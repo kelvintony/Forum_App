@@ -10,6 +10,7 @@ import quickLinksIcon from '../../assets/home-page/quickLinks-icon.svg';
 import profile_pix from '../../assets/profile_builb.png';
 import profile_image22 from '../../assets/profile_image22.png';
 import profile_image23 from '../../assets/avatar.jpg';
+import profile_image24 from '../../assets/avatar2.png';
 import award from '../../assets/award.png';
 
 import { BsFacebook } from 'react-icons/bs';
