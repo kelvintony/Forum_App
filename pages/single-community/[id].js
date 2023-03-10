@@ -235,6 +235,11 @@ const Singlecommunity = () => {
     // router.push(`/single-community/${communityId}`);
     // console.log('this ran');
   };
+
+  const navigateToProfile = (id) => {
+    router.push(`/user-profile/${id}`);
+  };
+
   return (
     <div>
       <section className={styles.rigtbar_section}>
@@ -349,7 +354,11 @@ const Singlecommunity = () => {
                 key={post?._id}
                 className={styles2.post_card}
               >
-                <div className={styles2.container_a}>
+                <div
+                  className={styles2.container_a}
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => navigateToProfile(post?.user?.id)}
+                >
                   {/* <Image width={40} height={40} src={userIcon} alt='user_pix' /> */}
                   <div className={styles2.profile__image}>
                     {post?.user?.username?.charAt(0).toUpperCase()}

@@ -97,17 +97,15 @@ const Signup = () => {
       formData.confirmPassword
     ) {
       setLoading(true);
-      await authAxios
-        .post('/user/signup', formData)
+      await axios
+        .post('https://reddit-forum-api.vercel.app/user/signup', formData)
         .then((res) => {
           if (res) {
             // localStorage.setItem('profile', JSON.stringify(res.data));
             setLoading(false);
-            setResponseMessage(
-              'A verification link has already been sent to your email please verify'
-            );
-            // alert('signup successfully');
+            setResponseMessage(res.data.message);
             // navigate('/');
+            // console.log(res);
           }
         })
         .catch((err) => {
