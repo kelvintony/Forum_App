@@ -143,6 +143,7 @@ export default function ModeratePost({ session: serverSession, myPost }) {
     <div>
       {/* <Navbar openMenu={toggle} session={session} /> */}
       <section className={styles.rigtbar_section}>
+        <LeftSideBar />
         <div className={styles.rigtbar_section_a}>
           <h3 className={styles.mode_header}>Post Moderation</h3>
           {myPost.map((post) => {

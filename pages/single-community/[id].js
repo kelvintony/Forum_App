@@ -357,13 +357,19 @@ const Singlecommunity = () => {
                 <div
                   className={styles2.container_a}
                   style={{ cursor: 'pointer' }}
-                  onClick={() => navigateToProfile(post?.user?.id)}
+                  // onClick={() => navigateToProfile(post?.user?.id)}
                 >
                   {/* <Image width={40} height={40} src={userIcon} alt='user_pix' /> */}
-                  <div className={styles2.profile__image}>
+                  <div
+                    onClick={() => navigateToProfile(post?.user?.id)}
+                    className={styles2.profile__image}
+                  >
                     {post?.user?.username?.charAt(0).toUpperCase()}
                   </div>
-                  <div className={styles2.inner_a}>
+                  <div
+                    onClick={() => navigateToProfile(post?.user?.id)}
+                    className={styles2.inner_a}
+                  >
                     <p>{post?.user?.username}</p>
                     <p>{moment(post?.createdAt).fromNow()}</p>
                   </div>

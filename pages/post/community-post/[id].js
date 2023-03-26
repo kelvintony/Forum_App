@@ -68,6 +68,9 @@ export default function Home({ session, myPost }) {
   const router = useRouter();
   const mySession = useSession();
 
+  //want to work on this
+  const [showText, setShowText] = useState(false);
+
   //   console.log("cusSess", mySession);
   // console.log('cusSess', mySession?.data?.user._id);
 
@@ -97,6 +100,10 @@ export default function Home({ session, myPost }) {
 
   //
   //
+  const toggleText = () => {
+    setShowText(!showText);
+  };
+
   const cutText = (str) => {
     if (str.length > 45) {
       str = str.substring(0, 150) + ' ...';
@@ -104,15 +111,16 @@ export default function Home({ session, myPost }) {
     return str;
   };
 
-  function replaceWithBr(value) {
+  const replaceWithBr = (value) => {
     return value.replace(/\n/g, '<br />');
-  }
+  };
 
-  function replaceWithBr2(value) {
+  const replaceWithBr2 = (value) => {
     let str = value;
     let result = str.split('\n');
     return result.map((i, key) => <p key={key}>{i + '\n'}</p>);
-  }
+  };
+
   const simpleDiv = {
     height: '300px',
     width: '300px',

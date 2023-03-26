@@ -1,5 +1,9 @@
 import db from '../../../../utils/db';
 import userModel from '../../../../models/user';
+import postModel from '../../../../models/post';
+import repliedcommentModel from '../../../../models/repliedcomment';
+import commentModel from '../../../../models/comment';
+import communityModel from '../../../../models/community';
 
 import cloudinary from '../../cloudinary-sign';
 
@@ -55,6 +59,8 @@ export const editUser = async (req, res) => {
 
   const cloudImage = req.body.image;
 
+  const emptyData = {};
+
   try {
     await db.connect();
 
@@ -63,17 +69,29 @@ export const editUser = async (req, res) => {
         upload_preset: 'forumiximages',
       });
       if (uploadRes) {
-        const id = req.query.id;
+        // const id = req.query.id;
         const updatedData = {
           ...req.body,
           image: uploadRes.secure_url,
         };
+
+        // console.log(uploadRes.secure_url);
         const options = { new: true };
         const data = await userModel.findByIdAndUpdate(
-          id,
+          userId,
           updatedData,
           options
         );
+
+        // session.user.image = uploadRes.secure_url;
+        // console.log('my session image', session.user.image);
+
+        // const myPost = await postModel.findOne({ 'user.id': userId });
+        //
+        // if (myPost) {
+        //   myPost.user.image = uploadRes.secure_url;
+        //   await myPost.save();
+        // }
 
         await db.disconnect();
         res.status(200).json(data);
@@ -94,6 +112,7 @@ export const editUser = async (req, res) => {
   } catch (error) {
     await db.disconnect();
     res.status(500).json({ message: 'something went wrong' });
+    console.log(error.message);
   }
 };
 

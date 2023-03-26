@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 const repliedcommentSchema = new mongoose.Schema(
   {
     commentId: { type: String, required: true },
+    postId: { type: String, required: true },
     content: { type: String, required: true },
     user: {
       id: { type: String, required: true },

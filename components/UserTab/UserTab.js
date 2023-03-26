@@ -6,8 +6,10 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import styles from '../../styles/UserTab.module.css';
 import axios from 'axios';
-
+// import styles from '../../sections/CreatePost/CreatePost.module.css';
 import { useSession } from 'next-auth/react';
+
+import Image from 'next/image';
 
 export default function LabTabs() {
   const { status, data: session } = useSession();
@@ -130,6 +132,46 @@ export default function LabTabs() {
         setErrorMessage(error?.response?.data);
       });
   };
+
+  const transformFile = (file) => {
+    const reader = new FileReader();
+
+    if (file) {
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        setUserProfile({
+          ...userProfile,
+          image: reader.result,
+        });
+      };
+    } else {
+      setUserProfile({
+        ...userProfile,
+        image: '',
+      });
+      // setImageSize('No image was selected');
+    }
+  };
+
+  // console.log(userProfile.image);
+
+  const uploadHandler = async (e) => {
+    const file = e.target.files[0];
+
+    // if (file?.size / 1024 > 5120) {
+    //   setImageSize('*Image size too large');
+    //   return;
+    // }
+
+    // if (file?.size / 1024 < 5120) {
+    //   setImageSize('Image is okay');
+    // }
+    transformFile(file);
+
+    const MIN_FILE_SIZE = 1024; // 1MB
+    const MAX_FILE_SIZE = 5120; // 5MB
+  };
+
   return (
     <Box sx={{ width: '100%', typography: 'body1' }}>
       <TabContext value={value}>
@@ -347,6 +389,31 @@ export default function LabTabs() {
                   })
                 }
                 value={userProfile.instagramUrl}
+              />{' '}
+              <br />
+            </div>
+            <div className={`${styles.profileName} ${styles.image_input}`}>
+              <p>Profile Image</p>
+              <p>Add a profile Image</p>
+              {userProfile.image && (
+                <div className={styles.imageContainer}>
+                  {userProfile.image && (
+                    <Image
+                      // unoptimized
+                      className={styles.postImage}
+                      src={userProfile.image}
+                      alt='post_image'
+                      fill
+                    />
+                  )}
+                </div>
+              )}
+              <input
+                type='file'
+                placeholder='choose file'
+                id='image'
+                multiple
+                onChange={uploadHandler}
               />{' '}
               <br />
             </div>

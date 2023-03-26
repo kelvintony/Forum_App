@@ -270,6 +270,25 @@
   padding: 10px;
   font-family: 'Poppins', sans-serif;
 }
+
+.imageContainer {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  position: relative;
+  overflow: hidden;
+  margin: 25px 0;
+}
+
+.postImage {
+  object-fit: cover;
+  width: 100% !important;
+  position: absolute !important;
+  /* height: unset !important; */
+}
+.image_input input {
+  border: none;
+}
 /* UTILITIES */
 .tab_button {
   border: none;
