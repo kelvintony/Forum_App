@@ -36,19 +36,21 @@ const ReplyComment = (props) => {
   };
   // console.log('from comment modal', commentId);
   const createRepliedComment = async () => {
+    let postId = JSON.parse(window.sessionStorage.getItem('postID'));
     setLoading(true);
     try {
       const res = await axios.post(`/api/comment/replycomment`, {
         commentId: commentId,
+        postId,
         content: commentContent,
       });
       if (res) {
         setLoading(false);
-
         dispatch({
           type: authConstants.CREATE_REPLIED_COMMENT,
           payload: res.data,
         });
+        window.sessionStorage.removeItem('postID');
         router.back();
       }
     } catch (err) {}
@@ -60,7 +62,12 @@ const ReplyComment = (props) => {
         <div className={styles2.container_a}>
           <div className={styles2.header_title}>
             <h3>New Post</h3>
-            <button onClick={() => router.back()}>
+            <button
+              onClick={() => {
+                router.back();
+                window.sessionStorage.removeItem('postID');
+              }}
+            >
               <Image src={cancelIcon} alt='cancel_pix' />
             </button>
           </div>
@@ -81,7 +88,10 @@ const ReplyComment = (props) => {
 
             <div className={styles2.interet_btnInner}>
               <button
-                onClick={() => router.back()}
+                onClick={() => {
+                  router.back();
+                  window.sessionStorage.removeItem('postID');
+                }}
                 className={`${styles2.btn_draft} ${styles2.btn_create}`}
               >
                 Cancel

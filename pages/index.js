@@ -104,7 +104,7 @@ export default function Home({ myPost }) {
     getPosts();
   }, [singlePost]);
 
-  // console.log('from home ', singlePost);
+  // console.log('from home ', session?.user?.image);
 
   const cutText = (str) => {
     if (str?.length > 45) {
@@ -211,7 +211,7 @@ export default function Home({ myPost }) {
       <LeftSideBar />
       <section className={styles2.rigtbar_section}>
         <div className={styles2.rigtbar_section_a}>
-          <button className={styles2.btn_rightbar_trending}>
+          {/* <button className={styles2.btn_rightbar_trending}>
             <Image
               width={12}
               height={12}
@@ -223,7 +223,7 @@ export default function Home({ myPost }) {
           <button className={styles2.btn_rightbar_new}>
             <Image width={10} height={10} src={newIcon} alt='start_icon' />
             New
-          </button>
+          </button> */}
           {posts.map((post) => {
             return (
               <div
@@ -232,15 +232,21 @@ export default function Home({ myPost }) {
                 className={styles2.post_card}
               >
                 <div
-                  onClick={() => navigateToProfile(post?.user?.id)}
+                  // onClick={() => navigateToProfile(post?.user?.id)}
                   className={styles2.container_a}
                   style={{ cursor: 'pointer' }}
                 >
                   {/* <Image width={40} height={40} src={userIcon} alt='user_pix' /> */}
-                  <div className={styles2.profile__image}>
+                  <div
+                    onClick={() => navigateToProfile(post?.user?.id)}
+                    className={styles2.profile__image}
+                  >
                     {post?.user?.username?.charAt(0).toUpperCase()}
                   </div>
-                  <div className={styles2.inner_a}>
+                  <div
+                    onClick={() => navigateToProfile(post?.user?.id)}
+                    className={styles2.inner_a}
+                  >
                     <p>{post?.user?.username}</p>
                     <p>{moment(post?.createdAt).fromNow()}</p>
                   </div>

@@ -47,11 +47,17 @@ const Comment = () => {
 
   const [showModal, setShowModal] = useState(false);
 
+  const [showReplyModel, setShowReplyModel] = useState(false);
+
   // console.log('from comment');
   // console.log('from comment', state.forumData);
 
   const toggleModal = () => {
     setShowModal(!showModal);
+  };
+
+  const toggleReplyModal = () => {
+    setShowReplyModel(!showReplyModel);
   };
 
   useEffect(() => {
@@ -62,9 +68,13 @@ const Comment = () => {
         setComments(res.data);
         setRepliedComment(res2.data);
 
+        let myRepliedComment = [];
+        myRepliedComment = res2?.data?.filter((data) => {
+          return data?.postId === id;
+        });
         dispatch({
           type: authConstants.FETCH_REPLIED_COMMENT,
-          payload: res2.data,
+          payload: myRepliedComment,
         });
       } catch (err) {}
     };
@@ -117,25 +127,6 @@ const Comment = () => {
         payload: res.data,
       });
       setCommentDescription('');
-
-      setLoading(false);
-    } catch (err) {}
-  };
-
-  const createRepliedComment = async (com_id) => {
-    setLoading(true);
-    try {
-      const res = await axios.post(`/api/comment/replycomment`, {
-        postId: id,
-        commentId: com_id,
-        content: 'xxxxxxx',
-      });
-
-      dispatch({
-        type: authConstants.CREATE_REPLIED_COMMENT,
-        payload: res.data,
-      });
-      // setCommentDescription('');
 
       setLoading(false);
     } catch (err) {}
@@ -211,15 +202,33 @@ const Comment = () => {
     return result.map((i, key) => <p key={key}>{i + '\n'}</p>);
   }
 
-  const replyComment = (id) => {
+  const replyComment = (comId) => {
     if (!session?.user?._id) {
       return alert('you need to signin in other to reply a comment');
     }
-    router.push(`/replycomment/${id}`);
+
+    window.sessionStorage.setItem('postID', JSON.stringify(id));
+
+    router.push(`/replycomment/${comId}`);
   };
+
+  const numberOfReplies = (replyComm, postId) => {
+    let data = replyComm.filter((comment) => comment.commentId === postId);
+
+    return data?.length;
+  };
+
+  const cancelComment = () => {
+    setCommentDescription('');
+  };
+
   return (
     <div className={styles.wrapper}>
-      <h1>Leave a comment</h1>
+      <h1>
+        {state?.commentData?.comments?.length +
+          state?.repliedCommentData?.comments?.length}{' '}
+        comments{' '}
+      </h1>
       <div className={styles.comment_container}>
         <input
           className={styles.txt_community}
@@ -229,7 +238,10 @@ const Comment = () => {
           onChange={(e) => setCommentDescription(e.target.value)}
         />
         <div className={styles.interet_btnInner}>
-          <button className={`${styles.btn_draft} ${styles.btn_create}`}>
+          <button
+            onClick={() => cancelComment()}
+            className={`${styles.btn_draft} ${styles.btn_create}`}
+          >
             Cancel
           </button>
           <button
@@ -308,10 +320,21 @@ const Comment = () => {
               <div className={styles.inner_ba}>
                 <button className={styles.show_replies}>
                   <AiOutlineArrowDown size={12} />
-                  Show all replies
+                  Show all replies{' '}
+                  {numberOfReplies(
+                    state?.repliedCommentData?.comments,
+                    post._id
+                  )}
                 </button>
                 <button
-                  onClick={() => replyComment(post._id)}
+                  // onClick={() => replyComment(post._id)}
+                  onClick={() => {
+                    toggleModal();
+                    window.sessionStorage.setItem(
+                      'commentId',
+                      JSON.stringify(post._id)
+                    );
+                  }}
                   className={styles.reply}
                 >
                   <BsArrowReturnRight size={12} />
@@ -319,6 +342,14 @@ const Comment = () => {
                 </button>
               </div>
             </div>
+            {showModal && <CommentModal closeModal={toggleModal} />}
+            {/* <div>
+              <input type='text' placeholder='reply comment' />
+              <div>
+                <button>Cancel</button>
+                <button>Comment</button>
+              </div>
+            </div> */}
             <div className={styles.comment_container2}>
               {state?.repliedCommentData?.comments?.map((com) => {
                 return (
@@ -394,7 +425,19 @@ const Comment = () => {
                           </button> */}
                           <button></button>
                           <button
-                            onClick={() => replyComment(post._id)}
+                            // onClick={() => replyComment(post._id)}
+                            // onClick={() => toggleReplyModal()}
+                            onClick={() => {
+                              toggleModal();
+                              window.sessionStorage.setItem(
+                                'commentId',
+                                JSON.stringify(post._id)
+                              );
+                              window.sessionStorage.setItem(
+                                'commentUsername',
+                                JSON.stringify(com?.user?.username)
+                              );
+                            }}
                             className={styles.reply}
                           >
                             <BsArrowReturnRight size={12} />
@@ -402,14 +445,21 @@ const Comment = () => {
                           </button>
                         </div>
                       </div>
-                      {showModal && (
-                        <CommentModal
-                          commentId={
-                            post._id === com.commentId ? post._id : null
-                          }
-                          closeModal={toggleModal}
-                        />
-                      )}
+                      {showModal && <CommentModal closeModal={toggleModal} />}
+
+                      {/* <div
+                        className={
+                          showReplyModel
+                            ? styles.replyContainer
+                            : styles.hide_replyContainer
+                        }
+                      >
+                        <input type='text' placeholder='reply comment' />
+                        <div>
+                          <button>Cancel</button>
+                          <button>Comment</button>
+                        </div>
+                      </div> */}
                     </div>
                   )
                 );

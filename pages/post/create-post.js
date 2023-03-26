@@ -273,8 +273,6 @@ const Createpost = ({ session, myCommunity }) => {
                 className={`${styles2.btn_image} ${styles2.btn_create}`}
                 placeholder='choose file'
                 multiple
-                // onChange={uploadHandler}
-
                 onChange={uploadHandler}
               />
 

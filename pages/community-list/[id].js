@@ -73,7 +73,7 @@ const Communitylist = ({ interest }) => {
       <LeftSideBar burgerMenu={mobileMenu} closeMenu={toggle} />
       <section className={styles.rigtbar_section}>
         <div className={styles.rigtbar_section_a}>
-          <button className={styles.btn_rightbar_trending}>
+          {/* <button className={styles.btn_rightbar_trending}>
             <Image
               width={12}
               height={12}
@@ -89,7 +89,7 @@ const Communitylist = ({ interest }) => {
           <button className={styles.btn_rightbar_new}>
             <Image width={10} height={10} src={new_icon} alt='start_icon' />
             Related Topic
-          </button>
+          </button> */}
 
           <div className={`${styles.post_card} ${styles.post_margin}`}>
             <p className={styles.post_card_heading}>

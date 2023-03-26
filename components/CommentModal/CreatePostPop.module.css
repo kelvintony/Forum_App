@@ -1,6 +1,6 @@
 /* rightbar section a */
 .post_wrapper {
-  background-color: black;
+  /* background-color: rgb(0, 0, 0, 0.4); */
   padding-top: 100px;
   z-index: 5000;
   position: fixed;
@@ -8,25 +8,23 @@
   left: 0;
   width: 100%;
   height: 1000px;
-  /* opacity: 1; */
+  /* opacity: 0.4; */
 
   display: flex;
   justify-content: center;
 }
-.rigtbar_section_a {
-  background-color: inherit;
-}
 
 .container_a {
   padding: 20px;
-  background-color: #ffffff;
+  background-color: #d4d4d4;
   box-shadow: 2px 1px 5px rgba(0, 0, 0, 0.15);
-
-  /* height: 600px; */
+  opacity: 1;
   display: flex;
   flex-direction: column;
   gap: 15px;
   padding-bottom: 30px;
+  width: 400px;
+  padding-right: 10px;
 }
 .header_title {
   display: flex;
@@ -34,109 +32,37 @@
   align-items: center;
 }
 
-.inneheader_titler_a p {
-  font-family: 'Roboto', sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 19px;
-  letter-spacing: 0.05em;
-  color: #000000;
-}
-.interest_name,
-.select_interest,
 .interest_buttons {
   margin-bottom: 10px;
 }
 
-.container_a h3 {
-  font-family: 'Poppins', sans-serif;
-  font-style: normal;
-  font-weight: 800;
-  font-size: 18px;
-  line-height: 17px;
-  color: #353535;
-  margin-bottom: 10px;
-  letter-spacing: 0.05em;
-}
-.select_interest {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-
-.select_interest p {
-  font-family: 'Poppins', sans-serif;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 16px;
-  color: #1f1f1f;
-}
-
-.select_interest select {
-  font-family: 'Poppins', sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 16px;
-  color: #4e4e4e;
-  outline: none;
-  height: 40px;
-  padding-left: 10px;
-  background-color: #ffffff;
-
-  border: 1px solid rgba(128, 128, 128, 0.5);
-  border-radius: 10px;
-}
-
-.interest_name {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-
-.interest_name p {
-  font-family: 'Poppins', sans-serif;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 16px;
-  color: #1f1f1f;
-}
-
-.interest_name .txt_community,
-.interest_name .txt_post {
+.input_container {
   margin-top: 7px;
+  background-color: #ffffff;
+  color: #4e4e4e;
+  padding-left: 5px;
+  border-radius: 10px;
+  font-size: 14px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+.txt_community {
   font-family: 'Poppins', sans-serif;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 300;
   font-size: 14px;
   line-height: 16px;
   color: #4e4e4e;
   outline: none;
-  /* height: 40px; */
-
+  background-color: #ffffff;
   padding: 20px;
+  padding-left: 5px;
+  padding-right: 5px;
   height: 50px;
-  border: 1px solid rgba(128, 128, 128, 0.5);
-  border-radius: 10px;
-}
-
-.hidden_input {
   border: none;
-  outline: none;
-}
-
-.interest_name .txt_post {
-  height: 200px;
-}
-.imageContainer {
+  border-radius: 10px;
   width: 100%;
-  height: 200px;
-  position: relative;
-  overflow: hidden;
-  margin: 25px 0;
 }
 
 .postImage {
@@ -150,28 +76,7 @@
   margin-top: 300px;
 }
 
-.upload_container {
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-}
-
-.upload_container p {
-  font-family: 'Poppins', sans-serif;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 16px;
-  color: #1f1f1f;
-}
-
 /*Button utilities */
-.interest_buttons {
-  display: flex;
-  justify-content: space-between;
-  gap: 5px;
-}
 
 .interet_btnInner {
   display: flex;
@@ -238,17 +143,6 @@
     gap: 3px;
   }
 
-  .select_interest select,
-  .interest_name input {
-    padding: 7px 10px;
-    height: 40px;
-    font-size: 12px;
-  }
-  .interest_name textarea {
-    font-size: 12px;
-    padding: 7px 10px;
-  }
-
   .interest_buttons {
     display: flex;
     flex-direction: column;
@@ -263,5 +157,15 @@
 
   .addMargin {
     margin-top: 0px;
+  }
+
+  .input_container {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .txt_community {
+    width: 100%;
+    /* max-width: 400px; */
   }
 }

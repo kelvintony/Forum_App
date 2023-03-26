@@ -125,7 +125,7 @@ export default function Profile({ myPost, myCommunity }) {
       <LeftSideBar />
       <section className={styles2.rigtbar_section}>
         <div className={styles2.rigtbar_section_a}>
-          <button className={styles2.btn_rightbar_trending}>
+          {/* <button className={styles2.btn_rightbar_trending}>
             <Image
               width={12}
               height={12}
@@ -137,7 +137,7 @@ export default function Profile({ myPost, myCommunity }) {
           <button className={styles2.btn_rightbar_new}>
             <Image width={10} height={10} src={newIcon} alt='start_icon' />
             Post
-          </button>
+          </button> */}
           {myPost.map((post) => {
             return (
               <div
