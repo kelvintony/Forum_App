@@ -56,10 +56,6 @@ const Comment = () => {
     setShowModal(!showModal);
   };
 
-  const toggleReplyModal = () => {
-    setShowReplyModel(!showReplyModel);
-  };
-
   useEffect(() => {
     const fetchComments = async () => {
       try {
@@ -190,6 +186,7 @@ const Comment = () => {
       console.log(error);
     }
   };
+
   const cutText = (str) => {
     if (str?.length > 45) {
       str = str?.substring(0, 150) + ' ...';
@@ -202,16 +199,6 @@ const Comment = () => {
     return result.map((i, key) => <p key={key}>{i + '\n'}</p>);
   }
 
-  const replyComment = (comId) => {
-    if (!session?.user?._id) {
-      return alert('you need to signin in other to reply a comment');
-    }
-
-    window.sessionStorage.setItem('postID', JSON.stringify(id));
-
-    router.push(`/replycomment/${comId}`);
-  };
-
   const numberOfReplies = (replyComm, postId) => {
     let data = replyComm.filter((comment) => comment.commentId === postId);
 
@@ -220,6 +207,27 @@ const Comment = () => {
 
   const cancelComment = () => {
     setCommentDescription('');
+  };
+
+  const toggleReplyModal = (replyComm, postId) => {
+    if (!session?.user?._id) {
+      return alert('you need to signin in other to reply a comment');
+    }
+    let data = replyComm.filter((comment) => comment.commentId === postId);
+
+    data.length > 0 && setShowReplyModel(!showReplyModel);
+  };
+
+  const handleReplyComment = (comment_id, comment_username) => {
+    if (!session?.user?._id) {
+      return alert('you need to signin in other to reply a comment');
+    }
+    toggleModal();
+    window.sessionStorage.setItem('commentId', JSON.stringify(comment_id));
+    window.sessionStorage.setItem(
+      'commentUsername',
+      JSON.stringify(comment_username)
+    );
   };
 
   return (
@@ -318,7 +326,15 @@ const Comment = () => {
                     </a> */}
               </div>
               <div className={styles.inner_ba}>
-                <button className={styles.show_replies}>
+                <button
+                  onClick={() =>
+                    toggleReplyModal(
+                      state?.repliedCommentData?.comments,
+                      post._id
+                    )
+                  }
+                  className={styles.show_replies}
+                >
                   <AiOutlineArrowDown size={12} />
                   Show all replies{' '}
                   {numberOfReplies(
@@ -342,15 +358,13 @@ const Comment = () => {
                 </button>
               </div>
             </div>
-            {showModal && <CommentModal closeModal={toggleModal} />}
-            {/* <div>
-              <input type='text' placeholder='reply comment' />
-              <div>
-                <button>Cancel</button>
-                <button>Comment</button>
-              </div>
-            </div> */}
-            <div className={styles.comment_container2}>
+            <div
+              className={
+                showReplyModel
+                  ? styles.comment_container2
+                  : styles.hide_comment_container2
+              }
+            >
               {state?.repliedCommentData?.comments?.map((com) => {
                 return (
                   com.commentId === post._id && (
@@ -419,25 +433,13 @@ const Comment = () => {
                             </a> */}
                         </div>
                         <div className={styles.inner_ba}>
-                          {/* <button className={styles.show_replies}>
-                            <AiOutlineArrowDown size={12} />
-                            Show all replies
-                          </button> */}
                           <button></button>
                           <button
                             // onClick={() => replyComment(post._id)}
                             // onClick={() => toggleReplyModal()}
-                            onClick={() => {
-                              toggleModal();
-                              window.sessionStorage.setItem(
-                                'commentId',
-                                JSON.stringify(post._id)
-                              );
-                              window.sessionStorage.setItem(
-                                'commentUsername',
-                                JSON.stringify(com?.user?.username)
-                              );
-                            }}
+                            onClick={() =>
+                              handleReplyComment(post._id, com?.user?.username)
+                            }
                             className={styles.reply}
                           >
                             <BsArrowReturnRight size={12} />
@@ -446,20 +448,6 @@ const Comment = () => {
                         </div>
                       </div>
                       {showModal && <CommentModal closeModal={toggleModal} />}
-
-                      {/* <div
-                        className={
-                          showReplyModel
-                            ? styles.replyContainer
-                            : styles.hide_replyContainer
-                        }
-                      >
-                        <input type='text' placeholder='reply comment' />
-                        <div>
-                          <button>Cancel</button>
-                          <button>Comment</button>
-                        </div>
-                      </div> */}
                     </div>
                   )
                 );
@@ -468,7 +456,7 @@ const Comment = () => {
           </div>
         );
       })}
-      {/* {showModal && <CommentModal commentId={post._id} closeModal={toggleModal} />} */}
+      {showModal && <CommentModal closeModal={toggleModal} />}
     </div>
   );
 };

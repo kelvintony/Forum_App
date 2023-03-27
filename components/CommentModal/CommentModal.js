@@ -48,6 +48,9 @@ const CommentModal = (props) => {
   };
 
   const createRepliedComment = async () => {
+    if (!session?.user?._id) {
+      return alert('you need to signin in other to make a comment');
+    }
     let commentId = JSON.parse(window.sessionStorage.getItem('commentId'));
     let commentUsername = JSON.parse(
       window.sessionStorage.getItem('commentUsername')
@@ -120,8 +123,8 @@ const CommentModal = (props) => {
                 onClick={createRepliedComment}
                 className={`${styles2.btn_image} ${styles2.btn_create}`}
               >
-                <Image src={sendPostIcon} alt='create_pix' />
-                Comment
+                {!loading && <Image src={sendPostIcon} alt='create_pix' />}
+                {loading ? 'Submiting...' : 'Comment'}
               </button>
             </div>
           </div>

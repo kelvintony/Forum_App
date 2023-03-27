@@ -55,6 +55,7 @@ export const getAllComment = async (req, res) => {
   await db.connect();
   try {
     const comments = await commentModel.find();
+    // const comments = await commentModel.find().sort({ _id: -1 });
 
     await db.disconnect();
     res.status(200).json(comments);
