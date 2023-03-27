@@ -187,7 +187,12 @@ hr.comment_divider {
 }
 
 .comment_container2 {
+  display: block;
   margin-left: 25px;
+}
+
+.hide_comment_container2 {
+  display: none;
 }
 .single_comment2 {
   margin-bottom: 20px;
