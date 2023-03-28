@@ -35,6 +35,8 @@ import { AiOutlineDislike } from 'react-icons/ai';
 import { AiFillLike } from 'react-icons/ai';
 import { AiOutlineLike } from 'react-icons/ai';
 import { FaRegEdit } from 'react-icons/fa';
+import { AiOutlineEdit } from 'react-icons/ai';
+import { AiOutlineDelete } from 'react-icons/ai';
 
 import { authConstants } from '../../context/constants';
 import Loader from '../../components/Loader/Loader';
@@ -84,6 +86,16 @@ const Singlecommunity = () => {
 
   const [showModal, setShowModal] = useState(false);
 
+  const [showEditContainer, setShowEditContainer] = useState(false);
+
+  const handleShowEditContainer = () => {
+    setShowEditContainer(!showEditContainer);
+  };
+
+  const handleEditPost = (postId) => {
+    router.push(`/post/${postId}`);
+  };
+
   useEffect(() => {
     setLoading(true);
 
@@ -128,6 +140,15 @@ const Singlecommunity = () => {
     };
     getCommunity2();
   }, [dispatch, router, id]);
+
+  const handleDeletePost = async (postId) => {
+    await axios.delete(`/api/post/${postId}`).then((res) => {
+      alert('Deleted successfully');
+    });
+
+    setGetThePost((posts) => posts.filter((post) => post._id !== postId));
+    setShowEditContainer(false);
+  };
 
   const toggle = () => {
     setmobileMenu(!mobileMenu);
@@ -374,17 +395,46 @@ const Singlecommunity = () => {
                     <p>{moment(post?.createdAt).fromNow()}</p>
                   </div>
                   {session?.user?._id === post?.user?.id ? (
-                    <Link href={`/post/${post?._id}`}>
+                    <button
+                      onClick={handleShowEditContainer}
+                      className={styles2.edit_icon2}
+                    >
                       <Image
                         width={24}
                         height={24}
                         src={futureMoreVertical_icon}
                         alt='feature_pix'
                       />
-                    </Link>
+                    </button>
                   ) : (
                     <a href=''></a>
                   )}
+                  {session?.user?._id === post?.user?.id &&
+                    showEditContainer && (
+                      <div className={styles2.edit_container}>
+                        <button
+                          onClick={() => handleEditPost(post._id)}
+                          className={styles2.btn_edit_button}
+                        >
+                          <AiOutlineEdit size={24} />
+                          Edit
+                        </button>
+                        <button
+                          onClick={() => {
+                            if (
+                              window.confirm(
+                                'Are you sure you wish to delete this post?'
+                              )
+                            )
+                              handleDeletePost(post._id);
+                          }}
+                          className={styles2.btn_edit_button}
+                        >
+                          <AiOutlineDelete size={24} />
+                          Delete
+                        </button>
+                      </div>
+                    )}
                 </div>
                 <h3 className={styles2.myHeader}>
                   <Link href={`/post/community-post/${post?._id}`}>

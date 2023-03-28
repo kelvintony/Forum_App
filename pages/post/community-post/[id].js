@@ -21,6 +21,9 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import Comment from '../../../components/Comment/Comment';
 
+import { AiOutlineEdit } from 'react-icons/ai';
+import { AiOutlineDelete } from 'react-icons/ai';
+
 export async function getServerSideProps(context) {
   const session = await getSession(context);
 
@@ -132,36 +135,83 @@ export default function Home({ session, myPost }) {
     router.push(`/user-profile/${id}`);
   };
 
+  const [showEditContainer, setShowEditContainer] = useState(false);
+
+  const handleShowEditContainer = () => {
+    setShowEditContainer(!showEditContainer);
+  };
+
+  const handleEditPost = (postId) => {
+    router.push(`/post/${postId}`);
+  };
+
+  const handleDeletePost = async (postId) => {
+    await axios.delete(`/api/post/${postId}`).then((res) => {
+      alert('Deleted successfully');
+    });
+    router.push('/');
+  };
+
   return (
     <div>
       <LeftSideBar burgerMenu={mobileMenu} closeMenu={toggle} />
       <section className={styles2.rigtbar_section}>
         <div className={styles2.rigtbar_section_a}>
           <div key={myPost?._id} className={styles2.post_card}>
-            <div
-              onClick={() => navigateToProfile(myPost?.user?.id)}
-              style={{ cursor: 'pointer' }}
-              className={styles2.container_a}
-            >
+            <div style={{ cursor: 'pointer' }} className={styles2.container_a}>
               {/* <Image width={40} height={40} src={userIcon} alt='user_pix' /> */}
-              <div className={styles2.profile__image}>
+              <div
+                onClick={() => navigateToProfile(myPost?.user?.id)}
+                className={styles2.profile__image}
+              >
                 {myPost?.user?.username?.charAt(0).toUpperCase()}
               </div>
-              <div className={styles2.inner_a}>
+              <div
+                onClick={() => navigateToProfile(myPost?.user?.id)}
+                className={styles2.inner_a}
+              >
                 <p>{myPost?.user?.username}</p>
                 <p>{moment(myPost?.createdAt).fromNow()}</p>
               </div>
               {mySession?.data?.user?._id === myPost?.user?.id ? (
-                <a href={`/post/${myPost?._id}`}>
+                <button
+                  onClick={handleShowEditContainer}
+                  className={styles2.edit_icon2}
+                >
                   <Image
                     width={24}
                     height={24}
                     src={futureMoreVertical}
                     alt='feature_pix'
                   />
-                </a>
+                </button>
               ) : (
                 <a href=''></a>
+              )}
+              {session?.user?._id === myPost?.user?.id && showEditContainer && (
+                <div className={styles2.edit_container}>
+                  <button
+                    onClick={() => handleEditPost(myPost._id)}
+                    className={styles2.btn_edit_button}
+                  >
+                    <AiOutlineEdit size={24} />
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => {
+                      if (
+                        window.confirm(
+                          'Are you sure you wish to delete this post?'
+                        )
+                      )
+                        handleDeletePost(myPost._id);
+                    }}
+                    className={styles2.btn_edit_button}
+                  >
+                    <AiOutlineDelete size={24} />
+                    Delete
+                  </button>
+                </div>
               )}
             </div>
             <h3>{myPost?.title}</h3>
