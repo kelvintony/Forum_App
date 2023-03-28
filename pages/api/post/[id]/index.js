@@ -1,5 +1,7 @@
 import db from '../../../../utils/db';
 import postModel from '../../../../models/post';
+import commentModel from '../../../../models/comment';
+import replyCommentModel from '../../../../models/repliedcomment';
 
 import cloudinary from '../../cloudinary-sign';
 
@@ -92,30 +94,11 @@ export const deletePost = async (req, res) => {
 
   try {
     await postModel.findByIdAndRemove(id);
+    await commentModel.deleteMany({ postId: id });
+    await replyCommentModel.deleteMany({ postId: id });
+
     res.json({ message: 'Post deleted successfully.' });
   } catch (error) {
     res.status(409).json({ message: error });
   }
 };
-/*
-export const editPost = async (req, res) => {
-  const session = await getSession({ req });
-
-  if (!session) {
-    return res.status(401).send('you are not authenticated');
-  }
-
-  try {
-    await db.connect();
-    const id = req.query.id;
-    const updatedData = req.body;
-    const options = { new: true };
-    const data = await postModel.findByIdAndUpdate(id, updatedData, options);
-
-    await db.disconnect();
-    res.status(200).json({ message: 'updated successfully', data });
-  } catch (error) {
-    await db.disconnect();
-    res.status(500).json({ message: 'something went wrong' });
-  }
-}; */
