@@ -110,11 +110,51 @@
 hr.comment_divider {
   border-top: 1px solid rgb(230, 230, 230);
 }
-.container_a {
+/* .container_a {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 10px;
+} */
+
+.container_a {
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+}
+
+.edit_icon2 {
+  margin-left: auto;
+}
+.edit_container {
+  /* border: 1px solid gray; */
+  position: absolute;
+  top: 33px;
+  right: 0;
+  padding: 5px 0px;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 10px;
+  width: 100px;
+  box-shadow: 2px 1px 5px 0px #00000026;
+  background-color: #ffffff;
+}
+
+.btn_edit_button {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: rgb(26, 26, 26);
+  padding: 5px;
+}
+
+.btn_edit_button:hover {
+  background-color: rgb(175, 175, 175);
+  color: #ffffff;
 }
 
 .container_a a {

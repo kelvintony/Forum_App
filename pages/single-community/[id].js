@@ -319,7 +319,7 @@ const Singlecommunity = () => {
 
           <hr className={styles.banner_line} />
 
-          <div className={styles.singlePost_btnContainer}>
+          {/* <div className={styles.singlePost_btnContainer}>
             <button className={styles.btn_rightbar_trending}>
               <Image
                 width={12}
@@ -339,7 +339,7 @@ const Singlecommunity = () => {
             </button>
             <Image src={feather_more_horizontal} alt='more_icon' />
             <Image src={dropdown} alt='more_icon' />
-          </div>
+          </div> */}
           {state?.communityData?.users?.includes(session?.user?._id) && (
             <div
               style={{ marginTop: '20px' }}

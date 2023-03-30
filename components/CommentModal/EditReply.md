@@ -1,3 +1,4 @@
+```javascript
 import React, { useState, useEffect, useRef } from 'react';
 import styles2 from './CreatePostPop.module.css';
 
@@ -14,7 +15,7 @@ import cancelIcon from '../../assets/single_community/cancel_icon.svg';
 import { authConstants } from '../../context/constants';
 import { useStore } from '../../context';
 
-const CommentModal = (props) => {
+const EditRepliedComment = (props) => {
   const router = useRouter();
 
   const { asPath, pathname } = useRouter();
@@ -27,9 +28,9 @@ const CommentModal = (props) => {
 
   const ref = useRef(null);
 
-  const [postData, setPostData] = useState({
-    content: '',
-  });
+  // const [postData, setPostData] = useState({
+  //   content: '',
+  // });
 
   const [mobileMenu, setmobileMenu] = useState(false);
 
@@ -39,7 +40,13 @@ const CommentModal = (props) => {
 
   const [error, setError] = useState(false);
 
+  const [content, setContent] = useState('');
+
+  const [comment__id, setComment__id] = useState('');
+
   useEffect(() => {
+    setContent(JSON.parse(window.sessionStorage.getItem('commentContent')));
+    setComment__id(JSON.parse(window.sessionStorage.getItem('commentId')));
     ref.current.focus();
   }, []);
 
@@ -59,7 +66,7 @@ const CommentModal = (props) => {
         postId: id,
         content:
           session.user.username === commentUsername
-            ? postData.content
+            ? content
             : !commentUsername
             ? postData.content
             : '@' + commentUsername + ', ' + postData.content,
@@ -96,10 +103,8 @@ const CommentModal = (props) => {
                 className={styles2.txt_community}
                 type='text'
                 ref={ref}
-                value={postData.content}
-                onChange={(e) =>
-                  setPostData({ ...postData, content: e.target.value })
-                }
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
               />
             </div>
           </div>
@@ -110,6 +115,7 @@ const CommentModal = (props) => {
                 onClick={() => {
                   props.closeModal();
                   window.sessionStorage.removeItem('commentId');
+                  window.sessionStorage.removeItem('commentContent');
                   window.sessionStorage.removeItem('commentUsername');
                 }}
                 className={`${styles2.btn_draft} ${styles2.btn_create}`}
@@ -131,4 +137,5 @@ const CommentModal = (props) => {
   );
 };
 
-export default CommentModal;
+export default EditRepliedComment;
+```

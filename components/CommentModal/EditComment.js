@@ -14,7 +14,7 @@ import cancelIcon from '../../assets/single_community/cancel_icon.svg';
 import { authConstants } from '../../context/constants';
 import { useStore } from '../../context';
 
-const CommentModal = (props) => {
+const EditComment = (props) => {
   const router = useRouter();
 
   const { asPath, pathname } = useRouter();
@@ -27,9 +27,9 @@ const CommentModal = (props) => {
 
   const ref = useRef(null);
 
-  const [postData, setPostData] = useState({
-    content: '',
-  });
+  const [content, setContent] = useState('');
+
+  const [comment__id, setComment__id] = useState('');
 
   const [mobileMenu, setmobileMenu] = useState(false);
 
@@ -40,6 +40,8 @@ const CommentModal = (props) => {
   const [error, setError] = useState(false);
 
   useEffect(() => {
+    setContent(JSON.parse(window.sessionStorage.getItem('commentContent')));
+    setComment__id(JSON.parse(window.sessionStorage.getItem('commentId')));
     ref.current.focus();
   }, []);
 
@@ -77,6 +79,28 @@ const CommentModal = (props) => {
       console.log(err);
     }
   };
+
+  const handleEditComment = async () => {
+    try {
+      setLoading(true);
+      const res = await axios.put(`/api/comment/${comment__id}`, {
+        content: content,
+      });
+      if (res) {
+        setLoading(false);
+        dispatch({
+          type: authConstants.EDIT_COMMENT,
+          payload: res.data,
+        });
+        setContent('');
+        props.closeModal();
+        window.sessionStorage.removeItem('commentId');
+        window.sessionStorage.removeItem('commentContent');
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <div className={styles2.post_wrapper}>
       <section className={styles2.rigtbar_section}>
@@ -96,10 +120,8 @@ const CommentModal = (props) => {
                 className={styles2.txt_community}
                 type='text'
                 ref={ref}
-                value={postData.content}
-                onChange={(e) =>
-                  setPostData({ ...postData, content: e.target.value })
-                }
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
               />
             </div>
           </div>
@@ -109,15 +131,17 @@ const CommentModal = (props) => {
               <button
                 onClick={() => {
                   props.closeModal();
+                  props.closeDropDown();
+
                   window.sessionStorage.removeItem('commentId');
-                  window.sessionStorage.removeItem('commentUsername');
+                  window.sessionStorage.removeItem('commentContent');
                 }}
                 className={`${styles2.btn_draft} ${styles2.btn_create}`}
               >
                 Cancel
               </button>
               <button
-                onClick={createRepliedComment}
+                onClick={handleEditComment}
                 className={`${styles2.btn_image} ${styles2.btn_create}`}
               >
                 {!loading && <Image src={sendPostIcon} alt='create_pix' />}
@@ -131,4 +155,4 @@ const CommentModal = (props) => {
   );
 };
 
-export default CommentModal;
+export default EditComment;
