@@ -69,7 +69,7 @@ const ForgotPassword = () => {
         </label>{' '}
         <br />
         {error && formData.email.length <= 0 ? (
-          <label style={{ color: 'red' }}>email can't be empty</label>
+          <label style={{ color: 'red' }}>email can&apos;t be empty</label>
         ) : (
           ''
         )}

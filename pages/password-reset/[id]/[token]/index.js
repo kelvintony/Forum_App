@@ -97,7 +97,7 @@ const Signin = () => {
         </label>{' '}
         <br />
         {error && formData.password.length <= 0 ? (
-          <label style={{ color: 'red' }}>password can't be empty</label>
+          <label style={{ color: 'red' }}>password can&apos;t be empty</label>
         ) : (
           ''
         )}
@@ -115,7 +115,9 @@ const Signin = () => {
         </label>
         <br />
         {error && formData.confirmPassword.length <= 0 ? (
-          <label style={{ color: 'red' }}>confirmPassword can't be empty</label>
+          <label style={{ color: 'red' }}>
+            confirmPassword can&apos;t be empty
+          </label>
         ) : (
           ''
         )}
