@@ -195,7 +195,7 @@ const Signin = () => {
               {loading ? <SiginLoader /> : 'Login'}
             </button>
 
-            <Link href='/signup' className={styles.already_signup}>
+            <Link href='/forgot-password' className={styles.already_signup}>
               Forgot username or password?
             </Link>
 

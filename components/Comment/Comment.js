@@ -14,6 +14,8 @@ import { AiOutlineLike } from 'react-icons/ai';
 import { BsArrowReturnRight } from 'react-icons/bs';
 import { AiOutlineArrowDown } from 'react-icons/ai';
 import { AiOutlineArrowUp } from 'react-icons/ai';
+import { AiOutlineEdit } from 'react-icons/ai';
+import { AiOutlineDelete } from 'react-icons/ai';
 import axios from 'axios';
 
 import reply_icon from '../../assets/reply_icon.png';
@@ -23,6 +25,8 @@ import { useRouter } from 'next/router';
 import { useStore } from '../../context';
 import { authConstants } from '../../context/constants';
 import CommentModal from '../CommentModal/CommentModal';
+import EditComment from '../CommentModal/EditComment';
+import EditRepliedComment from '../CommentModal/EditRepliedComment';
 
 const Comment = () => {
   const { status, data: session } = useSession();
@@ -49,11 +53,72 @@ const Comment = () => {
 
   const [showReplyModel, setShowReplyModel] = useState(false);
 
+  const [showEditContainer, setShowEditContainer] = useState(false);
+
+  const [showEditReplyDropDown, setShowEditReplyDropDown] = useState(false);
+
+  const [showEditCommentModal, setShowEditCommentModal] = useState(false);
+
+  const [showReplyEditCommentModal, setShowReplyEditCommentModal] =
+    useState(false);
+
+  const handleShowEditContainer = () => {
+    setShowEditContainer(!showEditContainer);
+  };
+
+  const handleShowEditReplyDropdwon = () => {
+    setShowEditReplyDropDown(!showEditReplyDropDown);
+  };
+
+  const handleEditComment = (comment_id, comment_content) => {
+    setShowEditContainer(!showEditContainer);
+
+    setShowEditCommentModal(!showEditCommentModal);
+
+    window.sessionStorage.setItem('commentId', JSON.stringify(comment_id));
+    window.sessionStorage.setItem(
+      'commentContent',
+      JSON.stringify(comment_content)
+    );
+  };
+
+  const handleEditReplyComment = (
+    comment_id,
+    comment_content,
+    comment_username
+  ) => {
+    setShowEditReplyDropDown(!showEditReplyDropDown);
+
+    setShowReplyEditCommentModal(!showReplyEditCommentModal);
+
+    window.sessionStorage.setItem('commentId', JSON.stringify(comment_id));
+    window.sessionStorage.setItem(
+      'commentContent',
+      JSON.stringify(comment_content)
+    );
+    window.sessionStorage.setItem(
+      'commentUsername',
+      JSON.stringify(comment_username)
+    );
+  };
+
+  // const handleEditComment2 = (postId) => {
+  //   router.push(`/post/${postId}`);
+  // };
+
   // console.log('from comment');
   // console.log('from comment', state.forumData);
 
   const toggleModal = () => {
     setShowModal(!showModal);
+  };
+
+  const toggleModalEditPost = () => {
+    setShowEditCommentModal(!showEditCommentModal);
+  };
+
+  const toggleModalReplyEditPost = () => {
+    setShowReplyEditCommentModal(!showReplyEditCommentModal);
   };
 
   useEffect(() => {
@@ -106,6 +171,47 @@ const Comment = () => {
     };
     getCommunity2();
   }, [dispatch, router, id, singlePost]);
+
+  const handleDeleteComment = async (comment__id) => {
+    try {
+      setLoading(true);
+      const res = await axios.delete(`/api/comment/${comment__id}`);
+
+      if (res) {
+        setLoading(false);
+        dispatch({
+          type: authConstants.DELETE_COMMENT,
+          payload: comment__id,
+        });
+        setShowEditContainer(!showEditContainer);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleDeleteRepliedComment = async (comment__id) => {
+    if (!session?.user?._id) {
+      return alert('you need to signin in other to make a comment');
+    }
+    try {
+      setLoading(true);
+      const res = await axios.delete(
+        `/api/comment/replycomment/${comment__id}`
+      );
+
+      if (res) {
+        setLoading(false);
+        dispatch({
+          type: authConstants.DELETE_REPLIED_COMMENT,
+          payload: comment__id,
+        });
+        setShowEditReplyDropDown(!showEditReplyDropDown);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const createComment = async () => {
     if (!session?.user?._id) {
@@ -278,16 +384,44 @@ const Comment = () => {
                 <p>{moment(post?.createdAt).fromNow()}</p>
               </div>
               {session?.user?._id === post?.user?.id ? (
-                <a href='#'>
+                <button
+                  onClick={handleShowEditContainer}
+                  className={styles.edit_icon2}
+                >
                   <Image
                     width={24}
                     height={24}
                     src={futureMoreVertical}
                     alt='feature_pix'
                   />
-                </a>
+                </button>
               ) : (
                 <a href=''></a>
+              )}
+              {session?.user?._id === post?.user?.id && showEditContainer && (
+                <div className={styles.edit_container}>
+                  <button
+                    onClick={() => handleEditComment(post?._id, post?.content)}
+                    className={styles.btn_edit_button}
+                  >
+                    <AiOutlineEdit size={24} />
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => {
+                      if (
+                        window.confirm(
+                          'Are you sure you wish to delete this comment?'
+                        )
+                      )
+                        handleDeleteComment(post._id);
+                    }}
+                    className={styles.btn_edit_button}
+                  >
+                    <AiOutlineDelete size={24} />
+                    Delete
+                  </button>
+                </div>
               )}
             </div>
 
@@ -383,17 +517,52 @@ const Comment = () => {
                           <p>{moment(com?.createdAt).fromNow()}</p>
                         </div>
                         {session?.user?._id === com?.user?.id ? (
-                          <a href='#'>
+                          <button
+                            onClick={handleShowEditReplyDropdwon}
+                            className={styles.edit_icon2}
+                          >
                             <Image
                               width={24}
                               height={24}
                               src={futureMoreVertical}
                               alt='feature_pix'
                             />
-                          </a>
+                          </button>
                         ) : (
                           <a href=''></a>
                         )}
+                        {session?.user?._id === com?.user?.id &&
+                          showEditReplyDropDown && (
+                            <div className={styles.edit_container}>
+                              <button
+                                onClick={() =>
+                                  handleEditReplyComment(
+                                    com?._id,
+                                    com?.content,
+                                    com?.user?.username
+                                  )
+                                }
+                                className={styles.btn_edit_button}
+                              >
+                                <AiOutlineEdit size={24} />
+                                Edit
+                              </button>
+                              <button
+                                onClick={() => {
+                                  if (
+                                    window.confirm(
+                                      'Are you sure you wish to delete this comment?'
+                                    )
+                                  )
+                                    handleDeleteRepliedComment(com._id);
+                                }}
+                                className={styles.btn_edit_button}
+                              >
+                                <AiOutlineDelete size={24} />
+                                Delete
+                              </button>
+                            </div>
+                          )}
                       </div>
 
                       <a className={styles.myTitle} href='#'>
@@ -456,6 +625,19 @@ const Comment = () => {
           </div>
         );
       })}
+      {showEditCommentModal && (
+        <EditComment
+          closeModal={toggleModalEditPost}
+          closeDropDown={handleShowEditReplyDropdwon}
+        />
+      )}
+
+      {showReplyEditCommentModal && (
+        <EditRepliedComment
+          closeModal={toggleModalReplyEditPost}
+          closeDropDown={handleShowEditReplyDropdwon}
+        />
+      )}
       {showModal && <CommentModal closeModal={toggleModal} />}
     </div>
   );

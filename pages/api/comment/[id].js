@@ -67,7 +67,7 @@ export const editComment = async (req, res) => {
     const data = await commentModel.findByIdAndUpdate(id, updatedData, options);
 
     await db.disconnect();
-    res.status(200).json({ message: 'updated successfully', data });
+    res.status(200).json(data);
   } catch (error) {
     await db.disconnect();
     res.status(500).json({ message: 'something went wrong' });

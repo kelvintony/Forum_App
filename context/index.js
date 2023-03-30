@@ -155,6 +155,26 @@ const reducer = (state, action) => {
         loading: false,
       },
     };
+  } else if (action.type === authConstants.EDIT_COMMENT) {
+    return {
+      ...state,
+      commentData: {
+        comments: state.commentData.comments.map((comment) =>
+          comment._id === action.payload._id ? action.payload : comment
+        ),
+        loading: false,
+      },
+    };
+  } else if (action.type === authConstants.DELETE_COMMENT) {
+    return {
+      ...state,
+      commentData: {
+        comments: state.commentData.comments.filter(
+          (comment) => comment._id !== action.payload
+        ),
+        loading: false,
+      },
+    };
   } else if (action.type === authConstants.CREATE_COMMENT) {
     return {
       ...state,
@@ -187,6 +207,26 @@ const reducer = (state, action) => {
       ...state,
       repliedCommentData: {
         comments: [...state?.repliedCommentData?.comments, action?.payload],
+        loading: false,
+      },
+    };
+  } else if (action.type === authConstants.EDIT_REPLIED_COMMENT) {
+    return {
+      ...state,
+      repliedCommentData: {
+        comments: state.repliedCommentData.comments.map((comment) =>
+          comment._id === action.payload._id ? action.payload : comment
+        ),
+        loading: false,
+      },
+    };
+  } else if (action.type === authConstants.DELETE_REPLIED_COMMENT) {
+    return {
+      ...state,
+      repliedCommentData: {
+        comments: state.repliedCommentData.comments.filter(
+          (comment) => comment._id !== action.payload
+        ),
         loading: false,
       },
     };

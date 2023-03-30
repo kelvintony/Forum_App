@@ -57,7 +57,7 @@ export const getHandler = async (req, res) => {
     await db.disconnect();
     res.send(interests);
   } catch (error) {
-    es.status(409).json({ message: error.message });
+    res.status(409).json({ message: error.message });
     console.log(error.message);
   }
 };
