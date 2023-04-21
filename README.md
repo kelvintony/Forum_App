@@ -1,2 +1,2 @@
-# FrontEnd Forum Application
+# Full stack nextjs application 
 
