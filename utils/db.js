@@ -22,7 +22,7 @@ async function connect() {
   //   'mongodb://localhost:27017/reddit-projectbd'
   // );
   const db = await mongoose.connect(
-    'mongodb+srv://kelvintony:qwertyuiop@cluster0.ql55m.mongodb.net/reddit-projectbd?retryWrites=true&w=majority'
+    'mongodb+srv://kelvintony:qwertyuiop@cluster0.ql55m.mongodb.net/forum_app?retryWrites=true&w=majority'
   );
   console.log('new connection');
   connection.isConnected = db.connections[0].readyState;
