@@ -21,9 +21,7 @@ async function connect() {
   // const db = await mongoose.connect(
   //   'mongodb://localhost:27017/reddit-projectbd'
   // );
-  //const db = await mongoose.connect(
-  //  'mongodb+srv://kelvintony:shYvJN3N3eVaD5FR@cluster0.ql55m.mongodb.net/forum_app?retryWrites=true&w=majority'
-  //);
+ 
   console.log('new connection');
   connection.isConnected = db.connections[0].readyState;
 }
