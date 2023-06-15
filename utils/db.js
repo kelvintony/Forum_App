@@ -16,14 +16,14 @@ async function connect() {
     await mongoose.disconnect();
   }
   mongoose.set('strictQuery', false);
-  // const db = await mongoose.connect(process.env.MONGODB_URI);
+  const db = await mongoose.connect(process.env.MONGODB_URI);
   // const db = await mongoose.connect('mongodb://127.0.0.1/reddit-projectbd'); // you can replace the local host with 127.0.0.1
   // const db = await mongoose.connect(
   //   'mongodb://localhost:27017/reddit-projectbd'
   // );
-  const db = await mongoose.connect(
-    'mongodb+srv://kelvintony:shYvJN3N3eVaD5FR@cluster0.ql55m.mongodb.net/forum_app?retryWrites=true&w=majority'
-  );
+  //const db = await mongoose.connect(
+  //  'mongodb+srv://kelvintony:shYvJN3N3eVaD5FR@cluster0.ql55m.mongodb.net/forum_app?retryWrites=true&w=majority'
+  //);
   console.log('new connection');
   connection.isConnected = db.connections[0].readyState;
 }
